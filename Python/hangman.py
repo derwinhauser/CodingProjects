@@ -43,19 +43,32 @@ def lose_life(word, guess, lives):
     lives = lives-1
   return lives
 
+def play_again():
+  choice = input(Would you like to play again? (y/n))
+  if choice.strip().lower() == 'y':
+    return True
+  elif choice.strip().lower() == 'n':
+    return False 
+  else: 
+    print('invalid input')
+    play_again()
+
 def main():
-  lives = 6
-  word = hidden_word()
-  data = create_state(word)
-  guessed_letters = []
   while True:
-    print(f'You have {lives} lives')
-    print(f'Guessed Letters: ', guessed_letters)
-    guess = guess_letter()
-    guessed_letters.append(guess)
-    print_state(word, guess, data, lives)
-    lives = lose_life(word, guess, lives)
-    if win_check(data, lives, word) == 'end':
-        break
-    
+    lives = 6
+    word = hidden_word()
+    data = create_state(word)
+    guessed_letters = []
+    while True:
+      print(f'You have {lives} lives')
+      print(f'Guessed Letters: ', guessed_letters)
+      guess = guess_letter()
+      guessed_letters.append(guess)
+      print_state(word, guess, data, lives)
+      lives = lose_life(word, guess, lives)
+      if win_check(data, lives, word) == 'end':
+          break
+    #DEFINE PLAY AGAIN
+    if play_again():
+      break
 main()
