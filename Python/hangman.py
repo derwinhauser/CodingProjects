@@ -44,14 +44,15 @@ def lose_life(word, guess, lives):
   return lives
 
 def play_again():
-  choice = input('Would you like to play again? (y/n)')
-  if choice.strip().lower() == 'y':
-    return True
-  elif choice.strip().lower() == 'n':
-    return False 
-  else: 
-    print('invalid input')
-    play_again()
+  while True:
+    choice = input('Would you like to play again? (y/n)')
+    if choice.strip().lower() == 'y':
+      return True
+    elif choice.strip().lower() == 'n':
+      return False
+    else: 
+      print('invalid input')
+      continue
 
 def main():
   while True:
