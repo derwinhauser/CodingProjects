@@ -44,7 +44,7 @@ def lose_life(word, guess, lives):
   return lives
 
 def play_again():
-  choice = input(Would you like to play again? (y/n))
+  choice = input('Would you like to play again? (y/n)')
   if choice.strip().lower() == 'y':
     return True
   elif choice.strip().lower() == 'n':
@@ -69,6 +69,6 @@ def main():
       if win_check(data, lives, word) == 'end':
           break
     #DEFINE PLAY AGAIN
-    if play_again():
+    if not play_again():
       break
 main()
