@@ -15,6 +15,7 @@ for i in range(2, max_int):
         not_prime.append(i)
     else: prime.append(i)
 
+# adds even number and its two prime ints to a list [even number, int 1, int 2]
 for int in range(4, max_int, 2):
     for number in prime:
         ans = int - number
@@ -22,7 +23,7 @@ for int in range(4, max_int, 2):
             equations.append([int, ans, number])
         else: continue
 
-    
+# Prints each even number, followed by the equations of prime numbers that equate to it.
 for even in range(4, max_int, 2):
     print(f'{even}: ', end="")
     for equation in equations:       
