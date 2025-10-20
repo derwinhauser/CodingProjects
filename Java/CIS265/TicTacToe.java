@@ -4,17 +4,44 @@ public class TicTacToe{
     public static void main(String[] args){
         //New board
         int[] board = new int [9];
-        Scanner sc = new Scanner(System.in);
         print_data(board);
+        //Declare Starting player and other variables
+        int move = 0;
+        int player = 1;
+        Boolean win = false;
         //Main Game Loop
-        while (true){
+        while (win==false){
+            // print state
             print_board(board);
-            int move = sc.nextInt();
-            for (int i =0; i<=8; i++){
+            //chose move
+            move = move_choice(board);
 
+            //update state (board[move])
+            board[move-1] = player;
+            //win check
+            win = win_check(board);
+            //change players
+            if (player == 1){
+                player = 2;
+            }
+            else{
+                player = 1;
+            }
+
+        }
+        print_board(board);
+        System.out.println("Game over");
+        if (win==true){
+            if (player == 2){
+                System.out.println("Player X Wins!");
+            }
+            else {
+                System.out.println("Player O Wins!");
             }
         }
-        
+        else {
+            System.out.println("Nobody Wins");
+        }
     }
     public static void print_data(int[] data){
         for (int i = 0; i<=8; i++){
@@ -46,5 +73,61 @@ public class TicTacToe{
             }
         }
         System.out.println("|");
+    }
+    public static int move_choice(int[] board){
+        Scanner sc = new Scanner(System.in);
+        int move = 0;
+        while(true){
+        move = sc.nextInt();
+        if (move >= 1){
+            if (move <= 9){
+                if (board[move-1]==0){
+                    break;
+                }
+            }
+        }  
+        System.out.println("Invalid move. Try again");
+        }
+        sc.close();
+        return move;
+    }
+    public static boolean win_check(int[] board){
+        //check rows
+        for (int i = 0; i<=2; i++){
+            if (board[3*i] == board[3*i+1]){
+                if (board[3*i] == board[3*i+2]){
+                    if (board[3*i] != 0){
+                        return true;
+                    }
+                }
+            }
+        }
+        // check collumns
+        for (int i = 0; i<=2; i++){
+            if (board[i] == board[i+3]){
+                if (board[i] == board[i+6]){
+                    if (board[i] != 0){
+                        return true;
+                    }
+                }
+            }
+        }
+        //check diagonals
+        if (board[0] == board[4]){
+            if (board[0] == board[8]){
+                if (board[0] != 0){
+                    return true;
+                }
+            }
+        }
+        if (board[2] == board[4]){
+            if (board[2] == board[6]){
+                if (board[2] != 0){
+                    return true;
+                }
+            }
+        }
+        // no win
+        return false;
     }
 }
