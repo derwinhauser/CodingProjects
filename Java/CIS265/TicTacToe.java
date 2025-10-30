@@ -2,24 +2,35 @@ import java.util.Scanner;
 
 public class TicTacToe{
     public static void main(String[] args){
-        //New board
+        //Create New board
         int[] board = new int [9];
-        print_data(board);
+
         //Declare Starting player and other variables
         int move = 0;
         int player = 1;
         Boolean win = false;
+
         //Main Game Loop
         while (win==false){
             // print state
+            System.out.println("");
+            if (player == 1){
+                System.out.println("Player X Choose your spot: ");
+            }
+            else{
+                System.out.println("Player O Choose your spot: ");
+            }
             print_board(board);
+
             //chose move
             move = move_choice(board);
 
             //update state (board[move])
             board[move-1] = player;
+
             //win check
             win = win_check(board);
+
             //change players
             if (player == 1){
                 player = 2;
@@ -27,8 +38,8 @@ public class TicTacToe{
             else{
                 player = 1;
             }
-
         }
+        // Game over
         print_board(board);
         System.out.println("Game over");
         if (win==true){
@@ -88,7 +99,6 @@ public class TicTacToe{
         }  
         System.out.println("Invalid move. Try again");
         }
-        sc.close();
         return move;
     }
     public static boolean win_check(int[] board){
