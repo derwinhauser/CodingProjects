@@ -116,22 +116,7 @@ public class TicTacToe{
                 System.out.print("Player O Choose your spot(1-9): ");
             }
             while(true){
-                move = sc.nextInt();
-                if (move >= 1){
-                    if (move <= 9){
-                        if (board[move-1]==0){
-                            break;
-                        }
-                    }
-                }  
-                System.out.println("Invalid move. Try again");
-            }
-        }
-
-        if (opponent.equals("CPU")){
-            if (player ==1){
-                System.out.print("Player X Choose your spot(1-9): ");
-                while(true){
+                if (sc.hasNextInt()){
                     move = sc.nextInt();
                     if (move >= 1){
                         if (move <= 9){
@@ -141,6 +126,33 @@ public class TicTacToe{
                         }
                     }  
                     System.out.println("Invalid move. Try again");
+                }
+                else{
+                    System.out.println("Invalid move. Try again");
+                    sc.next();
+                }
+            }
+        }
+
+        if (opponent.equals("CPU")){
+            if (player ==1){
+                System.out.print("Player X Choose your spot(1-9): ");
+                while(true){
+                    if (sc.hasNextInt()){
+                        move = sc.nextInt();
+                        if (move >= 1){
+                            if (move <= 9){
+                                if (board[move-1]==0){
+                                    break;
+                                }
+                            }
+                        }  
+                        System.out.println("Invalid move. Try again");
+                    }
+                    else{
+                        System.out.println("Invalid move. Try again");
+                        sc.next();
+                    }
                 }
             }
             else{
