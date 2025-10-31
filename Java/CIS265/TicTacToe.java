@@ -242,15 +242,21 @@ public class TicTacToe{
 
         System.out.print("Press 1 to play against CPU or press 2 to play against a friend: ");
         while(true){
-            opponent = sc.nextInt();
-            if (opponent==1){
-                return "CPU";
-            }
-            else if (opponent==2){
-                return "HUMAN";
+            if (sc.hasNextInt){
+                opponent = sc.nextInt();
+                if (opponent==1){
+                    return "CPU";
+                }
+                else if (opponent==2){
+                    return "HUMAN";
+                }
+                else{
+                    System.out.println("Invalid choice. Please try again.");
+                }
             }
             else{
                 System.out.println("Invalid choice. Please try again.");
+                sc.next();
             }
         }
         
