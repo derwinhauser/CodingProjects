@@ -242,7 +242,7 @@ public class TicTacToe{
 
         System.out.print("Press 1 to play against CPU or press 2 to play against a friend: ");
         while(true){
-            if (sc.hasNextInt){
+            if (sc.hasNextInt()){
                 opponent = sc.nextInt();
                 if (opponent==1){
                     return "CPU";
