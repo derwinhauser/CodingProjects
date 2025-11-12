@@ -19,6 +19,7 @@ public class ReadTextFile{
             row_count++;
         }
         System.out.println("There are " + row_count + " rows.");
-
+    sc.close();
+    sc1.close();
     }
 }
