@@ -25,6 +25,6 @@
     }
     // part 3: methods
     public void greeting(){
-        System.out.print("hello, my name is " + name + ", and I am " + age + " years old");
+        System.out.print("hello, my name is " + name + ", and I am " + age + " years old\n");
     }
  }
