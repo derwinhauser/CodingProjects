@@ -11,5 +11,10 @@
         p1.greeting();
         p2.greeting();
         p3.greeting();
+        System.out.println(p1.getName());
+        p1.setName("John");
+        p1.setAge(67);
+        System.out.println(p1.getName());
+        p1.greeting();
     }
  }

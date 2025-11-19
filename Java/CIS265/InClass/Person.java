@@ -6,8 +6,8 @@
 
  public class Person{
     // part 1: properties/states/members/attributes
-    String name;
-    int age;
+    private String name;
+    private int age;
 
     // part 2: constructors
     public Person(){
@@ -24,6 +24,22 @@
         age = n;
     }
     // part 3: methods
+    // getters
+    public String getName(){
+        return name;
+    }
+
+    public int getAge(){
+        return age;
+    }
+    // setters
+    public void setName(String s){
+        name = s;
+    }
+    public void setAge(int n){
+        age = n;
+    }
+
     public void greeting(){
         System.out.print("hello, my name is " + name + ", and I am " + age + " years old\n");
     }
