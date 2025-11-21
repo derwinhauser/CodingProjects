@@ -1,11 +1,6 @@
 /*
 TODO:
-Code a simple 4 deck blackjack game
-Add bankroll and bet sizings
-Add split/double down
-Add running and true count for counting cards
-Add agent that corrects incorrect moves by the player
-
+Possibly remove shoe object and implement varying shoe sizes within the deck class
  */
 
 import java.util.Scanner;
