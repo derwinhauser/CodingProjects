@@ -8,6 +8,10 @@ public class Card{
     }
 
     public void printCard(){
-        System.out.print(value + " of " + suit);
+        System.out.println(value + " of " + suit);
+    }
+
+    public String cardVal(){
+        return value;
     }
 }
