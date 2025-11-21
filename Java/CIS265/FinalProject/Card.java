@@ -6,4 +6,8 @@ public class Card{
         value = s;
         suit = n;
     }
+
+    public void printCard(){
+        System.out.print(value + " of " + suit);
+    }
 }

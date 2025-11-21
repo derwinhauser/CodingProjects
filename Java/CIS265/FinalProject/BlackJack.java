@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class BlackJack{
 
     public static void main(String[] args){
-       Deck deck = new Deck();
-       System.out.println(deck);
+       Shoe shoe = new Shoe(6);
+       shoe.printShoeSize();
     }
 
 

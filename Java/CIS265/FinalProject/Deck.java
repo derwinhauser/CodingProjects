@@ -4,67 +4,77 @@ public class Deck{
     private ArrayList <Card> deck;
     
     public Deck(){
-        deck = createDeck();
+    deck = createDeck();
     }
 
-    public Deck createDeck(){
+    public void printDeck(){
+        for (int i=0; i<deck.size(); i++){
+            Card temp = deck.get(i);
+            temp.printCard();
+            System.out.print(", ");
+        }
+    }
+
+    private ArrayList <Card> createDeck(){
+        ArrayList <Card> deck = new ArrayList<Card>();
         String suit = "";
         String value = "";
         for (int i=1; i<=4; i++){
             if (i==1){
-                suit.equals("spades");
+                suit="spades";
             }
             else if(i==2){
-                suit.equals("hearts");
+                suit="hearts";
             }
             else if (i==3){
-                suit.equals("clubs");
+                suit="clubs";
             }
             else{
-                suit.equals("diamonds");
+                suit="diamonds";
             }
             for (int j=1; j<=13; j++){
                 if (j==1){
-                    value.equals("ace");
+                    value="ace";
                 }
                 else if (j==2){
-                    value.equals("two");
+                    value="two";
                 }
                 else if (j==3){
-                    value.equals("three");
+                    value="three";
                 }
                 else if (j==4){
-                    value.equals("four");
+                    value="four";
                 }
                 else if (j==5){
-                    value.equals("five");
+                    value="five";
                 }
                 else if (j==6){
-                    value.equals("six");
+                    value="six";
                 }
                 else if (j==7){
-                    value.equals("seven");
+                    value="seven";
                 }
                 else if (j==8){
-                    value.equals("eight");
+                    value="eight";
                 }
                 else if (j==9){
-                    value.equals("nine");
+                    value="nine";
                 }
                 else if (j==10){
-                    value.equals("ten");
+                    value="ten";
                 }
                 else if (j==11){
-                    value.equals("jack");
+                    value="jack";
                 }
                 else if (j==12){
-                    value.equals("queen");
+                    value="queen";
                 }
                 else{
-                    value.equals("king");
+                    value="king";
                 }
                 deck.add(new Card(value, suit));
             }
         }
+        return deck;
     }
 }
