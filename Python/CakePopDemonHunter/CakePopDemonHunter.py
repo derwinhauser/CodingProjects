@@ -8,6 +8,9 @@ while True:
     if not ret:
         break
     
+    # Mirror the frame
+    frame = cv2.flip(frame, 1)
+    
     # Display the frame
     cv2.imshow('Webcam', frame)
     
@@ -15,6 +18,5 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# Cleanup
 cap.release()
 cv2.destroyAllWindows()
