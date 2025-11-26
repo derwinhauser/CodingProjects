@@ -32,13 +32,17 @@ public class Deck{
         return count;
     }
 
-    public double getRemainingDecks(){
+    public double getNumberOfDecks(){
         double remainingDecks = (double)deck.size()/52;
         // round to two decimals
         remainingDecks = remainingDecks*100;
         remainingDecks = Math.round(remainingDecks);
         remainingDecks = remainingDecks/100;
         return remainingDecks;
+    }
+
+    public void clearCards(){
+        deck.clear();
     }
 
     public void removeCard(int card){

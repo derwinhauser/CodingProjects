@@ -15,7 +15,7 @@ public class BlackJack{
     public static void main(String[] args) throws IOException{
         // initiate variables
         int bankroll = 0; // What is the starting bankroll?
-        Deck shoe = new Deck(1); // How many Decks is the shoe?
+        Deck shoe = new Deck(4); // How many Decks is the shoe?
         int unitSize = 0; //enter base unit
         int betSize = 0;
         double trueCount = 0;
@@ -26,58 +26,90 @@ public class BlackJack{
         Hand tableCards = new Hand();
         int playerTotal = 0;
         int dealerTotal = 0;
+        boolean playerTakesInsurance = false;
+        double totalBet = 0.0;
         
-        // initial deal 4 cards
-        for (int i=0; i<4; i++){
-            // variables
-            int shoeSize = shoe.getShoeSize();
-            int randInt = (int) (Math.random()*shoeSize);
-            Card tempCard = shoe.getCard(randInt);
+        // start of playing hands
+        while (shoe.getNumberOfDecks()>1.5){ // shuffle occurs at 1.5 decks remaining in the shoe
+            // First: determine truecount
+            trueCount = getTrueCount(shoe, discardTray, tableCards);
             
-            // remove card from shoe
-            shoe.removeCard(randInt);
+            // Second: determine betsize
+            betSize = getBetSize(trueCount);
+            totalBet = betSize;
             
-            // give removed card to player or dealer 
-            if(i%2==0){
-                playerCards.addCard(tempCard);
+            // Third: deal initial 4 cards
+            for (int i=0; i<4; i++){
+                // variables
+                int shoeSize = shoe.getShoeSize();
+                int randInt = (int) (Math.random()*shoeSize);
+                Card tempCard = shoe.getCard(randInt);
+                
+                // remove card from shoe
+                shoe.removeCard(randInt);
+                
+                // give removed card to player or dealer 
+                if(i%2==0){
+                    playerCards.addCard(tempCard);
+                }
+                else{
+                    dealerCards.addCard(tempCard);
+                }
+                //add cards to tableCards variable to track running count without interference from dealer's down card
+                tableCards.addCard(tempCard);
+            }
+
+            // debug/display
+            System.out.print("Dealer Cards: ");
+            dealerCards.printDealerHand();
+            System.out.print("Player Cards: ");
+            playerCards.printHand();
+            runningCount = discardTray.getRunningCount() + tableCards.getTableCount();
+            System.out.println("Running Count: " + runningCount);
+            System.out.print("Revealed dealer cards: ");
+            dealerCards.printHand();
+            playerTotal = playerCards.totalHand();
+            System.out.println("Player total: " + playerTotal);
+            // end debug/display
+
+            // fourth: Determine true count after hands are dealt
+            trueCount = getTrueCount(shoe, discardTray, tableCards);
+            System.out.println("True Count: " + trueCount); // debug
+
+            // fifth: check for ace as dealer upcard
+            if (dealerCards.dealerUpCard().equals("A")){
+                System.out.println("Dealer showing Ace. Take insurance?");// debug
+                if (trueCount>=3){
+                    System.out.println("---------------*****!!!!!Player takes insurance!!!!!!*****");// debug
+                    playerTakesInsurance = true;
+                    totalBet = totalBet + (.5*betSize);
+                }
+                else{
+                    System.out.println("Player does not take insurance");// debug
+                    playerTakesInsurance = false;
+                }
             }
             else{
-                dealerCards.addCard(tempCard);
+                System.out.println("No ace being shown");
+                playerTakesInsurance = false;
             }
-            //add cards to tableCards variable to track running count without interference from dealer's down card
-            tableCards.addCard(tempCard);
-        }
+            System.out.println("Total Bet: " + totalBet);
 
-        // debug/display
-        System.out.print("Dealer Cards: ");
-        dealerCards.printDealerHand();
-        System.out.print("Player Cards: ");
-        playerCards.printHand();
-        runningCount = discardTray.getRunningCount() + tableCards.getTableCount();
-        System.out.println("Running Count: " + runningCount);
-        System.out.println("Revealed dealer cards: ");
-        dealerCards.printHand();
-        playerTotal = playerCards.totalHand();
-        System.out.println("Player total: " + playerTotal);
 
-        // player plays hand according to basic strategy
-        trueCount = getTrueCount(shoe, discardTray, tableCards);
-        
-        // determine betsize
-        betSize = getBetSize(trueCount)
+            // final step: discard all tabled cards
+            playerCards.clearCards();
+            dealerCards.clearCards();
+            discardTray = discardTableCards(tableCards, discardTray);
+            tableCards.clearCards();
 
-        if (dealerCards.dealerUpCard().equals("A")){
-            System.out.println("Dealer showing Ace ");
-        }
-        else{
-            System.out.println("No ace being shown");
+            System.out.println();// debug
         }
     }
 
 
     public static double getTrueCount(Deck shoe, Deck discardTray, Hand tableCards){
         int runningCount = discardTray.getRunningCount()+tableCards.getTableCount();
-        double remainingDecks = shoe.getRemainingDecks();
+        double remainingDecks = shoe.getNumberOfDecks();
         double trueCount = runningCount/remainingDecks;
         // round to two decimals
         trueCount = trueCount*100;
@@ -86,7 +118,15 @@ public class BlackJack{
         return trueCount;
     }
 
+    public static Deck discardTableCards(Hand tableCards, Deck discardTray){
+        for (int i=0; i<tableCards.getHandSize(); i++){
+            discardTray.addCard(tableCards.getCard(i));
+        }
+        return discardTray;
+    }
+    
     public static int getBetSize(double trueCount){
+        int betSize = 0;
         if (trueCount<1){
             betSize = 3;
         }

@@ -117,6 +117,14 @@ public class Hand{
     public Card getCard(int i){
         return hand.get(i);
     }
+    
+    public int getHandSize(){
+        return hand.size();
+    }
+
+    public void clearCards(){
+        hand.clear();
+    }
 
     public void addCard(Card c){
         hand.add(c);
