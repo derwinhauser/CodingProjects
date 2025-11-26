@@ -1,6 +1,7 @@
 /*
 * TODO:
-*
+* bankroll
+* establish bet size
 *
  */
 
@@ -16,6 +17,9 @@ public class BlackJack{
         int runningCount = 0;
         Hand playerCards = new Hand();
         Hand dealerCards = new Hand();
+        Hand tableCards = new Hand();
+        int playerTotal = 0;
+        int dealerTotal = 0;
         
         // initial deal 4 cards
         for (int i=0; i<4; i++){
@@ -34,15 +38,19 @@ public class BlackJack{
             else{
                 dealerCards.addCard(tempCard);
             }
-            // preemtively add card to discard tray for running count purposes
-            discardTray.addCard(tempCard);
+            //add cards to tableCards variable to track running count without interference from dealer's down card
+            tableCards.addCard(tempCard);
         }
         System.out.print("Dealer Cards: ");
         dealerCards.printDealerHand();
         System.out.print("Player Cards: ");
         playerCards.printHand();
-        runningCount = discardTray.getRunningCount();
+        runningCount = discardTray.getRunningCount() + tableCards.getTableCount();
         System.out.println("Running Count: " + runningCount);
+        System.out.println("Revealed dealer cards: ");
+        dealerCards.printHand();
+        playerTotal = playerCards.totalHand();
+        System.out.println("Player total: " + playerTotal);
     }
 
 

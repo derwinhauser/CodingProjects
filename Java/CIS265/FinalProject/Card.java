@@ -19,6 +19,10 @@ public class Card{
         System.out.print(symbol);
     }
 
+    public String getSymbol(){
+        return symbol;
+    }
+
     public int getCardCount(){
         return count;
     }
