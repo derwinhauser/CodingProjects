@@ -23,6 +23,44 @@ public class Hand{
         System.out.print(" ");
     }
 
+    public boolean isSoftTotal(){
+        int cardSum = 0;
+        ArrayList <Card> aces = new ArrayList <Card>();
+        for(int i=0; i<hand.size(); i++){
+            Card tempCard = hand.get(i);
+            int tempCardVal = 0;
+            String tempSymbol = tempCard.getSymbol();
+            if (tempSymbol.equals("A")){
+                aces.add(tempCard);
+                tempCardVal = 1;
+            }
+            else if (tempSymbol.equals("K")){
+                tempCardVal = 10;
+            }
+            else if (tempSymbol.equals("Q")){
+                tempCardVal = 10;
+            }
+            else if (tempSymbol.equals("J")){
+                tempCardVal = 10;
+            }
+            else{
+                tempCardVal = Integer.parseInt(tempSymbol);
+            }
+            cardSum = cardSum+tempCardVal;    
+        }
+        if (aces.size()==0){
+            return false;
+        }
+        else{
+            if(cardSum>=11){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    }
+
     public int getTableCount(){
         int count = 0;
         for (int i=0; i<hand.size(); i++){

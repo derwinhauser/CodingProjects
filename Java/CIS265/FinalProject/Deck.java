@@ -30,7 +30,15 @@ public class Deck{
             count = count+tempCard.getCardCount();
         }
         return count;
+    }
 
+    public double getRemainingDecks(){
+        double remainingDecks = (double)deck.size()/52;
+        // round to two decimals
+        remainingDecks = remainingDecks*100;
+        remainingDecks = Math.round(remainingDecks);
+        remainingDecks = remainingDecks/100;
+        return remainingDecks;
     }
 
     public void removeCard(int card){
@@ -39,12 +47,6 @@ public class Deck{
 
     public int getShoeSize(){
         return deck.size();
-    }
-
-    public void printShoeSize(){
-        double totalCards = deck.size();
-        double decks = totalCards/52;
-        System.out.println("There are " + decks +  " decks in this shoe.");
     }
 
     private ArrayList <Card> createDeck(int numberOfDecks){
