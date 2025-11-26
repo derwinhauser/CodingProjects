@@ -61,6 +61,12 @@ public class Hand{
         }
     }
 
+    public String dealerUpCard(){
+        Card tempcard = hand.get(1);
+        String symbol = tempcard.getSymbol();
+        return symbol;
+    }
+
     public int getTableCount(){
         int count = 0;
         for (int i=0; i<hand.size(); i++){

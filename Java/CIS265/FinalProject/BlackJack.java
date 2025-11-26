@@ -16,6 +16,7 @@ public class BlackJack{
         // initiate variables
         int bankroll = 0; // What is the starting bankroll?
         Deck shoe = new Deck(1); // How many Decks is the shoe?
+        int unitSize = 0; //enter base unit
         int betSize = 0;
         double trueCount = 0;
         Deck discardTray = new Deck(0); // Create discard tray object
@@ -61,7 +62,16 @@ public class BlackJack{
 
         // player plays hand according to basic strategy
         trueCount = getTrueCount(shoe, discardTray, tableCards);
-        System.out.println("True Count: " + trueCount);
+        
+        // determine betsize
+        betSize = getBetSize(trueCount)
+
+        if (dealerCards.dealerUpCard().equals("A")){
+            System.out.println("Dealer showing Ace ");
+        }
+        else{
+            System.out.println("No ace being shown");
+        }
     }
 
 
@@ -74,6 +84,25 @@ public class BlackJack{
         trueCount = Math.round(trueCount);
         trueCount = trueCount/100;
         return trueCount;
+    }
+
+    public static int getBetSize(double trueCount){
+        if (trueCount<1){
+            betSize = 3;
+        }
+        else if(trueCount<2){
+            betSize = 10;
+        }
+        else if(trueCount<3){
+            betSize = 15;
+        }
+        else if (trueCount<4){
+            betSize = 25;
+        }
+        else{
+            betSize = 50;
+        }
+        return betSize;
     }
 
 }
