@@ -76,7 +76,7 @@ public class BlackJack{
             trueCount = getTrueCount(shoe, discardTray, tableCards);
             System.out.println("True Count: " + trueCount); // debug
 
-            // fifth: check for ace as dealer upcard
+            // fifth: check for ace as dealer upcard and ask for insurance
             if (dealerCards.dealerUpCard().equals("A")){
                 System.out.println("Dealer showing Ace. Take insurance?");// debug
                 if (trueCount>=3){
@@ -93,7 +93,11 @@ public class BlackJack{
                 System.out.println("No ace being shown");
                 playerTakesInsurance = false;
             }
-            System.out.println("Total Bet: " + totalBet);
+            System.out.println("Total Bet: " + totalBet);// debug
+            // sixth: determine player's cards, then decide action based on dealer's upcard.
+            
+
+            
 
 
             // final step: discard all tabled cards
