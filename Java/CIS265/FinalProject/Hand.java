@@ -78,6 +78,18 @@ public class Hand{
         return count;
     }
     
+    public String winLossTie(Hand dealerCards){
+        if(hand.totalHand()>dealerCards.totalHand()){
+            return "win";
+        }
+        else if(hand.totalHand()<dealerCards.totalHand()){
+            return "loss";
+        }
+        else{
+            return "tie";
+        }
+    }
+
     public int totalHand(){
         int cardSum = 0;
         ArrayList <Card> aces = new ArrayList <Card>();

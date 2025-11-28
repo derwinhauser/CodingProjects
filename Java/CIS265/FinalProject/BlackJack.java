@@ -3,19 +3,28 @@
 * 
 * create function that determines if dealer is showing an ace and returns boolean public static boolean dealerShowsAce(Hand dealerCards){}
 * ask player for even money (determine if they should take it based on count)
-* 
+*  
+* subtract money from bankroll for each bet/bet increase
+*
 * Steps in order:
-* double bankroll
-* Determine Player bet Size
-* Deal initial four cards
-* boolean dealerShowsAce
-* boolean playerHasBlackjack
-* If dealerShowsAce = true and playerHasBlackjack = true, determine if player takes even money based on true count
-* If dealerShowsAce = true and playerHasBlackjack = false, (playerTakesInsurance = true if trueCount >= 3)
-* Check for Dealer blackjack and determine if insurance is payed out; if dealerHasBlackjack = true and playerTakesInsurance = true, return full bet to player and end hand
-* if dealerHasBlackjack = true and playerTakesInsurance = false, continue hand as normal and only consider original bet
+* DO: determine double bankroll
+* DO: numberOfPlayerHands = 1
+* Done: Determine Player bet Size
+* DO: Subtract player bet size from bankroll
+* Done: Deal initial four cards
+* Done: boolean dealerShowsAce
+* Done: boolean playerHasBlackjack
+* Done: boolean dealerHasBlackjack
+* Do: If dealerShowsAce = true and playerHasBlackjack = true, determine if player takes even money based on true count
+* DO: If dealerShowsAce = true and playerHasBlackjack = false, (playerTakesInsurance = true if trueCount >= 3)
+* DO: Check for Dealer blackjack and determine if insurance is payed out; if dealerHasBlackjack = true and playerTakesInsurance = true, return full bet to player and end hand
+* DO: if dealerHasBlackjack = true and playerTakesInsurance = false, continue hand as normal and only consider original bet for payout
 * 
+* DO: check for Splits/doubles
 * 
+* DO: loop for Hand.winLossTie function that iterates over ArrayList <Hand> playerHands and determines payouts and clears their hands/bet sizes
+* DO: clear the following: playerCards, dealerCards, tableCards, playerHands
+*
  */
 
 import java.util.Scanner;
@@ -31,6 +40,7 @@ public class BlackJack{
         
         boolean dealerShowsAce;
         boolean playerHasBlackjack;
+        boolean dealerHasBlackjack;
         boolean playerTakesEvenMoney;
         boolean playerTakesInsurance;
         int betSize;
@@ -40,21 +50,26 @@ public class BlackJack{
         int dealerTotal;
         double totalBet;
         Deck shoe = new Deck(4); // How many Decks is the shoe?
-        Deck discardTray = new Deck(0); // Create discard tray object
+        Deck discardTray = new Deck(0); // Create discard tray object (must stay 0)
         Hand playerCards = new Hand();
+        Hand playerCards2 = new Hand(); // extra hands are used if player splits
+        Hand playerCards3 = new Hand();
+        Hand playerCards4 = new Hand();
+        int numberOfPlayerHands = 1; // increases if player splits their hand (max 4 total hands)
         Hand dealerCards = new Hand();
         Hand tableCards = new Hand();
+        ArrayList <Hand> playerHands = new ArrayList <Hand>(playerCards, playerCards2, playerCards3, playerCards4); // useful for determining all hands at end
         
         // start of playing hands
         while (shoe.getNumberOfDecks()>1.5){ // shuffle occurs at 1.5 decks remaining in the shoe
-            // First: determine truecount
+            // determine truecount
             trueCount = getTrueCount(shoe, discardTray, tableCards);
             
-            // Second: determine betsize
+            // determine betsize
             betSize = getBetSize(trueCount);
             totalBet = betSize;
             
-            // Third: deal initial 4 cards
+            // deal initial 4 cards
             for (int i=0; i<4; i++){
                 // variables
                 int shoeSize = shoe.getShoeSize();
@@ -94,12 +109,25 @@ public class BlackJack{
 
             // fifth: check for ace as dealer upcard and ask for insurance
             dealerShowsAce = dealerShowsAce(dealerCards);
-            playerHasBlackjack = playerHasBlackjack(playerCards);
+            playerHasBlackjack = blackjackCheck(playerCards);
+            dealerHasBlackjack = blackjackCheck(dealerCards);
             if (dealerShowsAce && !playerHasBlackjack){
                 playerTakesInsurance = playerTakesInsurance(playerCards);
             }
+            else{
+                playerTakesInsurance = false;
+            }
             if (dealerShowsAce && playerHasBlackjack){
                 playerTakesEvenMoney = playerTakesEvenMoney(trueCount);
+            }
+            else{
+                playerTakesEvenMoney = false;
+            }
+            if(playerTakesEvenMoney){
+                // payout player
+            }
+            if (playerTakesInsurance && dealerHasBlackjack){
+                // TODO: player takes back total bet and game loop restarts
             }
 
             /* 
@@ -130,6 +158,9 @@ public class BlackJack{
 
             // final step: discard all tabled cards
             playerCards.clearCards();
+            playerCards2.clearCards();
+            playerCards3.clearCards();
+            playerCards4.clearCards();
             dealerCards.clearCards();
             discardTray = discardTableCards(tableCards, discardTray);
             tableCards.clearCards();
@@ -195,8 +226,17 @@ public class BlackJack{
         }
     }
 
-    public static boolean playerHasBlackjack(Hand playerCards){
+    public static boolean blackjackCheck(Hand playerCards){
         if (playerCards.totalHand()==21){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static boolean playerTakesEvenMoney(double trueCount){
+        if (trueCount>=3){
             return true;
         }
         else{
