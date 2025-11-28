@@ -1,8 +1,21 @@
 /*
 * TODO:
-* bankroll
-* establish bet size
-*
+* 
+* create function that determines if dealer is showing an ace and returns boolean public static boolean dealerShowsAce(Hand dealerCards){}
+* ask player for even money (determine if they should take it based on count)
+* 
+* Steps in order:
+* double bankroll
+* Determine Player bet Size
+* Deal initial four cards
+* boolean dealerShowsAce
+* boolean playerHasBlackjack
+* If dealerShowsAce = true and playerHasBlackjack = true, determine if player takes even money based on true count
+* If dealerShowsAce = true and playerHasBlackjack = false, (playerTakesInsurance = true if trueCount >= 3)
+* Check for Dealer blackjack and determine if insurance is payed out; if dealerHasBlackjack = true and playerTakesInsurance = true, return full bet to player and end hand
+* if dealerHasBlackjack = true and playerTakesInsurance = false, continue hand as normal and only consider original bet
+* 
+* 
  */
 
 import java.util.Scanner;
@@ -14,20 +27,23 @@ public class BlackJack{
 
     public static void main(String[] args) throws IOException{
         // initiate variables
-        int bankroll = 0; // What is the starting bankroll?
+        double bankroll = 0; // What is the starting bankroll?
+        
+        boolean dealerShowsAce;
+        boolean playerHasBlackjack;
+        boolean playerTakesEvenMoney;
+        boolean playerTakesInsurance;
+        int betSize;
+        int runningCount;
+        double trueCount;
+        int playerTotal;
+        int dealerTotal;
+        double totalBet;
         Deck shoe = new Deck(4); // How many Decks is the shoe?
-        int unitSize = 0; //enter base unit
-        int betSize = 0;
-        double trueCount = 0;
         Deck discardTray = new Deck(0); // Create discard tray object
-        int runningCount = 0;
         Hand playerCards = new Hand();
         Hand dealerCards = new Hand();
         Hand tableCards = new Hand();
-        int playerTotal = 0;
-        int dealerTotal = 0;
-        boolean playerTakesInsurance = false;
-        double totalBet = 0.0;
         
         // start of playing hands
         while (shoe.getNumberOfDecks()>1.5){ // shuffle occurs at 1.5 decks remaining in the shoe
@@ -77,6 +93,16 @@ public class BlackJack{
             System.out.println("True Count: " + trueCount); // debug
 
             // fifth: check for ace as dealer upcard and ask for insurance
+            dealerShowsAce = dealerShowsAce(dealerCards);
+            playerHasBlackjack = playerHasBlackjack(playerCards);
+            if (dealerShowsAce && !playerHasBlackjack){
+                playerTakesInsurance = playerTakesInsurance(playerCards);
+            }
+            if (dealerShowsAce && playerHasBlackjack){
+                playerTakesEvenMoney = playerTakesEvenMoney(trueCount);
+            }
+
+            /* 
             if (dealerCards.dealerUpCard().equals("A")){
                 System.out.println("Dealer showing Ace. Take insurance?");// debug
                 if (trueCount>=3){
@@ -93,7 +119,9 @@ public class BlackJack{
                 System.out.println("No ace being shown");
                 playerTakesInsurance = false;
             }
-            System.out.println("Total Bet: " + totalBet);// debug
+            System.out.println("Total Bet: " + totalBet);// debug            
+            */
+           
             // sixth: determine player's cards, then decide action based on dealer's upcard.
             
 
@@ -147,6 +175,33 @@ public class BlackJack{
             betSize = 50;
         }
         return betSize;
+    }
+
+    public static boolean dealerShowsAce(Hand dealerCards){
+        if(dealerCards.dealerUpCard().equals("A")){
+            return true;
+            }
+        else{
+            return false;
+        }
+    }
+
+    public static boolean playerTakesInsurance(double trueCount){
+        if (trueCount>=3){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static boolean playerHasBlackjack(Hand playerCards){
+        if (playerCards.totalHand()==21){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 }
