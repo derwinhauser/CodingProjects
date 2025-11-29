@@ -92,6 +92,22 @@ public class Hand{
         }
     }
 
+    public boolean pairCheck(){
+        if(hand.size()!=2){
+            return false;
+        }
+        Card tempCard1 = getCard(0);
+        Card tempCard2 = getCard(1);
+        String tempCard1Val = tempCard1.cardVal();
+        String tempCard2Val = tempCard2.cardVal();
+        if (tempCard1Val.equals(tempCard2Val)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public int totalHand(){
         int cardSum = 0;
         ArrayList <Card> aces = new ArrayList <Card>();
@@ -142,5 +158,9 @@ public class Hand{
 
     public void addCard(Card c){
         hand.add(c);
+    }
+
+    public void removeCard(int i){
+        hand.remove(i);
     }
 }

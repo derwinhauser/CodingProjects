@@ -75,7 +75,7 @@ public class Deck{
                 for (int j=1; j<=13; j++){
                     int count = 0;
                     if (j==1){
-                        value="ace";
+                        value="one/eleven";
                         count = -1;
                         symbol = "A";
                     }
@@ -122,17 +122,17 @@ public class Deck{
                         symbol = "10";
                     }
                     else if (j==11){
-                        value="jack";
+                        value="ten";
                         count = -1;
                         symbol = "J";
                     }
                     else if (j==12){
-                        value="queen";
+                        value="ten";
                         count = -1;
                         symbol = "Q";
                     }
                     else{
-                        value="king";
+                        value="ten";
                         count = -1;
                         symbol = "K";
                     }

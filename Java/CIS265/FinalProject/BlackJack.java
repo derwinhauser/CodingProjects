@@ -44,23 +44,26 @@ public class BlackJack{
         boolean playerTakesEvenMoney;
         boolean playerTakesInsurance;
         boolean isSoftTotal;
+        boolean playerHasPair;
         int betSize;
         int runningCount;
+        double remainingDecks;
         double trueCount;
         int playerTotal;
         int dealerTotal;
-        Deck shoe = new Deck(2); // How many Decks is the shoe?
+        Deck shoe = new Deck(6); // How many Decks is the shoe?
         Deck discardTray = new Deck(0); // Create discard tray object (must stay 0)
         Hand playerCards = new Hand();
         Hand playerCards2 = new Hand(); // extra hands are used if player splits
         Hand playerCards3 = new Hand();
         Hand playerCards4 = new Hand();
-        int numberOfHands = 0; // number of hands the player has played in total
+        int numberOfHandsPlayed = 0; // number of hands the player has played in total
+        int numberOfShoesPlayed = 0;
         int numberOfPlayerHands = 1; // increases if player splits their hand (max 4 total hands)
         Hand dealerCards = new Hand();
         Hand tableCards = new Hand();
         
-        // start of playing hands
+        // start of new shoe
         while (shoe.getNumberOfDecks()>1.5){ // shuffle occurs at 1.5 decks remaining in the shoe
             // first step: discard all tabled cards
             playerCards.clearCards();
@@ -72,15 +75,19 @@ public class BlackJack{
             tableCards.clearCards();
 
             System.out.println("Bankroll: "+bankroll); //debug
-            numberOfHands= numberOfHands + 1;
-            System.out.println("Number of Hands: " + numberOfHands); //debug
+            numberOfHandsPlayed= numberOfHandsPlayed + 1;
+            System.out.println("Number of Hands: " + numberOfHandsPlayed); //debug
             // determine truecount
+            runningCount = tableCards.getTableCount()+discardTray.getRunningCount();
+            System.out.println("Running Count: " + runningCount); // debug
+            remainingDecks = shoe.getNumberOfDecks();
+            System.out.println("Reamaining Decks: " + remainingDecks); //debug
             trueCount = getTrueCount(shoe, discardTray, tableCards);
-            System.out.println("True Count: " + trueCount);
+            System.out.println("True Count: " + trueCount); // debug
             
             // determine betsize
             betSize = getBetSize(trueCount);
-            System.out.println("betSize: " + betSize);
+            System.out.println("betSize: " + betSize); // debug
             
             // deal initial 4 cards
             for (int i=0; i<4; i++){
@@ -103,21 +110,22 @@ public class BlackJack{
                 tableCards.addCard(tempCard);
             }
 
-            // debug/display
-            System.out.print("Dealer Cards: ");
-            dealerCards.printDealerHand();
-            System.out.print("Player Cards: ");
-            playerCards.printHand();
-            runningCount = discardTray.getRunningCount() + tableCards.getTableCount();
-            System.out.println("Running Count: " + runningCount);
-            System.out.print("Revealed dealer cards: ");
-            dealerCards.printHand();
+            // Start Debug
+            System.out.print("Dealer Cards: "); //debug
+            dealerCards.printDealerHand(); //debug
+            System.out.print("Player Cards: "); //debug
+            playerCards.printHand(); //debug
+            System.out.print("Revealed dealer cards: "); // debug
+            dealerCards.printHand(); //debug
             playerTotal = playerCards.totalHand();
-            System.out.println("Player total: " + playerTotal);
-            // end debug/display
+            System.out.println("Player total: " + playerTotal); //debug
+            // End Debug
 
             // fourth: Determine true count after hands are dealt
             runningCount = discardTray.getRunningCount() + tableCards.getTableCount();
+            System.out.println("Running Count: " + runningCount); //debug
+            remainingDecks = shoe.getNumberOfDecks(); // debug
+            System.out.println("Remaining Decks: " + remainingDecks); // debug
             trueCount = getTrueCount(shoe, discardTray, tableCards);
             System.out.println("True Count: " + trueCount); // debug
 
@@ -147,52 +155,47 @@ public class BlackJack{
                 /* System.out.println("Dealer is showing ace and player does not have blackjack");//debug
                 break; //debug*/
             }
+
             else{
                 playerTakesInsurance = false;
             }
+
+            if (playerTakesInsurance){ //debug
+                System.out.println("Player takes insurance.");
+            }
+
+            if (playerTakesInsurance && dealerHasBlackjack){
+                System.out.println("Player wins Insurance bet."); ///debug
+                continue;
+            }
+
+            if (playerTakesInsurance && !dealerHasBlackjack){
+                bankroll = bankroll - (0.5*betSize);
+                System.out.println("Player lost insurance bet.");//debug
+            }
+
             if (dealerShowsAce && playerHasBlackjack){
                 playerTakesEvenMoney = playerTakesEvenMoney(trueCount);
-                System.out.println("Even money check");
-                break;
+                /* debug
+                System.out.println("End of Even money check"); // debug
+                break; //debug*/
             }
+
             else{
                 playerTakesEvenMoney = false;
             }
             if(playerTakesEvenMoney){
                 // payout player
                 bankroll = bankroll+betSize;
-                System.out.println("player takes even money ");
-                System.out.println("Bankroll: " + bankroll);
-                break;
-            }
-            if (playerTakesInsurance && dealerHasBlackjack){
+                System.out.println("Player Takes even money");//debug
                 continue;
             }
-
-            /* 
-            if (dealerCards.dealerUpCard().equals("A")){
-                System.out.println("Dealer showing Ace. Take insurance?");// debug
-                if (trueCount>=3){
-                    System.out.println("---------------*****!!!!!Player takes insurance!!!!!!*****");// debug
-                    playerTakesInsurance = true;
-                    totalBet = totalBet + (.5*betSize);
-                }
-                else{
-                    System.out.println("Player does not take insurance");// debug
-                    playerTakesInsurance = false;
-                }
-            }
-            else{
-                System.out.println("No ace being shown");
-                playerTakesInsurance = false;
-            }
-            System.out.println("Total Bet: " + totalBet);// debug            
-            */
            
-            // sixth: determine player's cards, then decide action based on dealer's upcard.
+            // check for player pair
+            playerHasPair = playerCards.pairCheck();
 
             System.out.println();// debug
-        }
+        } // end of shoe (Deck shuffles)
     }
 
 

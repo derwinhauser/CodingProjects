@@ -12,7 +12,7 @@ public class Card{
     }
 
     public void printCard(){
-        System.out.print(value + " of " + suit);
+        System.out.print(symbol + " of " + suit);
     }
 
     public void printSymbol(){
