@@ -36,38 +36,51 @@ public class BlackJack{
 
     public static void main(String[] args) throws IOException{
         // initiate variables
-        double bankroll = 0; // What is the starting bankroll?
+        double bankroll = 1000; // What is the starting bankroll?
         
         boolean dealerShowsAce;
         boolean playerHasBlackjack;
         boolean dealerHasBlackjack;
         boolean playerTakesEvenMoney;
         boolean playerTakesInsurance;
+        boolean isSoftTotal;
         int betSize;
         int runningCount;
         double trueCount;
         int playerTotal;
         int dealerTotal;
-        double totalBet;
-        Deck shoe = new Deck(4); // How many Decks is the shoe?
+        Deck shoe = new Deck(2); // How many Decks is the shoe?
         Deck discardTray = new Deck(0); // Create discard tray object (must stay 0)
         Hand playerCards = new Hand();
         Hand playerCards2 = new Hand(); // extra hands are used if player splits
         Hand playerCards3 = new Hand();
         Hand playerCards4 = new Hand();
+        int numberOfHands = 0; // number of hands the player has played in total
         int numberOfPlayerHands = 1; // increases if player splits their hand (max 4 total hands)
         Hand dealerCards = new Hand();
         Hand tableCards = new Hand();
-        ArrayList <Hand> playerHands = new ArrayList <Hand>(playerCards, playerCards2, playerCards3, playerCards4); // useful for determining all hands at end
         
         // start of playing hands
         while (shoe.getNumberOfDecks()>1.5){ // shuffle occurs at 1.5 decks remaining in the shoe
+            // first step: discard all tabled cards
+            playerCards.clearCards();
+            playerCards2.clearCards();
+            playerCards3.clearCards();
+            playerCards4.clearCards();
+            dealerCards.clearCards();
+            discardTray = discardTableCards(tableCards, discardTray);
+            tableCards.clearCards();
+
+            System.out.println("Bankroll: "+bankroll); //debug
+            numberOfHands= numberOfHands + 1;
+            System.out.println("Number of Hands: " + numberOfHands); //debug
             // determine truecount
             trueCount = getTrueCount(shoe, discardTray, tableCards);
+            System.out.println("True Count: " + trueCount);
             
             // determine betsize
             betSize = getBetSize(trueCount);
-            totalBet = betSize;
+            System.out.println("betSize: " + betSize);
             
             // deal initial 4 cards
             for (int i=0; i<4; i++){
@@ -104,30 +117,56 @@ public class BlackJack{
             // end debug/display
 
             // fourth: Determine true count after hands are dealt
+            runningCount = discardTray.getRunningCount() + tableCards.getTableCount();
             trueCount = getTrueCount(shoe, discardTray, tableCards);
             System.out.println("True Count: " + trueCount); // debug
 
             // fifth: check for ace as dealer upcard and ask for insurance
             dealerShowsAce = dealerShowsAce(dealerCards);
+            /*debug
+            if (dealerShowsAce){
+                System.out.println("Dealer is showing Ace.");
+               break;
+            }*/
             playerHasBlackjack = blackjackCheck(playerCards);
+            /*debug
+            if (playerHasBlackjack){
+                System.out.println("Player has blackjack.");
+                break;
+            }*/
             dealerHasBlackjack = blackjackCheck(dealerCards);
+            /* debug
+            if (dealerHasBlackjack){
+                System.out.println("dealerHasBlackjack");
+                break;
+            }*/
+
+
             if (dealerShowsAce && !playerHasBlackjack){
-                playerTakesInsurance = playerTakesInsurance(playerCards);
+                playerTakesInsurance = playerTakesInsurance(trueCount);
+                /* System.out.println("Dealer is showing ace and player does not have blackjack");//debug
+                break; //debug*/
             }
             else{
                 playerTakesInsurance = false;
             }
             if (dealerShowsAce && playerHasBlackjack){
                 playerTakesEvenMoney = playerTakesEvenMoney(trueCount);
+                System.out.println("Even money check");
+                break;
             }
             else{
                 playerTakesEvenMoney = false;
             }
             if(playerTakesEvenMoney){
                 // payout player
+                bankroll = bankroll+betSize;
+                System.out.println("player takes even money ");
+                System.out.println("Bankroll: " + bankroll);
+                break;
             }
             if (playerTakesInsurance && dealerHasBlackjack){
-                // TODO: player takes back total bet and game loop restarts
+                continue;
             }
 
             /* 
@@ -151,19 +190,6 @@ public class BlackJack{
             */
            
             // sixth: determine player's cards, then decide action based on dealer's upcard.
-            
-
-            
-
-
-            // final step: discard all tabled cards
-            playerCards.clearCards();
-            playerCards2.clearCards();
-            playerCards3.clearCards();
-            playerCards4.clearCards();
-            dealerCards.clearCards();
-            discardTray = discardTableCards(tableCards, discardTray);
-            tableCards.clearCards();
 
             System.out.println();// debug
         }
@@ -236,10 +262,13 @@ public class BlackJack{
     }
 
     public static boolean playerTakesEvenMoney(double trueCount){
+        System.out.println("Checking if player takes even money"); //debug
         if (trueCount>=3){
+            System.out.println("player takes even money"); //debug
             return true;
         }
         else{
+            System.out.println("player does not take even money"); //debug
             return false;
         }
     }

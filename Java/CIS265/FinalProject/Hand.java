@@ -79,10 +79,12 @@ public class Hand{
     }
     
     public String winLossTie(Hand dealerCards){
-        if(hand.totalHand()>dealerCards.totalHand()){
+        int playerTotal = totalHand();
+        int dealerTotal = dealerCards.totalHand();
+        if(playerTotal>dealerTotal){
             return "win";
         }
-        else if(hand.totalHand()<dealerCards.totalHand()){
+        else if(playerTotal<dealerTotal){
             return "loss";
         }
         else{
