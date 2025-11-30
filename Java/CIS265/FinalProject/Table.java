@@ -575,6 +575,9 @@ public class Table{
             else if(playerTotal>dealerTotal){
                 playerHand.setResult("win");
             }
+            else if(playerTotal<dealerTotal && dealerTotal<=21){
+                playerHand.setResult("loss");
+            }
             else{
                 playerHand.setResult("push");
             }
