@@ -25,6 +25,12 @@ last_corner_spawn = time.time()
 corner_spawn_interval = 3.0
 demon_size = 60
 
+# Falling demon
+falling_demon = None
+last_falling_spawn = time.time()
+falling_spawn_interval = 5.0
+falling_speed = 3
+
 def spawn_corner_demon():
     corners = [
         (30, 30),
@@ -34,6 +40,44 @@ def spawn_corner_demon():
     ]
     x, y = random.choice(corners)
     corner_demons.append({'x': x, 'y': y, 'active': True})
+
+def spawn_falling_demon():
+    global falling_demon
+    if falling_demon is None:
+        falling_demon = {
+            'x': width // 2 - 40,
+            'y': 0,
+            'width': 80,
+            'height': 100,
+            'active': True
+        }
+
+def update_falling_demon():
+    global falling_demon, last_falling_spawn
+    
+    if falling_demon and falling_demon['active']:
+        falling_demon['y'] += falling_speed
+        
+        # Check if demon reached bottom
+        if falling_demon['y'] > height:
+            falling_demon = None
+            last_falling_spawn = time.time()
+
+def check_face_demon_collision():
+    if falling_demon is None or face_rect is None:
+        return False
+    
+    fx, fy, fw, fh = face_rect
+    dx = falling_demon['x']
+    dy = falling_demon['y']
+    dw = falling_demon['width']
+    dh = falling_demon['height']
+    
+    # Check rectangle intersection
+    if (fx < dx + dw and fx + fw > dx and
+        fy < dy + dh and fy + fh > dy):
+        return True
+    return False
 
 def check_motion_collision(frame_gray, prev_frame_gray):
     global score
@@ -80,6 +124,18 @@ while True:
         spawn_corner_demon()
         last_corner_spawn = time.time()
     
+    # Spawn falling demon periodically
+    if time.time() - last_falling_spawn > falling_spawn_interval:
+        spawn_falling_demon()
+    
+    # Update falling demon
+    update_falling_demon()
+    
+    # Check collision between face and falling demon
+    collision = check_face_demon_collision()
+    if collision:
+        print("COLLISION DETECTED!")
+    
     # Check motion collision with corner demons
     if prev_frame_gray is not None:
         check_motion_collision(gray, prev_frame_gray)
@@ -91,6 +147,15 @@ while True:
             center_y = demon['y'] + demon_size // 2
             cv2.circle(frame, (center_x, center_y), demon_size // 2, (0, 0, 255), -1)
             cv2.circle(frame, (center_x, center_y), demon_size // 2, (0, 0, 0), 2)
+    
+    # Draw falling demon
+    if falling_demon and falling_demon['active']:
+        x = falling_demon['x']
+        y = falling_demon['y']
+        w = falling_demon['width']
+        h = falling_demon['height']
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), -1)
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 0), 2)
     
     # Draw rectangle around face
     if face_rect is not None:
@@ -110,7 +175,6 @@ while True:
     # Check for quit key
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-
 
 cap.release()
 cv2.destroyAllWindows()
