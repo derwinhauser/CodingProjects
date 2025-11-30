@@ -593,6 +593,7 @@ public class Table{
             String result = playerHand.getResult();
             if (result.equals("win")){
                 bankroll = bankroll + betSize;
+                
             }
             else if(result.equals("loss")){
                 bankroll = bankroll-betSize;
@@ -691,6 +692,7 @@ public class Table{
                     
                     if(playerTakesInsurance && !dealerHasBlackjack){
                         bankroll = bankroll-(0.5*betSize);
+                        player.setBankroll(bankroll);
                     }
                     
                     if (playerTakesInsurance && dealerHasBlackjack){
@@ -701,12 +703,14 @@ public class Table{
                     
                     if(playerTakesEvenMoney){
                         bankroll = bankroll + betSize;
+                        player.setBankroll(bankroll);
                         continue;
                     }
                 }
                 if (playerHasBlackjack){
                     double payout = betSize*1.5;
                     bankroll = bankroll + payout;
+                    player.setBankroll(bankroll);
                     continue;
                 }
                 else{
