@@ -2,6 +2,14 @@ import java.util.ArrayList;
 
 public class test{
     public static void main(String[] args){
+        Table gameState = new Table();
+        
+        
+        
+        
+        
+        
+        /*
         Deck shoe = new Deck(4);
         Hand playerCards = new Hand();
         Hand playerCards2 = new Hand(); // extra hands are used if player splits
@@ -35,7 +43,7 @@ public class test{
                 System.out.print("Hand " + i + ":");
                 tempHand.printHand();
                 System.out.println();
-            }
+            }*/
     
     }
 }

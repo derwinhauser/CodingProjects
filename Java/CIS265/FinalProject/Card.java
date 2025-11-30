@@ -27,7 +27,7 @@ public class Card{
         return count;
     }
 
-    public String cardVal(){
+    public String getCardValue(){
         return value;
     }
 }

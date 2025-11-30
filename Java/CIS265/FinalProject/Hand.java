@@ -2,9 +2,14 @@ import java.util.ArrayList;
 
 public class Hand{
     private ArrayList <Card> hand;
-
+    private boolean handIsInPlay;
+    private boolean betWasDoubled;
+    private String result;
     public Hand(){
         hand = new ArrayList <Card>();
+        handIsInPlay = true;
+        betWasDoubled = false;
+        result = "";
     }
 
     public void printHand(){
@@ -13,14 +18,37 @@ public class Hand{
             temp.printSymbol();
             System.out.print(" ");
         }    
-        System.out.println();
+    }
+
+    public boolean handCanSplit(){
+        if (hand.size() != 2){
+            return false;
+        }
+        if (hand.get(0).getCardValue()==hand.get(1).getCardValue()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public void setResult(String s){
+        result = s;
+    }
+
+    public void setHandIsInPlay(boolean b){
+        handIsInPlay = b;
+    }
+
+    public boolean getHandIsInPlay(){
+        return handIsInPlay;
     }
 
     public void printDealerHand(){
         System.out.print("[] ");
         Card temp = hand.get(1);
         temp.printSymbol();
-        System.out.print(" ");
+        System.out.println();
     }
 
     public boolean isSoftTotal(){
@@ -28,25 +56,25 @@ public class Hand{
         ArrayList <Card> aces = new ArrayList <Card>();
         for(int i=0; i<hand.size(); i++){
             Card tempCard = hand.get(i);
-            int tempCardVal = 0;
+            int tempCardValue = 0;
             String tempSymbol = tempCard.getSymbol();
             if (tempSymbol.equals("A")){
                 aces.add(tempCard);
-                tempCardVal = 1;
+                tempCardValue = 1;
             }
             else if (tempSymbol.equals("K")){
-                tempCardVal = 10;
+                tempCardValue = 10;
             }
             else if (tempSymbol.equals("Q")){
-                tempCardVal = 10;
+                tempCardValue = 10;
             }
             else if (tempSymbol.equals("J")){
-                tempCardVal = 10;
+                tempCardValue = 10;
             }
             else{
-                tempCardVal = Integer.parseInt(tempSymbol);
+                tempCardValue = Integer.parseInt(tempSymbol);
             }
-            cardSum = cardSum+tempCardVal;    
+            cardSum = cardSum+tempCardValue;    
         }
         if (aces.size()==0){
             return false;
@@ -98,8 +126,8 @@ public class Hand{
         }
         Card tempCard1 = getCard(0);
         Card tempCard2 = getCard(1);
-        String tempCard1Val = tempCard1.cardVal();
-        String tempCard2Val = tempCard2.cardVal();
+        String tempCard1Val = tempCard1.getCardValue();
+        String tempCard2Val = tempCard2.getCardValue();
         if (tempCard1Val.equals(tempCard2Val)){
             return true;
         }
@@ -113,24 +141,24 @@ public class Hand{
         ArrayList <Card> aces = new ArrayList <Card>();
         for(int i=0; i<hand.size(); i++){
             Card tempCard = hand.get(i);
-            int tempCardVal = 0;
+            int tempCardValue = 0;
             String tempSymbol = tempCard.getSymbol();
             if (tempSymbol.equals("A")){
                 aces.add(tempCard);
             }
             else if (tempSymbol.equals("K")){
-                tempCardVal = 10;
+                tempCardValue = 10;
             }
             else if (tempSymbol.equals("Q")){
-                tempCardVal = 10;
+                tempCardValue = 10;
             }
             else if (tempSymbol.equals("J")){
-                tempCardVal = 10;
+                tempCardValue = 10;
             }
             else{
-                tempCardVal = Integer.parseInt(tempSymbol);
+                tempCardValue = Integer.parseInt(tempSymbol);
             }
-            cardSum = cardSum+tempCardVal;
+            cardSum = cardSum+tempCardValue;
             
         }
         for (int i=0; i<aces.size(); i++){
@@ -148,7 +176,7 @@ public class Hand{
         return hand.get(i);
     }
     
-    public int getHandSize(){
+    public int getSize(){
         return hand.size();
     }
 

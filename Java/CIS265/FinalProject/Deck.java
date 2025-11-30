@@ -75,64 +75,64 @@ public class Deck{
                 for (int j=1; j<=13; j++){
                     int count = 0;
                     if (j==1){
-                        value="one/eleven";
+                        value="1";
                         count = -1;
                         symbol = "A";
                     }
                     else if (j==2){
-                        value="two";
+                        value="2";
                         count = 1;
                         symbol = "2";
                     }
                     else if (j==3){
-                        value="three";
+                        value="3";
                         count = 1;
                         symbol = "3";
                     }
                     else if (j==4){
-                        value="four";
+                        value="4";
                         count = 1;
                         symbol = "4";
                     }
                     else if (j==5){
-                        value="five";
+                        value="5";
                         count = 1;
                         symbol = "5";
                     }
                     else if (j==6){
-                        value="six";
+                        value="6";
                         count = 1;
                         symbol = "6";
                     }
                     else if (j==7){
-                        value="seven";
+                        value="7";
                         symbol = "7";
                     }
                     else if (j==8){
-                        value="eight";
+                        value="8";
                         symbol = "8";
                     }
                     else if (j==9){
-                        value="nine";
+                        value="9";
                         symbol = "9";
                     }
                     else if (j==10){
-                        value="ten";
+                        value="10";
                         count = -1;
                         symbol = "10";
                     }
                     else if (j==11){
-                        value="ten";
+                        value="10";
                         count = -1;
                         symbol = "J";
                     }
                     else if (j==12){
-                        value="ten";
+                        value="10";
                         count = -1;
                         symbol = "Q";
                     }
                     else{
-                        value="ten";
+                        value="10";
                         count = -1;
                         symbol = "K";
                     }
