@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class BlackJack2{
+public class BlackJack{
 
     public static void main(String[] args) throws IOException{
         // initiate variables

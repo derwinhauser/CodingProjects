@@ -20,6 +20,14 @@ public class Hand{
         }    
     }
 
+    public void setBetWasDoubled(boolean b){
+        betWasDoubled = b;
+    }
+
+    public String getResult(){
+        return result;
+    }
+
     public boolean handCanSplit(){
         if (hand.size() != 2){
             return false;
@@ -80,7 +88,7 @@ public class Hand{
             return false;
         }
         else{
-            if(cardSum>=11){
+            if(cardSum>11){
                 return false;
             }
             else{
@@ -106,20 +114,6 @@ public class Hand{
         return count;
     }
     
-    public String winLossTie(Hand dealerCards){
-        int playerTotal = totalHand();
-        int dealerTotal = dealerCards.totalHand();
-        if(playerTotal>dealerTotal){
-            return "win";
-        }
-        else if(playerTotal<dealerTotal){
-            return "loss";
-        }
-        else{
-            return "tie";
-        }
-    }
-
     public boolean pairCheck(){
         if(hand.size()!=2){
             return false;
