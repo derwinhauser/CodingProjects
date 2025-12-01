@@ -3,8 +3,10 @@ import java.io.FileWriter;
 public class BlackJack{
     public static void main(String args[]) throws IOException{
         FileWriter writer = new FileWriter("blackjackResults.csv", false);
+        FileWriter writer1 = new FileWriter("blackjackData.txt", false);
         Table table = new Table(4);
-        table.playShoe(100);
+        table.playShoe(8000);
         writer.close();
+        writer1.close();
     }
 }
