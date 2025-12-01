@@ -231,6 +231,7 @@ public class Table{
         }
         System.out.println();
         writer1.write("\n");
+        writer1.close();
     }
 
     public boolean playerCanSplit(){
