@@ -678,6 +678,7 @@ public class Table{
         for(int i=0; i<numberOfShoesToPlay;i++){
             shuffleCards();
             while(shoe.getNumberOfDecks()>1.5){
+                writeToFile();
                 player.addHandNumber();
                 discardCards();
                 betSize = getBetSize();
@@ -723,7 +724,6 @@ public class Table{
                     dealerPlaysHand();
                     winCheck();
                     payPlayer();
-                    writeToFile();
                 }
             }
         }
