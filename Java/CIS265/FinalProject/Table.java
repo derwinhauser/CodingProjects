@@ -616,7 +616,8 @@ public class Table{
         player.setBankroll(bankroll);
     }
 
-    public void playHand(int i){
+    public void playHand(int i)throws IOException{
+        FileWriter writer2 = new FileWriter("blackjackData2.txt", true);
         Hand playerHand = player.getHand(i);
         Card dealerUpCard = dealer.getUpCard();
         boolean doesPlayerSplit;
@@ -633,6 +634,7 @@ public class Table{
                 if(doesPlayerSplit){
                     player.splitHand(i);
                     dealNextCard(i);
+                    writer2.write("Player Split Hand.\n");
                 }
                 else{
                     break;
@@ -677,7 +679,7 @@ public class Table{
 
     public void playShoe(int numberOfShoesToPlay) throws IOException{
         // variables
-        FileWriter writer2 = new FileWriter("blackjackData.txt", true);
+        FileWriter writer2 = new FileWriter("blackjackData2.txt", true);
         double bankroll = player.getBankroll();
         int betSize;
         boolean dealerShowsAce;
@@ -700,6 +702,7 @@ public class Table{
                 writer2.write("Cards discarded\n");
                 betSize = getBetSize();
                 dealStartingCards();
+                writer2.write("\n\n" + (player.getHandNumber()+1) + ".");
                 writer2.write("Starting Cards dealt\n");
                 playerHasHandInPlay = true;
                 playerHasBlackjack = player.blackjackCheck();
@@ -729,7 +732,8 @@ public class Table{
                     }
                 }
                 if (playerHasBlackjack){
-                    double payout = betSize*1.5;
+                    double payout = (betSize*1.5);
+                    bankroll = player.getBankroll();
                     bankroll = bankroll + payout;
                     player.setBankroll(bankroll);
                     writer2.write("Player wins blackjack bet\n");
