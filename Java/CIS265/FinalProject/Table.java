@@ -116,16 +116,16 @@ public class Table{
         int betSize = 0;
         double trueCount = getTrueCount();
         if (trueCount<1){
-            betSize = 3;
+            betSize = 5;
         }
         else if(trueCount<2){
-            betSize = 10;
+            betSize = 25;
         }
         else if(trueCount<3){
-            betSize = 15;
+            betSize = 50;
         }
         else if (trueCount<4){
-            betSize = 25;
+            betSize = 50;
         }
         else{
             betSize = 50;
