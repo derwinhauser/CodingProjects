@@ -65,6 +65,22 @@ public class Player{
         }
     }
 
+    public boolean handCanSplit(int i){
+        Hand hand = getHand(i);
+        if (hands.size()>3){
+            return false;
+        }
+        if (hand.getSize() != 2){
+            return false;
+        }
+        if (hand.getCard(0).getCardValue()==hand.getCard(1).getCardValue()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public void splitHand(int i){
         int newHandNumber = hands.size();//new hand
         addHand();//create new hand

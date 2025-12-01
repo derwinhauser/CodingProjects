@@ -624,7 +624,7 @@ public class Table{
         boolean doesPlayerHit;
         while(playerHand.getHandIsInPlay()){
             while (true){//loop determines splits
-                if (playerHand.handCanSplit()){
+                if (player.handCanSplit(i)){
                     doesPlayerSplit = doesPlayerSplit(i);
                 }
                 else{
@@ -677,6 +677,7 @@ public class Table{
 
     public void playShoe(int numberOfShoesToPlay) throws IOException{
         // variables
+        FileWriter writer2 = new FileWriter("blackjackData.txt", true);
         double bankroll = player.getBankroll();
         int betSize;
         boolean dealerShowsAce;
@@ -688,6 +689,7 @@ public class Table{
 
         for(int i=0; i<numberOfShoesToPlay;i++){
             shuffleCards();
+            writer2.write("\n**Shuffle**\n");
             while(shoe.getNumberOfDecks()>1.5){
                 writeToFile();
                 if(player.getHandNumber()>0){
@@ -695,8 +697,10 @@ public class Table{
                 }
                 player.addHandNumber();
                 discardCards();
+                writer2.write("Cards discarded\n");
                 betSize = getBetSize();
                 dealStartingCards();
+                writer2.write("Starting Cards dealt\n");
                 playerHasHandInPlay = true;
                 playerHasBlackjack = player.blackjackCheck();
                 dealerShowsAce = dealerShowsAce();
@@ -707,9 +711,11 @@ public class Table{
                     if(playerTakesInsurance && !dealerHasBlackjack){
                         bankroll = bankroll-(0.5*betSize);
                         player.setBankroll(bankroll);
+                        writer2.write("Player loses insurance bet\n");
                     }
                     
                     if (playerTakesInsurance && dealerHasBlackjack){
+                        writer2.write("player wins insurance bet\n");
                         continue;
                     }
                     
@@ -718,6 +724,7 @@ public class Table{
                     if(playerTakesEvenMoney){
                         bankroll = bankroll + betSize;
                         player.setBankroll(bankroll);
+                        writer2.write("Player took even money\n");
                         continue;
                     }
                 }
@@ -725,9 +732,11 @@ public class Table{
                     double payout = betSize*1.5;
                     bankroll = bankroll + payout;
                     player.setBankroll(bankroll);
+                    writer2.write("Player wins blackjack bet\n");
                     continue;
                 }
                 else{
+                    writer2.write("No Dealer or player blackjack\n");
                     int handNumber=0;
                     while(playerHasHandInPlay){
                         playHand(handNumber);

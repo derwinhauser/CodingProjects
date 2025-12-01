@@ -28,18 +28,6 @@ public class Hand{
         return result;
     }
 
-    public boolean handCanSplit(){
-        if (hand.size() != 2){
-            return false;
-        }
-        if (hand.get(0).getCardValue()==hand.get(1).getCardValue()){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
     public void setResult(String s){
         result = s;
     }
