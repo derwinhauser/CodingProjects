@@ -52,6 +52,25 @@ public class Hand{
         return handIsInPlay;
     }
 
+    public String getHand(){
+        String s = "";
+        int handSize = hand.size();
+        for(int i=0; i<handSize;i++){
+            Card tempCard = hand.get(i);
+            String symbol = tempCard.getSymbol();
+            s = s+symbol+" ";
+        }
+        return s;
+    }
+
+    public String getDealerHand(){
+        String s = "";
+        Card temp = hand.get(1);
+        String symbol = temp.getSymbol();
+        s = "[] "+symbol;
+        return s;
+    }
+
     public void printDealerHand(){
         System.out.print("[] ");
         Card temp = hand.get(1);

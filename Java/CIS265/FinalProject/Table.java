@@ -179,8 +179,9 @@ public class Table{
         }
     }
 
-    public void printTable(){
-        //print bankroll
+    public void printTable()throws IOException{
+        FileWriter writer1 = new FileWriter("blackjackData.txt", true);
+        /*//print bankroll
         double bankroll = player.getBankroll();
         System.out.println("Bankroll: " + bankroll);
         
@@ -198,29 +199,38 @@ public class Table{
         int betSize = getBetSize();
         System.out.println("Bet Size: " + betSize);
 
-        Hand dealerHand = dealer.getHand();
-        //print dealer hand
-        System.out.print("Dealer: ");
-        dealerHand.printDealerHand();
-        Card dealerUpCard = dealer.getUpCard();
-        System.out.println("Dealer UpCard: " + dealerUpCard.getSymbol());
-
         //reveal dealer cards for debug
         System.out.print("dealer revealed: ");
         dealerHand.printHand();
-        System.out.println();
+        System.out.println();*/
+
+        //print hand number
+        int handNumber = player.getHandNumber();
+        System.out.println("Hand Number: "+ handNumber);
+        writer1.write("Hand number" + handNumber + "\n");
+        //print dealer hand
+        Hand dealerHand = dealer.getHand();
+        System.out.print("Dealer: ");
+        dealerHand.printDealerHand();
+        writer1.write("Dealer: " + dealerHand.getDealerHand() + "\n");
+        
+        Card dealerUpCard = dealer.getUpCard();
+        System.out.println("Dealer UpCard: " + dealerUpCard.getSymbol());
 
         //print player hands
         int numberOfHands = player.getNumberOfHands();
         for (int i=0; i<numberOfHands; i++){
             Hand playerHand = player.getHand(i);
+            String symbol = playerHand.getHand();
             int playerTotal = playerHand.totalHand();
-            System.out.print("Player: ");
+            System.out.print("Player: " );
             playerHand.printHand();
+            writer1.write("Player: "+ symbol + "\n");
             System.out.println();
             System.out.println("player Total: " + playerTotal);
         }
         System.out.println();
+        writer1.write("\n");
     }
 
     public boolean playerCanSplit(){
@@ -679,12 +689,14 @@ public class Table{
             shuffleCards();
             while(shoe.getNumberOfDecks()>1.5){
                 writeToFile();
+                if(player.getHandNumber()>0){
+                    printTable();//print for status in powershell
+                }
                 player.addHandNumber();
                 discardCards();
                 betSize = getBetSize();
                 dealStartingCards();
                 playerHasHandInPlay = true;
-                printTable(); //debug
                 playerHasBlackjack = player.blackjackCheck();
                 dealerShowsAce = dealerShowsAce();
                 if (dealerShowsAce){  
