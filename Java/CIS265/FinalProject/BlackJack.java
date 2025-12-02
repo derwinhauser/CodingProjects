@@ -3,12 +3,18 @@ import java.io.FileWriter;
 public class BlackJack{
     public static void main(String args[]) throws IOException{
         FileWriter writer = new FileWriter("blackjackResults.csv", false);
-        FileWriter writer1 = new FileWriter("blackjackData.txt", false);
-        FileWriter writer2 = new FileWriter("blackjackData2.txt", false);
+        FileWriter handData = new FileWriter("handData.txt", false);
+        FileWriter aceData = new FileWriter("aceData.txt", false);
+        FileWriter doubleData = new FileWriter("doubleData.txt", false);
+        FileWriter splitData = new FileWriter("splitData.txt", false);
+        FileWriter payData = new FileWriter("payData.txt", false);
         Table table = new Table(4);// input deck size
-        table.playShoe(2000);//input how many shoes to play
+        table.playShoe(1000);//input how many shoes to play
         writer.close();
-        writer1.close();
-        writer2.close();
+        handData.close();
+        aceData.close();
+        doubleData.close();
+        splitData.close();
+        payData.close();
     }
 }

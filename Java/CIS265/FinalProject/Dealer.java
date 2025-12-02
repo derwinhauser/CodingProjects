@@ -27,6 +27,9 @@ public class Dealer{
 
     public boolean blackjackCheck(){
         Hand dealerHand = getHand();
+        if (dealerHand.getSize()!=2){
+            return false;
+        }
         if (dealerHand.totalHand()==21){
             return true;
         }
