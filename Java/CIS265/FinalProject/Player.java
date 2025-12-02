@@ -1,4 +1,6 @@
+import java.io.IOException;
 import java.util.ArrayList;
+import java.io.FileWriter;
 
 public class Player{
     private ArrayList <Hand> hands;
@@ -57,6 +59,9 @@ public class Player{
     
     public boolean blackjackCheck(){
         Hand playerHand = getHand(0);
+        if (playerHand.getSize()!=2){
+            return false;
+        }
         if (playerHand.totalHand()==21){
             return true;
         }
@@ -81,7 +86,8 @@ public class Player{
         }
     }
 
-    public void splitHand(int i){
+    public void splitHand(int i)throws IOException{
+        FileWriter splitData = new FileWriter("splitData.txt", true);
         int newHandNumber = hands.size();//new hand
         addHand();//create new hand
         Hand currentHand = getHand(i);//curent hand
@@ -91,5 +97,10 @@ public class Player{
         newHand.addCard(tempCard);//add card to new hand
         setHand(currentHand, i);
         setHand(newHand, newHandNumber);
+        String symbol = tempCard.getSymbol();
+        int handNumber = getHandNumber();
+        splitData.write("Hand Number: " + handNumber + "\n");
+        splitData.write("Player split " + symbol + " on hand number " + i + "\n");
+        splitData.close();
     }
 }

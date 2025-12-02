@@ -24,6 +24,10 @@ public class Hand{
         betWasDoubled = b;
     }
 
+    public boolean getBetWasDoubled(){
+        return betWasDoubled;
+    }
+
     public String getResult(){
         return result;
     }

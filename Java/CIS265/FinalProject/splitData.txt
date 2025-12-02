@@ -1,0 +1,1226 @@
+Hand Number: 47
+Player split 6 on hand number 0
+Hand Number: 49
+Player split A on hand number 0
+Hand Number: 81
+Player split A on hand number 0
+Hand Number: 85
+Player split 7 on hand number 0
+Hand Number: 110
+Player split A on hand number 0
+Hand Number: 120
+Player split 8 on hand number 0
+Hand Number: 120
+Player split 8 on hand number 0
+Hand Number: 153
+Player split A on hand number 0
+Hand Number: 178
+Player split 6 on hand number 0
+Hand Number: 240
+Player split 3 on hand number 0
+Hand Number: 245
+Player split 2 on hand number 0
+Hand Number: 257
+Player split 7 on hand number 0
+Hand Number: 265
+Player split 6 on hand number 0
+Hand Number: 265
+Player split 6 on hand number 0
+Hand Number: 334
+Player split 3 on hand number 0
+Hand Number: 379
+Player split 9 on hand number 0
+Hand Number: 440
+Player split J on hand number 0
+Hand Number: 498
+Player split 7 on hand number 0
+Hand Number: 619
+Player split A on hand number 0
+Hand Number: 619
+Player split A on hand number 0
+Hand Number: 654
+Player split 7 on hand number 0
+Hand Number: 706
+Player split 6 on hand number 0
+Hand Number: 730
+Player split 4 on hand number 0
+Hand Number: 760
+Player split 3 on hand number 0
+Hand Number: 852
+Player split 7 on hand number 0
+Hand Number: 1069
+Player split 2 on hand number 0
+Hand Number: 1115
+Player split A on hand number 0
+Hand Number: 1129
+Player split 3 on hand number 0
+Hand Number: 1250
+Player split 8 on hand number 0
+Hand Number: 1333
+Player split 7 on hand number 0
+Hand Number: 1364
+Player split 10 on hand number 0
+Hand Number: 1385
+Player split A on hand number 0
+Hand Number: 1430
+Player split 7 on hand number 0
+Hand Number: 1458
+Player split 8 on hand number 0
+Hand Number: 1594
+Player split 3 on hand number 0
+Hand Number: 1634
+Player split A on hand number 0
+Hand Number: 1727
+Player split A on hand number 0
+Hand Number: 1754
+Player split 8 on hand number 0
+Hand Number: 1784
+Player split 6 on hand number 0
+Hand Number: 1785
+Player split 7 on hand number 0
+Hand Number: 1801
+Player split 6 on hand number 0
+Hand Number: 1919
+Player split A on hand number 0
+Hand Number: 2006
+Player split 3 on hand number 0
+Hand Number: 2014
+Player split 8 on hand number 0
+Hand Number: 2017
+Player split 9 on hand number 0
+Hand Number: 2050
+Player split 2 on hand number 0
+Hand Number: 2166
+Player split 2 on hand number 0
+Hand Number: 2276
+Player split 7 on hand number 0
+Hand Number: 2308
+Player split 2 on hand number 0
+Hand Number: 2325
+Player split 2 on hand number 0
+Hand Number: 2395
+Player split A on hand number 0
+Hand Number: 2530
+Player split 9 on hand number 0
+Hand Number: 2543
+Player split 2 on hand number 0
+Hand Number: 2574
+Player split A on hand number 0
+Hand Number: 2616
+Player split A on hand number 0
+Hand Number: 2835
+Player split 2 on hand number 0
+Hand Number: 2850
+Player split 8 on hand number 0
+Hand Number: 2856
+Player split A on hand number 0
+Hand Number: 2871
+Player split 8 on hand number 0
+Hand Number: 2897
+Player split A on hand number 0
+Hand Number: 2922
+Player split A on hand number 0
+Hand Number: 2940
+Player split 2 on hand number 0
+Hand Number: 2940
+Player split 2 on hand number 0
+Hand Number: 2955
+Player split 6 on hand number 0
+Hand Number: 2979
+Player split 3 on hand number 0
+Hand Number: 3027
+Player split 8 on hand number 0
+Hand Number: 3037
+Player split 8 on hand number 0
+Hand Number: 3059
+Player split 7 on hand number 0
+Hand Number: 3089
+Player split A on hand number 0
+Hand Number: 3091
+Player split 9 on hand number 0
+Hand Number: 3109
+Player split A on hand number 0
+Hand Number: 3118
+Player split A on hand number 0
+Hand Number: 3138
+Player split 2 on hand number 0
+Hand Number: 3177
+Player split A on hand number 0
+Hand Number: 3210
+Player split 8 on hand number 0
+Hand Number: 3210
+Player split 8 on hand number 0
+Hand Number: 3219
+Player split A on hand number 0
+Hand Number: 3254
+Player split 2 on hand number 0
+Hand Number: 3288
+Player split 8 on hand number 0
+Hand Number: 3330
+Player split 6 on hand number 0
+Hand Number: 3383
+Player split 6 on hand number 0
+Hand Number: 3423
+Player split A on hand number 0
+Hand Number: 3430
+Player split A on hand number 0
+Hand Number: 3445
+Player split 9 on hand number 0
+Hand Number: 3445
+Player split 9 on hand number 0
+Hand Number: 3541
+Player split A on hand number 0
+Hand Number: 3619
+Player split 2 on hand number 0
+Hand Number: 3651
+Player split 6 on hand number 0
+Hand Number: 3661
+Player split 4 on hand number 0
+Hand Number: 3684
+Player split 7 on hand number 0
+Hand Number: 3698
+Player split 8 on hand number 0
+Hand Number: 3713
+Player split A on hand number 0
+Hand Number: 3732
+Player split 8 on hand number 0
+Hand Number: 3781
+Player split 9 on hand number 0
+Hand Number: 3829
+Player split A on hand number 0
+Hand Number: 3874
+Player split A on hand number 0
+Hand Number: 3898
+Player split 9 on hand number 0
+Hand Number: 3915
+Player split 3 on hand number 0
+Hand Number: 4071
+Player split 7 on hand number 0
+Hand Number: 4076
+Player split 8 on hand number 0
+Hand Number: 4156
+Player split A on hand number 0
+Hand Number: 4161
+Player split 8 on hand number 0
+Hand Number: 4194
+Player split A on hand number 0
+Hand Number: 4194
+Player split A on hand number 0
+Hand Number: 4260
+Player split 3 on hand number 0
+Hand Number: 4276
+Player split 3 on hand number 0
+Hand Number: 4276
+Player split 3 on hand number 0
+Hand Number: 4340
+Player split A on hand number 0
+Hand Number: 4374
+Player split A on hand number 0
+Hand Number: 4374
+Player split A on hand number 0
+Hand Number: 4374
+Player split A on hand number 0
+Hand Number: 4554
+Player split 8 on hand number 0
+Hand Number: 4640
+Player split A on hand number 0
+Hand Number: 4669
+Player split 8 on hand number 0
+Hand Number: 4742
+Player split 3 on hand number 0
+Hand Number: 4836
+Player split 9 on hand number 0
+Hand Number: 4837
+Player split 8 on hand number 0
+Hand Number: 4903
+Player split A on hand number 0
+Hand Number: 4903
+Player split A on hand number 0
+Hand Number: 4907
+Player split 3 on hand number 0
+Hand Number: 5064
+Player split 9 on hand number 0
+Hand Number: 5085
+Player split 2 on hand number 0
+Hand Number: 5085
+Player split 2 on hand number 0
+Hand Number: 5140
+Player split 8 on hand number 0
+Hand Number: 5152
+Player split K on hand number 0
+Hand Number: 5152
+Player split J on hand number 0
+Hand Number: 5152
+Player split 10 on hand number 0
+Hand Number: 5237
+Player split 8 on hand number 0
+Hand Number: 5242
+Player split 6 on hand number 0
+Hand Number: 5276
+Player split 6 on hand number 0
+Hand Number: 5345
+Player split 2 on hand number 0
+Hand Number: 5411
+Player split A on hand number 0
+Hand Number: 5553
+Player split 6 on hand number 0
+Hand Number: 5615
+Player split 9 on hand number 0
+Hand Number: 5639
+Player split A on hand number 0
+Hand Number: 5656
+Player split A on hand number 0
+Hand Number: 5698
+Player split 8 on hand number 0
+Hand Number: 5711
+Player split 2 on hand number 0
+Hand Number: 5714
+Player split 2 on hand number 0
+Hand Number: 5722
+Player split 8 on hand number 0
+Hand Number: 5763
+Player split A on hand number 0
+Hand Number: 5797
+Player split 8 on hand number 0
+Hand Number: 5968
+Player split 7 on hand number 0
+Hand Number: 6017
+Player split 8 on hand number 0
+Hand Number: 6097
+Player split 8 on hand number 0
+Hand Number: 6162
+Player split 6 on hand number 0
+Hand Number: 6180
+Player split A on hand number 0
+Hand Number: 6181
+Player split 2 on hand number 0
+Hand Number: 6236
+Player split A on hand number 0
+Hand Number: 6302
+Player split 7 on hand number 0
+Hand Number: 6384
+Player split A on hand number 0
+Hand Number: 6384
+Player split A on hand number 0
+Hand Number: 6415
+Player split 3 on hand number 0
+Hand Number: 6426
+Player split 4 on hand number 0
+Hand Number: 6464
+Player split 8 on hand number 0
+Hand Number: 6493
+Player split 8 on hand number 0
+Hand Number: 6512
+Player split 8 on hand number 0
+Hand Number: 6542
+Player split 3 on hand number 0
+Hand Number: 6564
+Player split A on hand number 0
+Hand Number: 6574
+Player split 9 on hand number 0
+Hand Number: 6602
+Player split 3 on hand number 0
+Hand Number: 6602
+Player split 3 on hand number 0
+Hand Number: 6700
+Player split 6 on hand number 0
+Hand Number: 6710
+Player split 8 on hand number 0
+Hand Number: 6726
+Player split 2 on hand number 0
+Hand Number: 6763
+Player split A on hand number 0
+Hand Number: 6765
+Player split 4 on hand number 0
+Hand Number: 6765
+Player split 4 on hand number 0
+Hand Number: 6852
+Player split 8 on hand number 0
+Hand Number: 6871
+Player split A on hand number 0
+Hand Number: 6895
+Player split 3 on hand number 0
+Hand Number: 6911
+Player split 7 on hand number 0
+Hand Number: 6911
+Player split 7 on hand number 0
+Hand Number: 6952
+Player split A on hand number 0
+Hand Number: 6988
+Player split A on hand number 0
+Hand Number: 7065
+Player split 7 on hand number 0
+Hand Number: 7114
+Player split A on hand number 0
+Hand Number: 7145
+Player split 3 on hand number 0
+Hand Number: 7169
+Player split 7 on hand number 0
+Hand Number: 7177
+Player split 8 on hand number 0
+Hand Number: 7203
+Player split A on hand number 0
+Hand Number: 7204
+Player split 8 on hand number 0
+Hand Number: 7255
+Player split 2 on hand number 0
+Hand Number: 7317
+Player split 8 on hand number 0
+Hand Number: 7406
+Player split 8 on hand number 0
+Hand Number: 7442
+Player split 6 on hand number 0
+Hand Number: 7458
+Player split 2 on hand number 0
+Hand Number: 7490
+Player split 9 on hand number 0
+Hand Number: 7508
+Player split A on hand number 0
+Hand Number: 7509
+Player split A on hand number 0
+Hand Number: 7626
+Player split 8 on hand number 0
+Hand Number: 7629
+Player split 7 on hand number 0
+Hand Number: 7641
+Player split 7 on hand number 0
+Hand Number: 7656
+Player split A on hand number 0
+Hand Number: 7656
+Player split A on hand number 0
+Hand Number: 7797
+Player split 3 on hand number 0
+Hand Number: 7810
+Player split 3 on hand number 0
+Hand Number: 7817
+Player split 8 on hand number 0
+Hand Number: 7826
+Player split 2 on hand number 0
+Hand Number: 7836
+Player split 3 on hand number 0
+Hand Number: 7868
+Player split 8 on hand number 0
+Hand Number: 7888
+Player split 3 on hand number 0
+Hand Number: 7935
+Player split 9 on hand number 0
+Hand Number: 7943
+Player split A on hand number 0
+Hand Number: 7943
+Player split A on hand number 0
+Hand Number: 7948
+Player split 6 on hand number 0
+Hand Number: 7982
+Player split 4 on hand number 0
+Hand Number: 8067
+Player split 3 on hand number 0
+Hand Number: 8138
+Player split A on hand number 0
+Hand Number: 8157
+Player split 7 on hand number 0
+Hand Number: 8197
+Player split 2 on hand number 0
+Hand Number: 8204
+Player split 4 on hand number 0
+Hand Number: 8207
+Player split A on hand number 0
+Hand Number: 8207
+Player split A on hand number 0
+Hand Number: 8230
+Player split 8 on hand number 0
+Hand Number: 8294
+Player split 6 on hand number 0
+Hand Number: 8300
+Player split 9 on hand number 0
+Hand Number: 8306
+Player split 9 on hand number 0
+Hand Number: 8311
+Player split 9 on hand number 0
+Hand Number: 8311
+Player split 9 on hand number 0
+Hand Number: 8327
+Player split 7 on hand number 0
+Hand Number: 8340
+Player split 6 on hand number 0
+Hand Number: 8399
+Player split A on hand number 0
+Hand Number: 8399
+Player split A on hand number 0
+Hand Number: 8411
+Player split A on hand number 0
+Hand Number: 8414
+Player split 8 on hand number 0
+Hand Number: 8482
+Player split 6 on hand number 0
+Hand Number: 8530
+Player split 9 on hand number 0
+Hand Number: 8530
+Player split 9 on hand number 0
+Hand Number: 8534
+Player split 6 on hand number 0
+Hand Number: 8534
+Player split 6 on hand number 0
+Hand Number: 8579
+Player split 7 on hand number 0
+Hand Number: 8704
+Player split 9 on hand number 0
+Hand Number: 8736
+Player split 9 on hand number 0
+Hand Number: 8741
+Player split 3 on hand number 0
+Hand Number: 8803
+Player split 8 on hand number 0
+Hand Number: 8881
+Player split 7 on hand number 0
+Hand Number: 8887
+Player split A on hand number 0
+Hand Number: 8921
+Player split A on hand number 0
+Hand Number: 8934
+Player split 9 on hand number 0
+Hand Number: 8947
+Player split A on hand number 0
+Hand Number: 8964
+Player split A on hand number 0
+Hand Number: 8980
+Player split 7 on hand number 0
+Hand Number: 9077
+Player split 8 on hand number 0
+Hand Number: 9080
+Player split 7 on hand number 0
+Hand Number: 9145
+Player split 2 on hand number 0
+Hand Number: 9159
+Player split 8 on hand number 0
+Hand Number: 9221
+Player split 8 on hand number 0
+Hand Number: 9229
+Player split 2 on hand number 0
+Hand Number: 9303
+Player split 8 on hand number 0
+Hand Number: 9397
+Player split 3 on hand number 0
+Hand Number: 9450
+Player split 2 on hand number 0
+Hand Number: 9484
+Player split 7 on hand number 0
+Hand Number: 9484
+Player split 7 on hand number 0
+Hand Number: 9485
+Player split 7 on hand number 0
+Hand Number: 9488
+Player split 8 on hand number 0
+Hand Number: 9519
+Player split 9 on hand number 0
+Hand Number: 9532
+Player split A on hand number 0
+Hand Number: 9533
+Player split 2 on hand number 0
+Hand Number: 9537
+Player split 8 on hand number 0
+Hand Number: 9563
+Player split A on hand number 0
+Hand Number: 9565
+Player split 3 on hand number 0
+Hand Number: 9635
+Player split 8 on hand number 0
+Hand Number: 9674
+Player split 2 on hand number 0
+Hand Number: 9801
+Player split 6 on hand number 0
+Hand Number: 9816
+Player split 9 on hand number 0
+Hand Number: 9821
+Player split 7 on hand number 0
+Hand Number: 9834
+Player split A on hand number 0
+Hand Number: 9878
+Player split A on hand number 0
+Hand Number: 9970
+Player split 8 on hand number 0
+Hand Number: 9995
+Player split 8 on hand number 0
+Hand Number: 10005
+Player split 7 on hand number 0
+Hand Number: 10052
+Player split 2 on hand number 0
+Hand Number: 10119
+Player split A on hand number 0
+Hand Number: 10122
+Player split 6 on hand number 0
+Hand Number: 10136
+Player split 9 on hand number 0
+Hand Number: 10143
+Player split A on hand number 0
+Hand Number: 10158
+Player split 8 on hand number 0
+Hand Number: 10173
+Player split 9 on hand number 0
+Hand Number: 10295
+Player split 9 on hand number 0
+Hand Number: 10321
+Player split A on hand number 0
+Hand Number: 10332
+Player split 7 on hand number 0
+Hand Number: 10365
+Player split 9 on hand number 0
+Hand Number: 10381
+Player split 2 on hand number 0
+Hand Number: 10394
+Player split A on hand number 0
+Hand Number: 10506
+Player split A on hand number 0
+Hand Number: 10508
+Player split 2 on hand number 0
+Hand Number: 10514
+Player split 8 on hand number 0
+Hand Number: 10568
+Player split 2 on hand number 0
+Hand Number: 10609
+Player split 3 on hand number 0
+Hand Number: 10609
+Player split 3 on hand number 0
+Hand Number: 10628
+Player split 8 on hand number 0
+Hand Number: 10628
+Player split 8 on hand number 0
+Hand Number: 10640
+Player split 6 on hand number 0
+Hand Number: 10687
+Player split A on hand number 0
+Hand Number: 10765
+Player split 6 on hand number 0
+Hand Number: 10794
+Player split 3 on hand number 0
+Hand Number: 10862
+Player split 2 on hand number 0
+Hand Number: 10867
+Player split A on hand number 0
+Hand Number: 10868
+Player split 7 on hand number 0
+Hand Number: 10925
+Player split A on hand number 0
+Hand Number: 10960
+Player split 8 on hand number 0
+Hand Number: 10970
+Player split 9 on hand number 0
+Hand Number: 11016
+Player split 8 on hand number 0
+Hand Number: 11034
+Player split 9 on hand number 0
+Hand Number: 11039
+Player split 9 on hand number 0
+Hand Number: 11080
+Player split A on hand number 0
+Hand Number: 11125
+Player split A on hand number 0
+Hand Number: 11234
+Player split 8 on hand number 0
+Hand Number: 11295
+Player split A on hand number 0
+Hand Number: 11296
+Player split 2 on hand number 0
+Hand Number: 11296
+Player split 2 on hand number 0
+Hand Number: 11313
+Player split 3 on hand number 0
+Hand Number: 11390
+Player split 3 on hand number 0
+Hand Number: 11500
+Player split A on hand number 0
+Hand Number: 11523
+Player split A on hand number 0
+Hand Number: 11553
+Player split A on hand number 0
+Hand Number: 11569
+Player split 8 on hand number 0
+Hand Number: 11571
+Player split 9 on hand number 0
+Hand Number: 11608
+Player split A on hand number 0
+Hand Number: 11641
+Player split 8 on hand number 0
+Hand Number: 11673
+Player split 3 on hand number 0
+Hand Number: 11731
+Player split 6 on hand number 0
+Hand Number: 11757
+Player split A on hand number 0
+Hand Number: 11769
+Player split 7 on hand number 0
+Hand Number: 11814
+Player split 2 on hand number 0
+Hand Number: 11814
+Player split 2 on hand number 0
+Hand Number: 11831
+Player split 8 on hand number 0
+Hand Number: 11857
+Player split 6 on hand number 0
+Hand Number: 11973
+Player split 7 on hand number 0
+Hand Number: 11974
+Player split A on hand number 0
+Hand Number: 11986
+Player split A on hand number 0
+Hand Number: 12025
+Player split A on hand number 0
+Hand Number: 12115
+Player split 8 on hand number 0
+Hand Number: 12187
+Player split A on hand number 0
+Hand Number: 12203
+Player split 2 on hand number 0
+Hand Number: 12215
+Player split 6 on hand number 0
+Hand Number: 12234
+Player split A on hand number 0
+Hand Number: 12248
+Player split 2 on hand number 0
+Hand Number: 12248
+Player split 2 on hand number 0
+Hand Number: 12278
+Player split A on hand number 0
+Hand Number: 12417
+Player split A on hand number 0
+Hand Number: 12417
+Player split A on hand number 0
+Hand Number: 12429
+Player split 4 on hand number 0
+Hand Number: 12484
+Player split 2 on hand number 0
+Hand Number: 12670
+Player split 8 on hand number 0
+Hand Number: 12670
+Player split 8 on hand number 0
+Hand Number: 12674
+Player split 7 on hand number 0
+Hand Number: 12724
+Player split 8 on hand number 0
+Hand Number: 12750
+Player split 2 on hand number 0
+Hand Number: 12891
+Player split 6 on hand number 0
+Hand Number: 12923
+Player split 7 on hand number 0
+Hand Number: 12954
+Player split 4 on hand number 0
+Hand Number: 12973
+Player split 7 on hand number 0
+Hand Number: 12982
+Player split A on hand number 0
+Hand Number: 13092
+Player split A on hand number 0
+Hand Number: 13097
+Player split 9 on hand number 0
+Hand Number: 13101
+Player split 3 on hand number 0
+Hand Number: 13118
+Player split 8 on hand number 0
+Hand Number: 13155
+Player split 6 on hand number 0
+Hand Number: 13157
+Player split A on hand number 0
+Hand Number: 13172
+Player split 8 on hand number 0
+Hand Number: 13178
+Player split 2 on hand number 0
+Hand Number: 13250
+Player split 9 on hand number 0
+Hand Number: 13281
+Player split 6 on hand number 0
+Hand Number: 13290
+Player split 7 on hand number 0
+Hand Number: 13317
+Player split 9 on hand number 0
+Hand Number: 13321
+Player split 9 on hand number 0
+Hand Number: 13333
+Player split 2 on hand number 0
+Hand Number: 13364
+Player split 2 on hand number 0
+Hand Number: 13425
+Player split 8 on hand number 0
+Hand Number: 13446
+Player split A on hand number 0
+Hand Number: 13489
+Player split 8 on hand number 0
+Hand Number: 13569
+Player split 3 on hand number 0
+Hand Number: 13599
+Player split 8 on hand number 0
+Hand Number: 13676
+Player split 8 on hand number 0
+Hand Number: 13739
+Player split 8 on hand number 0
+Hand Number: 13746
+Player split 8 on hand number 0
+Hand Number: 13758
+Player split A on hand number 0
+Hand Number: 13818
+Player split 6 on hand number 0
+Hand Number: 13843
+Player split 6 on hand number 0
+Hand Number: 13900
+Player split A on hand number 0
+Hand Number: 13958
+Player split 9 on hand number 0
+Hand Number: 13979
+Player split 9 on hand number 0
+Hand Number: 14036
+Player split A on hand number 0
+Hand Number: 14098
+Player split 3 on hand number 0
+Hand Number: 14098
+Player split 3 on hand number 0
+Hand Number: 14140
+Player split 6 on hand number 0
+Hand Number: 14141
+Player split 9 on hand number 0
+Hand Number: 14166
+Player split 3 on hand number 0
+Hand Number: 14170
+Player split 2 on hand number 0
+Hand Number: 14188
+Player split 3 on hand number 0
+Hand Number: 14303
+Player split 8 on hand number 0
+Hand Number: 14312
+Player split 7 on hand number 0
+Hand Number: 14360
+Player split 8 on hand number 0
+Hand Number: 14452
+Player split A on hand number 0
+Hand Number: 14504
+Player split 3 on hand number 0
+Hand Number: 14538
+Player split 3 on hand number 0
+Hand Number: 14589
+Player split 6 on hand number 0
+Hand Number: 14598
+Player split A on hand number 0
+Hand Number: 14602
+Player split A on hand number 0
+Hand Number: 14684
+Player split 8 on hand number 0
+Hand Number: 14706
+Player split 4 on hand number 0
+Hand Number: 14775
+Player split 8 on hand number 0
+Hand Number: 14802
+Player split 8 on hand number 0
+Hand Number: 14802
+Player split 8 on hand number 0
+Hand Number: 14814
+Player split A on hand number 0
+Hand Number: 14918
+Player split 3 on hand number 0
+Hand Number: 14949
+Player split 3 on hand number 0
+Hand Number: 15004
+Player split A on hand number 0
+Hand Number: 15024
+Player split 3 on hand number 0
+Hand Number: 15063
+Player split 9 on hand number 0
+Hand Number: 15113
+Player split 8 on hand number 0
+Hand Number: 15133
+Player split A on hand number 0
+Hand Number: 15138
+Player split A on hand number 0
+Hand Number: 15188
+Player split 7 on hand number 0
+Hand Number: 15216
+Player split A on hand number 0
+Hand Number: 15288
+Player split 3 on hand number 0
+Hand Number: 15312
+Player split 8 on hand number 0
+Hand Number: 15332
+Player split A on hand number 0
+Hand Number: 15383
+Player split 8 on hand number 0
+Hand Number: 15555
+Player split 8 on hand number 0
+Hand Number: 15555
+Player split 8 on hand number 0
+Hand Number: 15582
+Player split 7 on hand number 0
+Hand Number: 15602
+Player split 2 on hand number 0
+Hand Number: 15713
+Player split 8 on hand number 0
+Hand Number: 15767
+Player split A on hand number 0
+Hand Number: 15791
+Player split 7 on hand number 0
+Hand Number: 15874
+Player split 7 on hand number 0
+Hand Number: 15883
+Player split 8 on hand number 0
+Hand Number: 15921
+Player split 3 on hand number 0
+Hand Number: 15923
+Player split 6 on hand number 0
+Hand Number: 16020
+Player split 8 on hand number 0
+Hand Number: 16090
+Player split 3 on hand number 0
+Hand Number: 16223
+Player split 8 on hand number 0
+Hand Number: 16231
+Player split 9 on hand number 0
+Hand Number: 16242
+Player split 9 on hand number 0
+Hand Number: 16245
+Player split 6 on hand number 0
+Hand Number: 16303
+Player split A on hand number 0
+Hand Number: 16308
+Player split 8 on hand number 0
+Hand Number: 16342
+Player split 7 on hand number 0
+Hand Number: 16429
+Player split 9 on hand number 0
+Hand Number: 16430
+Player split 8 on hand number 0
+Hand Number: 16432
+Player split 4 on hand number 0
+Hand Number: 16522
+Player split 6 on hand number 0
+Hand Number: 16529
+Player split 8 on hand number 0
+Hand Number: 16701
+Player split 9 on hand number 0
+Hand Number: 16725
+Player split A on hand number 0
+Hand Number: 16748
+Player split A on hand number 0
+Hand Number: 16786
+Player split 3 on hand number 0
+Hand Number: 16815
+Player split A on hand number 0
+Hand Number: 16833
+Player split 2 on hand number 0
+Hand Number: 16846
+Player split 9 on hand number 0
+Hand Number: 16859
+Player split 9 on hand number 0
+Hand Number: 16911
+Player split 2 on hand number 0
+Hand Number: 16926
+Player split J on hand number 0
+Hand Number: 16926
+Player split 10 on hand number 0
+Hand Number: 16926
+Player split Q on hand number 0
+Hand Number: 16991
+Player split 6 on hand number 0
+Hand Number: 17014
+Player split 9 on hand number 0
+Hand Number: 17027
+Player split 6 on hand number 0
+Hand Number: 17036
+Player split A on hand number 0
+Hand Number: 17082
+Player split 6 on hand number 0
+Hand Number: 17151
+Player split 8 on hand number 0
+Hand Number: 17174
+Player split 6 on hand number 0
+Hand Number: 17229
+Player split 8 on hand number 0
+Hand Number: 17244
+Player split 9 on hand number 0
+Hand Number: 17275
+Player split A on hand number 0
+Hand Number: 17298
+Player split A on hand number 0
+Hand Number: 17368
+Player split 2 on hand number 0
+Hand Number: 17458
+Player split 8 on hand number 0
+Hand Number: 17474
+Player split 3 on hand number 0
+Hand Number: 17495
+Player split 8 on hand number 0
+Hand Number: 17515
+Player split 9 on hand number 0
+Hand Number: 17568
+Player split A on hand number 0
+Hand Number: 17584
+Player split 6 on hand number 0
+Hand Number: 17584
+Player split 6 on hand number 0
+Hand Number: 17588
+Player split K on hand number 0
+Hand Number: 17666
+Player split A on hand number 0
+Hand Number: 17708
+Player split 4 on hand number 0
+Hand Number: 17745
+Player split 9 on hand number 0
+Hand Number: 17756
+Player split 8 on hand number 0
+Hand Number: 17761
+Player split 8 on hand number 0
+Hand Number: 17823
+Player split 8 on hand number 0
+Hand Number: 17875
+Player split 3 on hand number 0
+Hand Number: 17929
+Player split 8 on hand number 0
+Hand Number: 18004
+Player split 9 on hand number 0
+Hand Number: 18030
+Player split A on hand number 0
+Hand Number: 18128
+Player split 2 on hand number 0
+Hand Number: 18198
+Player split 2 on hand number 0
+Hand Number: 18205
+Player split A on hand number 0
+Hand Number: 18210
+Player split 4 on hand number 0
+Hand Number: 18367
+Player split A on hand number 0
+Hand Number: 18371
+Player split 7 on hand number 0
+Hand Number: 18440
+Player split 9 on hand number 0
+Hand Number: 18474
+Player split 8 on hand number 0
+Hand Number: 18518
+Player split 8 on hand number 0
+Hand Number: 18531
+Player split 6 on hand number 0
+Hand Number: 18565
+Player split 6 on hand number 0
+Hand Number: 18619
+Player split A on hand number 0
+Hand Number: 18625
+Player split 6 on hand number 0
+Hand Number: 18629
+Player split 9 on hand number 0
+Hand Number: 18669
+Player split 3 on hand number 0
+Hand Number: 18705
+Player split 2 on hand number 0
+Hand Number: 18785
+Player split 8 on hand number 0
+Hand Number: 18785
+Player split 8 on hand number 0
+Hand Number: 18799
+Player split 7 on hand number 0
+Hand Number: 18873
+Player split A on hand number 0
+Hand Number: 18873
+Player split A on hand number 0
+Hand Number: 18876
+Player split 9 on hand number 0
+Hand Number: 19053
+Player split 8 on hand number 0
+Hand Number: 19053
+Player split 8 on hand number 0
+Hand Number: 19057
+Player split 7 on hand number 0
+Hand Number: 19111
+Player split 9 on hand number 0
+Hand Number: 19135
+Player split 7 on hand number 0
+Hand Number: 19179
+Player split 2 on hand number 0
+Hand Number: 19250
+Player split 2 on hand number 0
+Hand Number: 19354
+Player split 7 on hand number 0
+Hand Number: 19367
+Player split 4 on hand number 0
+Hand Number: 19367
+Player split 4 on hand number 0
+Hand Number: 19452
+Player split 2 on hand number 0
+Hand Number: 19458
+Player split A on hand number 0
+Hand Number: 19461
+Player split 8 on hand number 0
+Hand Number: 19552
+Player split 8 on hand number 0
+Hand Number: 19596
+Player split 8 on hand number 0
+Hand Number: 19760
+Player split 8 on hand number 0
+Hand Number: 19819
+Player split 8 on hand number 0
+Hand Number: 19871
+Player split 8 on hand number 0
+Hand Number: 19894
+Player split A on hand number 0
+Hand Number: 19894
+Player split A on hand number 0
+Hand Number: 19895
+Player split 6 on hand number 0
+Hand Number: 19899
+Player split K on hand number 0
+Hand Number: 19921
+Player split 6 on hand number 0
+Hand Number: 19953
+Player split 6 on hand number 0
+Hand Number: 19970
+Player split 8 on hand number 0
+Hand Number: 19980
+Player split 6 on hand number 0
+Hand Number: 20057
+Player split 9 on hand number 0
+Hand Number: 20071
+Player split A on hand number 0
+Hand Number: 20107
+Player split K on hand number 0
+Hand Number: 20107
+Player split 10 on hand number 0
+Hand Number: 20157
+Player split 6 on hand number 0
+Hand Number: 20253
+Player split 3 on hand number 0
+Hand Number: 20253
+Player split 3 on hand number 0
+Hand Number: 20254
+Player split 9 on hand number 0
+Hand Number: 20442
+Player split 8 on hand number 0
+Hand Number: 20469
+Player split A on hand number 0
+Hand Number: 20487
+Player split A on hand number 0
+Hand Number: 20504
+Player split 8 on hand number 0
+Hand Number: 20619
+Player split A on hand number 0
+Hand Number: 20690
+Player split 9 on hand number 0
+Hand Number: 20695
+Player split 6 on hand number 0
+Hand Number: 20742
+Player split A on hand number 0
+Hand Number: 20799
+Player split 8 on hand number 0
+Hand Number: 20817
+Player split 7 on hand number 0
+Hand Number: 20836
+Player split 6 on hand number 0
+Hand Number: 20861
+Player split 9 on hand number 0
+Hand Number: 20874
+Player split 6 on hand number 0
+Hand Number: 20907
+Player split 6 on hand number 0
+Hand Number: 20917
+Player split 9 on hand number 0
+Hand Number: 20926
+Player split A on hand number 0
+Hand Number: 21004
+Player split 6 on hand number 0
+Hand Number: 21023
+Player split 10 on hand number 0
+Hand Number: 21100
+Player split 3 on hand number 0
+Hand Number: 21132
+Player split 9 on hand number 0
+Hand Number: 21149
+Player split A on hand number 0
+Hand Number: 21211
+Player split A on hand number 0
+Hand Number: 21303
+Player split 9 on hand number 0
+Hand Number: 21321
+Player split 3 on hand number 0
+Hand Number: 21418
+Player split 8 on hand number 0
+Hand Number: 21428
+Player split A on hand number 0
+Hand Number: 21511
+Player split 7 on hand number 0
+Hand Number: 21529
+Player split A on hand number 0
+Hand Number: 21577
+Player split A on hand number 0
+Hand Number: 21611
+Player split 2 on hand number 0
+Hand Number: 21690
+Player split 9 on hand number 0
+Hand Number: 21767
+Player split 7 on hand number 0
+Hand Number: 21950
+Player split 8 on hand number 0
+Hand Number: 21969
+Player split 7 on hand number 0
+Hand Number: 22055
+Player split 6 on hand number 0
+Hand Number: 22164
+Player split 7 on hand number 0
+Hand Number: 22177
+Player split 2 on hand number 0
+Hand Number: 22283
+Player split 9 on hand number 0
+Hand Number: 22294
+Player split 2 on hand number 0
+Hand Number: 22338
+Player split A on hand number 0
+Hand Number: 22339
+Player split 8 on hand number 0
+Hand Number: 22347
+Player split 9 on hand number 0
+Hand Number: 22431
+Player split 7 on hand number 0
+Hand Number: 22431
+Player split 7 on hand number 0
+Hand Number: 22520
+Player split A on hand number 0
+Hand Number: 22634
+Player split 3 on hand number 0
+Hand Number: 22687
+Player split 9 on hand number 0
+Hand Number: 22724
+Player split K on hand number 0
+Hand Number: 22750
+Player split 6 on hand number 0
+Hand Number: 22759
+Player split A on hand number 0
+Hand Number: 22771
+Player split 8 on hand number 0
+Hand Number: 22795
+Player split 9 on hand number 0
+Hand Number: 22846
+Player split 2 on hand number 0
+Hand Number: 22916
+Player split 9 on hand number 0
+Hand Number: 22928
+Player split A on hand number 0
+Hand Number: 22996
+Player split 9 on hand number 0
+Hand Number: 23046
+Player split 9 on hand number 0
+Hand Number: 23108
+Player split 8 on hand number 0
+Hand Number: 23109
+Player split 7 on hand number 0
+Hand Number: 23132
+Player split 3 on hand number 0
+Hand Number: 23152
+Player split 8 on hand number 0
+Hand Number: 23186
+Player split A on hand number 0
+Hand Number: 23194
+Player split 6 on hand number 0
+Hand Number: 23244
+Player split 8 on hand number 0
+Hand Number: 23255
+Player split Q on hand number 0
+Hand Number: 23285
+Player split A on hand number 0
+Hand Number: 23294
+Player split A on hand number 0
+Hand Number: 23324
+Player split 9 on hand number 0
+Hand Number: 23343
+Player split 7 on hand number 0

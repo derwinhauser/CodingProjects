@@ -9,8 +9,8 @@ public class Table{
     private Dealer dealer;
     private Player player;
     private int numberOfDecks;
-    
-    public Table(int x){
+
+    public Table(int x)throws IOException{
         numberOfDecks = x;
         shoe = new Deck(x);
         discardTray = new Deck(0);
@@ -148,6 +148,7 @@ public class Table{
         boolean dealerShowsAce = dealerShowsAce();
         boolean playerHasBlackjack = player.blackjackCheck();
         double trueCount = getTrueCount();
+        
         if (dealerShowsAce && !playerHasBlackjack){
             if (trueCount>=3){
             return true;
@@ -180,7 +181,7 @@ public class Table{
     }
 
     public void printTable()throws IOException{
-        FileWriter writer1 = new FileWriter("blackjackData.txt", true);
+        FileWriter handData = new FileWriter("handData.txt", true);
         /*//print bankroll
         double bankroll = player.getBankroll();
         System.out.println("Bankroll: " + bankroll);
@@ -207,16 +208,29 @@ public class Table{
         //print hand number
         int handNumber = player.getHandNumber();
         System.out.println("Hand Number: "+ handNumber);
-        writer1.write("Hand number" + handNumber + "\n");
+        handData.write("Hand number" + handNumber + "\n");
         //print dealer hand
         Hand dealerHand = dealer.getHand();
         System.out.print("Dealer: ");
         dealerHand.printDealerHand();
-        writer1.write("Dealer: " + dealerHand.getDealerHand() + "\n");
-        
         Card dealerUpCard = dealer.getUpCard();
         System.out.println("Dealer UpCard: " + dealerUpCard.getSymbol());
 
+        //write dealer hand for file
+        for (int i=0; i<dealerHand.getSize(); i++){
+            Card tempCard = dealerHand.getCard(i);
+            if (i==0){
+                handData.write("[" + tempCard.getSymbol());
+            }
+            else if(i==1){
+                handData.write("]" + tempCard.getSymbol() +"|");
+            }
+            else{
+                handData.write(tempCard.getSymbol() + " ");
+            }
+            
+        }
+        handData.write("\n");        
         //print player hands
         int numberOfHands = player.getNumberOfHands();
         for (int i=0; i<numberOfHands; i++){
@@ -225,13 +239,13 @@ public class Table{
             int playerTotal = playerHand.totalHand();
             System.out.print("Player: " );
             playerHand.printHand();
-            writer1.write("Player: "+ symbol + "\n");
+            handData.write("Player: "+ symbol + "\n");
             System.out.println();
             System.out.println("player Total: " + playerTotal);
         }
         System.out.println();
-        writer1.write("\n");
-        writer1.close();
+        handData.write("\n");
+        handData.close();
     }
 
     public boolean playerCanSplit(){
@@ -360,6 +374,9 @@ public class Table{
 
     public boolean canPlayerDouble(int i){
         Hand playerHand = player.getHand(i);
+        if (playerHand.getSize()!=2){
+            return false;
+        }
         if (playerHand.getSize()==2){
             if(playerHand.isSoftTotal()){
                 if (player.getNumberOfHands()==1){
@@ -387,6 +404,9 @@ public class Table{
         int handTotal = playerHand.totalHand();
         double trueCount = getTrueCount();
         
+        if(!canPlayerDouble){
+            return false;
+        }
         if(canPlayerDouble){
             if (isSoftTotal){
                 if (handTotal>=19){
@@ -475,13 +495,16 @@ public class Table{
         
     }
 
-    public void doubleHand(int i){
+    public void doubleHand(int i)throws IOException{
+        FileWriter doubleData = new FileWriter("doubleData.txt", true);
         dealNextCard(i);
         Hand playerHand = player.getHand(i);
         playerHand.setBetWasDoubled(true);
         playerHand.setHandIsInPlay(false);
         player.setHand(playerHand, i);
-
+        int handNumber = player.getHandNumber();
+        doubleData.write(handNumber + ". Hand was doubled.\n");
+        doubleData.close();
     }
 
     public boolean doesPlayerHit(int i){
@@ -553,37 +576,47 @@ public class Table{
         Card tempCard = shoe.getCard(randInt);
         //remove card from shoe
         shoe.removeCard(randInt);
-        //add card to player's hand
+        //add card to dealer's hand
         dealerHand.addCard(tempCard);
         //add cards to tableCards variable to track running count without interference from dealer's down card
         tableCards.addCard(tempCard);
-        //update player hand
+        //update dealer's hand
         dealer.setHand(dealerHand);
     }
 
-    public void dealerPlaysHand(){
+    public void dealerPlaysHand()throws IOException{
         Hand dealerHand = dealer.getHand();
+        if (dealerHand.getSize()!=2){
+        }
         int dealerTotal = dealerHand.totalHand();
-        while(dealerTotal<17){
-            dealerHand = dealer.getHand();
-            dealerTotal = dealerHand.totalHand();
-            dealerTakesCard();
+        while(true){
+            if(dealerTotal<17){
+                dealerHand = dealer.getHand();
+                dealerTakesCard();
+                dealerHand = dealer.getHand();
+                dealerTotal = dealerHand.totalHand();
+            }
+            else{
+                break;
+            }
         }
     }
 
     public void winCheck(){
+        Hand dealerHand = dealer.getHand();
+        Hand playerHand;
+        int playerTotal;
+        int dealerTotal = dealerHand.totalHand();
         for (int i=0; i<player.getNumberOfHands(); i++){
-            Hand dealerHand = dealer.getHand();
-            Hand playerHand = player.getHand(i);
-            int playerTotal = playerHand.totalHand();
-            int dealerTotal = dealerHand.totalHand();
+            playerHand = player.getHand(i);
+            playerTotal = playerHand.totalHand(); 
             if(playerTotal>21){
                 playerHand.setResult("loss");
             }
             else if(dealerTotal>21 && playerTotal<=21){
                 playerHand.setResult("win");
             }
-            else if(playerTotal>dealerTotal){
+            else if(playerTotal>dealerTotal && playerTotal<=21){
                 playerHand.setResult("win");
             }
             else if(playerTotal<dealerTotal && dealerTotal<=21){
@@ -596,28 +629,59 @@ public class Table{
         }
     }
 
-    public void payPlayer(){
+    public void payPlayer()throws IOException{
+        FileWriter payData = new FileWriter("payData.txt", true);
         int betSize = player.getBetSize();
         double bankroll = player.getBankroll();
+        Hand playerHand;
+        String result;
+        int handNumber = player.getHandNumber();
+        payData.write("\n Hand number: " + handNumber + "\n");
         for (int i=0; i<player.getNumberOfHands(); i++){
-            Hand playerHand = player.getHand(i);
-            String result = playerHand.getResult();
+            playerHand = player.getHand(i);
+            result = playerHand.getResult();
             if (result.equals("win")){
-                bankroll = bankroll + betSize;
-                
+                if (playerHand.getBetWasDoubled()){
+                    bankroll = player.getBankroll();
+                    bankroll = bankroll + (2*betSize);
+                    player.setBankroll(bankroll);
+                    payData.write("Hand " + i + " was doubled.\n");
+                }
+                else{
+                    bankroll = player.getBankroll();
+                    bankroll = bankroll + betSize;
+                    player.setBankroll(bankroll);
+                }
+                payData.write("Hand " + i + " win.\n");
+                payData.write("bankroll: " + bankroll + "\n");   
             }
             else if(result.equals("loss")){
-                bankroll = bankroll-betSize;
+                if (playerHand.getBetWasDoubled()){
+                    bankroll = player.getBankroll();
+                    bankroll = bankroll-(2*betSize);
+                    player.setBankroll(bankroll);
+                    payData.write("Hand " + i + " was doubled.\n");
+                }
+                else{
+                    bankroll = player.getBankroll();
+                    bankroll = bankroll-betSize;
+                    player.setBankroll(bankroll);
+                }
+                payData.write("Hand " + i + " loss.\n");
+                payData.write("bankroll: " + bankroll + "\n");
             }
             else{
+                bankroll = player.getBankroll();
                 bankroll = bankroll;
+                player.setBankroll(bankroll);
+                payData.write("Hand " + i + " push\n");
+                payData.write("bankroll: " + bankroll + "\n");
             }
         }
-        player.setBankroll(bankroll);
+        payData.close();
     }
 
     public void playHand(int i)throws IOException{
-        FileWriter writer2 = new FileWriter("blackjackData2.txt", true);
         Hand playerHand = player.getHand(i);
         Card dealerUpCard = dealer.getUpCard();
         boolean doesPlayerSplit;
@@ -634,7 +698,6 @@ public class Table{
                 if(doesPlayerSplit){
                     player.splitHand(i);
                     dealNextCard(i);
-                    writer2.write("Player Split Hand.\n");
                 }
                 else{
                     break;
@@ -679,7 +742,7 @@ public class Table{
 
     public void playShoe(int numberOfShoesToPlay) throws IOException{
         // variables
-        FileWriter writer2 = new FileWriter("blackjackData2.txt", true);
+        FileWriter aceData = new FileWriter("aceData.txt", true);
         double bankroll = player.getBankroll();
         int betSize;
         boolean dealerShowsAce;
@@ -687,47 +750,52 @@ public class Table{
         boolean dealerHasBlackjack;
         boolean playerTakesInsurance;
         boolean playerTakesEvenMoney;
-        boolean playerHasHandInPlay;
 
         for(int i=0; i<numberOfShoesToPlay;i++){
             shuffleCards();
-            writer2.write("\n**Shuffle**\n");
             while(shoe.getNumberOfDecks()>1.5){
                 writeToFile();
+                
                 if(player.getHandNumber()>0){
-                    printTable();//print for status in powershell
+                    printTable();//print for status in powershell and writes to file
                 }
                 player.addHandNumber();
+                aceData.write("\n Hand Number: " + player.getHandNumber());
+
                 discardCards();
-                writer2.write("Cards discarded\n");
+                
                 betSize = getBetSize();
+
                 dealStartingCards();
-                writer2.write("\n\n" + (player.getHandNumber()+1) + ".");
-                writer2.write("Starting Cards dealt\n");
-                playerHasHandInPlay = true;
+
                 playerHasBlackjack = player.blackjackCheck();
                 dealerShowsAce = dealerShowsAce();
+
                 if (dealerShowsAce){  
+                    aceData.write("Dealer shows Ace.\n");
                     dealerHasBlackjack = dealer.blackjackCheck();
                     playerTakesInsurance = playerTakesInsurance();
                     
                     if(playerTakesInsurance && !dealerHasBlackjack){
-                        bankroll = bankroll-(0.5*betSize);
+                        double loss = (betSize*0.5);
+                        bankroll = player.getBankroll();
+                        bankroll = (bankroll-loss);
                         player.setBankroll(bankroll);
-                        writer2.write("Player loses insurance bet\n");
+                        aceData.write("Player loses insurance bet. Bankroll: " + bankroll +"\n");
                     }
                     
                     if (playerTakesInsurance && dealerHasBlackjack){
-                        writer2.write("player wins insurance bet\n");
-                        continue;
+                        aceData.write("Player wins insurance bet. Bankroll: " + bankroll +"\n");
+                        continue;                        
                     }
                     
                     playerTakesEvenMoney = playerTakesEvenMoney();
                     
                     if(playerTakesEvenMoney){
+                        bankroll = player.getBankroll();
                         bankroll = bankroll + betSize;
                         player.setBankroll(bankroll);
-                        writer2.write("Player took even money\n");
+                        aceData.write("Player takes even money. Bankroll: " + bankroll + "\n");
                         continue;
                     }
                 }
@@ -736,16 +804,14 @@ public class Table{
                     bankroll = player.getBankroll();
                     bankroll = bankroll + payout;
                     player.setBankroll(bankroll);
-                    writer2.write("Player wins blackjack bet\n");
+                    aceData.write("Player wins with blackjack. Bankroll: " + bankroll + "\n");
                     continue;
                 }
                 else{
-                    writer2.write("No Dealer or player blackjack\n");
                     int handNumber=0;
-                    while(playerHasHandInPlay){
+                    while(playerHasHandInPlay()){
                         playHand(handNumber);
                         handNumber++;
-                        playerHasHandInPlay = playerHasHandInPlay();
                     }
                     dealerPlaysHand();
                     winCheck();
@@ -753,5 +819,6 @@ public class Table{
                 }
             }
         }
+        aceData.close();
     }
 }
