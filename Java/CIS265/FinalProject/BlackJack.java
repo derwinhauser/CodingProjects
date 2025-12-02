@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.FileWriter;
+import java.util.Scanner;
 public class BlackJack{
     public static void main(String args[]) throws IOException{
         FileWriter writer = new FileWriter("blackjackResults.csv", false);
@@ -8,8 +9,20 @@ public class BlackJack{
         FileWriter doubleData = new FileWriter("doubleData.txt", false);
         FileWriter splitData = new FileWriter("splitData.txt", false);
         FileWriter payData = new FileWriter("payData.txt", false);
-        Table table = new Table(4);// input deck size
-        table.playShoe(1000);//input how many shoes to play
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("How many decks are in the shoe?(2-8) ");
+        int shoeSize = sc.nextInt();
+        Table table = new Table(shoeSize);// input deck size
+
+        System.out.print("How many shoes do you want to simulate?(1-10000) ");
+        int numberOfShoes = sc.nextInt();
+        table.playShoe(numberOfShoes);//input how many shoes to play
+
+        System.out.print("What is the starting bankroll? ");
+        double bankroll = sc.nextDouble();
+        table.setPlayerBankroll(bankroll);
+
         writer.close();
         handData.close();
         aceData.close();

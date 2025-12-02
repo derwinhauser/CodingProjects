@@ -19,6 +19,10 @@ public class Table{
         dealer = new Dealer();
     }
 
+    public void setPlayerBankroll(double d){
+        player.setBankroll(d);
+    }
+
     public void shuffleCards(){
         shoe = new Deck(numberOfDecks);
         discardTray = new Deck(0);
