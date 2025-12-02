@@ -9,7 +9,6 @@ public class Player{
     private int handNumber;
     public Player(){
         hands = new ArrayList <Hand>();
-        bankroll = 1000;
         handNumber = 0;
     }
 
