@@ -120,19 +120,19 @@ public class Table{
         int betSize = 0;
         double trueCount = getTrueCount();
         if (trueCount<1){
-            betSize = 5;
-        }
-        else if(trueCount<2){
             betSize = 25;
         }
+        else if(trueCount<2){
+            betSize = 100;
+        }
         else if(trueCount<3){
-            betSize = 50;
+            betSize = 500;
         }
         else if (trueCount<4){
-            betSize = 50;
+            betSize = 100;
         }
         else{
-            betSize = 50;
+            betSize = 25;
         }
         player.setBetSize(betSize);
         return betSize;

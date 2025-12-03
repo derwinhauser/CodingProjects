@@ -19,9 +19,6 @@ public class BlackJack{
         int numberOfShoes = sc.nextInt();
         table.playShoe(numberOfShoes);//input how many shoes to play
 
-        System.out.print("What is the starting bankroll? ");
-        double bankroll = sc.nextDouble();
-        table.setPlayerBankroll(bankroll);
 
         writer.close();
         handData.close();
