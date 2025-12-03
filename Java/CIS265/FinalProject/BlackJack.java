@@ -29,5 +29,6 @@ public class BlackJack{
         doubleData.close();
         splitData.close();
         payData.close();
+        sc.close();
     }
 }

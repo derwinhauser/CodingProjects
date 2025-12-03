@@ -676,7 +676,6 @@ public class Table{
             }
             else{
                 bankroll = player.getBankroll();
-                bankroll = bankroll;
                 player.setBankroll(bankroll);
                 payData.write("Hand " + i + " push\n");
                 payData.write("bankroll: " + bankroll + "\n");
