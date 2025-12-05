@@ -119,20 +119,20 @@ public class Table{
     public int getBetSize(){
         int betSize = 0;
         double trueCount = getTrueCount();
-        if (trueCount<1){
-            betSize = 25;
+        if (trueCount<1){ 
+            betSize = 5; //min bet
         }
         else if(trueCount<2){
-            betSize = 100;
+            betSize = 25; //true 1
         }
         else if(trueCount<3){
-            betSize = 500;
+            betSize = 50; // true 2
         }
         else if (trueCount<4){
-            betSize = 100;
+            betSize = 50; // true 3
         }
         else{
-            betSize = 25;
+            betSize = 50; // true 4 and up (max bet)
         }
         player.setBetSize(betSize);
         return betSize;
@@ -686,7 +686,6 @@ public class Table{
 
     public void playHand(int i)throws IOException{
         Hand playerHand = player.getHand(i);
-        Card dealerUpCard = dealer.getUpCard();
         boolean doesPlayerSplit;
         boolean doesPlayerDouble;
         boolean doesPlayerHit;
@@ -756,7 +755,7 @@ public class Table{
 
         for(int i=0; i<numberOfShoesToPlay;i++){
             shuffleCards();
-            while(shoe.getNumberOfDecks()>1.5){
+            while(shoe.getNumberOfDecks()>1){
                 writeToFile();
                 
                 if(player.getHandNumber()>0){
