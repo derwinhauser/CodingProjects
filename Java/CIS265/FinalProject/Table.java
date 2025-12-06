@@ -718,9 +718,14 @@ public class Table{
         boolean playerTakesInsurance;
         boolean playerTakesEvenMoney;
         int handsPlayedInDeck;
+        int shoesPlayed = 0;
 
         for(int i=0; i<numberOfShoesToPlay;i++){
             shuffleCards();
+            shoesPlayed++;
+            if (shoesPlayed%1000==0){
+                System.out.println("Shoe Number: " + shoesPlayed);
+            }
             handsPlayedInDeck = 0;
             while(shoe.getNumberOfDecks()>1){
                 writeToFile();
