@@ -191,8 +191,6 @@ public class Table{
         handData.write("Hand number" + handNumber + "\n");
         //print dealer hand
         Hand dealerHand = dealer.getHand();
-        dealerHand.printDealerHand();
-        Card dealerUpCard = dealer.getUpCard();
 
         //write dealer hand for file
         for (int i=0; i<dealerHand.getSize(); i++){
@@ -215,7 +213,6 @@ public class Table{
             Hand playerHand = player.getHand(i);
             String symbol = playerHand.getHand();
             int playerTotal = playerHand.totalHand();
-            playerHand.printHand();
             handData.write("Player: "+ symbol + "\n");
         }
         handData.write("\n");
