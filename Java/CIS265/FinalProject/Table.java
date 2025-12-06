@@ -186,39 +186,13 @@ public class Table{
 
     public void printTable()throws IOException{
         FileWriter handData = new FileWriter("handData.txt", true);
-        /*//print bankroll
-        double bankroll = player.getBankroll();
-        System.out.println("Bankroll: " + bankroll);
-        
-        //print remaining decks
-        double remainingDecks = shoe.getNumberOfDecks();
-        System.out.println("Remaining Decks: " + remainingDecks);
-
-        //print counts
-        int runningCount = getRunningCount();
-        System.out.println("Running Count: " + runningCount);
-        double trueCount = getTrueCount();
-        System.out.println("True Count: " + trueCount);
-
-        //print betSize
-        int betSize = getBetSize();
-        System.out.println("Bet Size: " + betSize);
-
-        //reveal dealer cards for debug
-        System.out.print("dealer revealed: ");
-        dealerHand.printHand();
-        System.out.println();*/
-
         //print hand number
         int handNumber = player.getHandNumber();
-        System.out.println("Hand Number: "+ handNumber);
         handData.write("Hand number" + handNumber + "\n");
         //print dealer hand
         Hand dealerHand = dealer.getHand();
-        System.out.print("Dealer: ");
         dealerHand.printDealerHand();
         Card dealerUpCard = dealer.getUpCard();
-        System.out.println("Dealer UpCard: " + dealerUpCard.getSymbol());
 
         //write dealer hand for file
         for (int i=0; i<dealerHand.getSize(); i++){
@@ -241,13 +215,9 @@ public class Table{
             Hand playerHand = player.getHand(i);
             String symbol = playerHand.getHand();
             int playerTotal = playerHand.totalHand();
-            System.out.print("Player: " );
             playerHand.printHand();
             handData.write("Player: "+ symbol + "\n");
-            System.out.println();
-            System.out.println("player Total: " + playerTotal);
         }
-        System.out.println();
         handData.write("\n");
         handData.close();
     }
@@ -371,7 +341,6 @@ public class Table{
             }
         }
         else{
-            System.out.println("-----------********ERROR IN DOESPLAYERSPLIT FUNCTION IN TABLE.JAVA" );
             return false;
         }
     }
@@ -447,7 +416,6 @@ public class Table{
                     return "56".contains(dealerUpCardSymbol);
                 }
                 else{
-                    System.out.println("ERROR EITH DOESPLAYERDOUBLE FUNCTION IN TABLE.JAVA");
                     return false;
                 }
             }
@@ -488,7 +456,6 @@ public class Table{
                     return false;
                 }
                 else{
-                    System.out.println("ERROR IN DOESPLAYERDOUBLE FUNCTION IN TABLE.JAVA");
                     return false;
                 }
             }
@@ -536,7 +503,6 @@ public class Table{
                 
             }
             else{
-                System.out.println("ERROR WITH DOESPLAYERHIT FUNCTION IN TABLE.JAVA");
                 return false;
             }
         }
@@ -565,7 +531,6 @@ public class Table{
                 return true;
             }
             else{
-                System.out.println("ERROR IN DOESPLAYERHIT FUNCTION IN TABLE.JAVA");
                 return false;
             }
             
@@ -752,9 +717,11 @@ public class Table{
         boolean dealerHasBlackjack;
         boolean playerTakesInsurance;
         boolean playerTakesEvenMoney;
+        int handsPlayedInDeck;
 
         for(int i=0; i<numberOfShoesToPlay;i++){
             shuffleCards();
+            handsPlayedInDeck = 0;
             while(shoe.getNumberOfDecks()>1){
                 writeToFile();
                 
@@ -765,11 +732,17 @@ public class Table{
                 aceData.write("\n Hand Number: " + player.getHandNumber());
 
                 discardCards();
-                
+                if (handsPlayedInDeck>0){
+                    if(getTrueCount()<2){
+                        break;
+                    }
+                }
+                handsPlayedInDeck++;
+
                 betSize = getBetSize();
 
                 dealStartingCards();
-
+                
                 playerHasBlackjack = player.blackjackCheck();
                 dealerShowsAce = dealerShowsAce();
 
