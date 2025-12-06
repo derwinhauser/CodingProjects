@@ -17,8 +17,10 @@ public class BlackJack{
 
         System.out.print("How many shoes do you want to simulate?(1-10000) ");
         int numberOfShoes = sc.nextInt();
-        table.playShoe(numberOfShoes);//input how many shoes to play
 
+        System.out.println("Running Simulation...");
+        table.playShoe(numberOfShoes);//input how many shoes to play
+        System.out.println("Simulation Complete.")
 
         writer.close();
         handData.close();
