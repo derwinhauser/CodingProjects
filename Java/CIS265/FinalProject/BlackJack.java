@@ -20,7 +20,7 @@ public class BlackJack{
 
         System.out.println("Running Simulation...");
         table.playShoe(numberOfShoes);//input how many shoes to play
-        System.out.println("Simulation Complete.")
+        System.out.println("Simulation Complete.");
 
         writer.close();
         handData.close();
