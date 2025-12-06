@@ -120,19 +120,19 @@ public class Table{
         int betSize = 0;
         double trueCount = getTrueCount();
         if (trueCount<1){ 
-            betSize = 5; //min bet
+            betSize = 25; //min bet
         }
         else if(trueCount<2){
-            betSize = 25; //true 1
+            betSize = 100; //true 1
         }
         else if(trueCount<3){
-            betSize = 50; // true 2
+            betSize = 500; // true 2
         }
         else if (trueCount<4){
-            betSize = 50; // true 3
+            betSize = 1000; // true 3
         }
         else{
-            betSize = 50; // true 4 and up (max bet)
+            betSize = 2000; // true 4 and up (max bet)
         }
         player.setBetSize(betSize);
         return betSize;
@@ -714,7 +714,6 @@ public class Table{
         boolean dealerHasBlackjack;
         boolean playerTakesInsurance;
         boolean playerTakesEvenMoney;
-        int handsPlayedInDeck;
         int shoesPlayed = 0;
 
         for(int i=0; i<numberOfShoesToPlay;i++){
@@ -723,7 +722,6 @@ public class Table{
             if (shoesPlayed%1000==0){
                 System.out.println("Shoe Number: " + shoesPlayed);
             }
-            handsPlayedInDeck = 0;
             while(shoe.getNumberOfDecks()>1){
                 writeToFile();
                 
@@ -734,12 +732,6 @@ public class Table{
                 aceData.write("\n Hand Number: " + player.getHandNumber());
 
                 discardCards();
-                if (handsPlayedInDeck>0){
-                    if(getTrueCount()<2){
-                        break;
-                    }
-                }
-                handsPlayedInDeck++;
 
                 betSize = getBetSize();
 
