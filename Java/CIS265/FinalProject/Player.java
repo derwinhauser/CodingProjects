@@ -10,7 +10,7 @@ public class Player{
     public Player(){
         hands = new ArrayList <Hand>();
         handNumber = 0;
-        bankroll = 2000;
+        bankroll = 200000;
     }
 
     public void addHand(){
