@@ -9,6 +9,7 @@ public class Table{
     private Dealer dealer;
     private Player player;
     private int numberOfDecks;
+    private double shuffleAt;
 
     public Table(int x)throws IOException{
         numberOfDecks = x;
@@ -17,6 +18,10 @@ public class Table{
         tableCards = new Hand();
         player = new Player();
         dealer = new Dealer();
+    }
+
+    public void setShuffleAt(double d){
+        shuffleAt = d;
     }
 
     public void setPlayerBankroll(double d){
@@ -722,7 +727,7 @@ public class Table{
             if (shoesPlayed%1000==0){
                 System.out.println("Shoe Number: " + shoesPlayed);
             }
-            while(shoe.getNumberOfDecks()>1){
+            while(shoe.getNumberOfDecks()>shuffleAt){
                 writeToFile();
                 
                 if(player.getHandNumber()>0){

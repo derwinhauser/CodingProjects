@@ -11,10 +11,17 @@ public class BlackJack{
         FileWriter payData = new FileWriter("payData.txt", false);
         Scanner sc = new Scanner(System.in);
         
+        // How many decks per shoe?
         System.out.print("How many decks are in the shoe?(2-8) ");
         int shoeSize = sc.nextInt();
         Table table = new Table(shoeSize);// input deck size
 
+        // How many decks remain before shuffling?
+        System.out.println("How many decks remain before shuffle?");
+        double shuffleAt = sc.nextDouble();
+        table.setShuffleAt(shuffleAt);
+
+        // How many shoes are simulated?
         System.out.print("How many shoes do you want to simulate?(1-10000) ");
         int numberOfShoes = sc.nextInt();
 
