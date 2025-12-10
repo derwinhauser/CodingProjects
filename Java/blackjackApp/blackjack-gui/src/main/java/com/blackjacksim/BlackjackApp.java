@@ -59,17 +59,6 @@ public class BlackjackApp extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         // --- Step 1: Input Controls ---
-        Label shoeSizeLabel = new Label("How many decks are in the shoe? (2-8):");
-        TextField shoeSizeField = new TextField();
-        shoeSizeField.setPromptText("Enter a number between 2 and 8");
-
-        Label numberOfShoesLabel = new Label("How many shoes to simulate?:");
-        TextField numberOfShoesField = new TextField();
-        numberOfShoesField.setPromptText("Enter a number greater than 1");
-
-        Label shuffleAtLabel = new Label("How many decks remain before shuffling?:");
-        TextField shuffleAtField = new TextField();
-        shuffleAtField.setPromptText("Enter a number greater than 0.5 and less than shoe size");
 
         Label startingBankrollLabel = new Label("Starting Bankroll:");
         TextField startingBankrollField = new TextField();
@@ -119,6 +108,18 @@ public class BlackjackApp extends Application {
         tc4Field.setText("");
         tc4Field.setPrefWidth(100);
         tc4Box.getChildren().addAll(tc4Label, tc4Field);
+
+        Label shoeSizeLabel = new Label("How many decks are in the shoe? (2-8):");
+        TextField shoeSizeField = new TextField();
+        shoeSizeField.setPromptText("Enter a number between 2 and 8");
+
+        Label shuffleAtLabel = new Label("How many decks remain before shuffling?:");
+        TextField shuffleAtField = new TextField();
+        shuffleAtField.setPromptText("Enter a number greater than 0.5 and less than shoe size");
+
+        Label numberOfShoesLabel = new Label("How many shoes to simulate?:");
+        TextField numberOfShoesField = new TextField();
+        numberOfShoesField.setPromptText("Enter a number greater than 1");
 
         Button runButton = new Button("Run Simulation");
 
@@ -385,21 +386,17 @@ public class BlackjackApp extends Application {
         inputGrid.setPadding(new Insets(10));
 
         // Add simulation parameters to the grid
-        inputGrid.add(shoeSizeLabel, 0, 0);
-        inputGrid.add(shoeSizeField, 1, 0);
-        inputGrid.add(numberOfShoesLabel, 0, 1);
-        inputGrid.add(numberOfShoesField, 1, 1);
+        inputGrid.add(numberOfShoesLabel, 0, 0);
+        inputGrid.add(numberOfShoesField, 1, 0);
+        inputGrid.add(shoeSizeLabel, 0, 1);
+        inputGrid.add(shoeSizeField, 1, 1);
         inputGrid.add(shuffleAtLabel, 0, 2);
-        inputGrid.add(shuffleAtField, 1, 2);
-        inputGrid.add(startingBankrollLabel, 0, 3);
-        inputGrid.add(startingBankrollField, 1, 3);
+        inputGrid.add(shuffleAtField, 1, 2);        
 
         // Set text fields to grow with the column
         javafx.scene.layout.GridPane.setHgrow(shoeSizeField, javafx.scene.layout.Priority.ALWAYS);
         javafx.scene.layout.GridPane.setHgrow(numberOfShoesField, javafx.scene.layout.Priority.ALWAYS);
         javafx.scene.layout.GridPane.setHgrow(shuffleAtField, javafx.scene.layout.Priority.ALWAYS);
-        javafx.scene.layout.GridPane.setHgrow(startingBankrollField, javafx.scene.layout.Priority.ALWAYS);
-
 
         // 2. Group all Bet Spread HBoxes together in one large HBox
         HBox betSpreadGroup = new HBox(20); // 20px spacing between bet fields
@@ -407,6 +404,16 @@ public class BlackjackApp extends Application {
         betSpreadGroup.getChildren().addAll(
             minBetBox, tc1Box, tc2Box, tc3Box, tc4Box
         );
+
+        javafx.scene.layout.GridPane inputGrid1 = new javafx.scene.layout.GridPane();
+        inputGrid1.setHgap(10); // Horizontal gap
+        inputGrid1.setVgap(10); // Vertical gap
+        inputGrid1.setPadding(new Insets(10));
+
+        inputGrid1.add(startingBankrollLabel, 0, 0);
+        inputGrid1.add(startingBankrollField, 1, 0);
+
+        javafx.scene.layout.GridPane.setHgrow(startingBankrollField, javafx.scene.layout.Priority.ALWAYS);
 
 
         // 3. Create a VBox for the Run button, Progress Bar, and Progress Label
@@ -425,6 +432,7 @@ public class BlackjackApp extends Application {
 
         root.getChildren().addAll(
             inputGrid,
+            inputGrid1,
             betSpreadLabel,
             betSpreadGroup,
             controlPanel,
