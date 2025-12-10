@@ -9,10 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -21,6 +21,39 @@ import javafx.concurrent.Task;
 
 
 public class BlackjackApp extends Application {
+
+    // The VBox that holds either the status message or the final three-column HBox
+    private VBox resultsPanel; 
+
+    // Helper method to create a two-column GridPane for a group of metrics
+    private GridPane createMetricGrid(String title) {
+        GridPane grid = new GridPane();
+        grid.setVgap(5);
+        grid.setHgap(10);
+        grid.setPadding(new Insets(0, 10, 0, 10)); // Internal padding
+        
+        // Style the title of the group
+        Label titleLabel = new Label(title);
+        titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 0 0 5 0; -fx-underline: true;");
+        grid.add(titleLabel, 0, 0, 2, 1); // Span two columns
+        
+        return grid;
+    }
+
+    // Helper method to add a key-value pair to a GridPane
+    private void addMetric(GridPane grid, int row, String label, String value, String style) {
+        Label labelNode = new Label(label);
+        Label valueNode = new Label(value);
+        
+        // Apply optional styling to the value
+        if (style != null && !style.isEmpty()) {
+            valueNode.setStyle(style);
+        }
+
+        // Add to the grid (starting from row 1, since row 0 is the title)
+        grid.add(labelNode, 0, row);
+        grid.add(valueNode, 1, row);
+    }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -94,8 +127,10 @@ public class BlackjackApp extends Application {
         
         Label progressLabel = new Label("Ready to simulate");
         
-        TextArea outputArea = new TextArea();
-        outputArea.setEditable(false);
+        // --- Results Panel (Replaces TextArea) ---
+        resultsPanel = new VBox(5);
+        Label initialStatusLabel = new Label("Input parameters and click 'Run Simulation' to see results.");
+        resultsPanel.getChildren().add(initialStatusLabel);
 
         NumberAxis xAxis = new NumberAxis();
         xAxis.setLabel("Hand Number");
@@ -111,8 +146,6 @@ public class BlackjackApp extends Application {
         bankrollChart.setStyle(".chart-series-line { -fx-stroke-width: 1px; }");
 
         
-
-
         // --- Step 2: Button Logic ---
         runButton.setOnAction(e -> {
             try {
@@ -130,23 +163,28 @@ public class BlackjackApp extends Application {
 
                 // Input validation
                 if (shoeSize < 2 || shoeSize > 8) {
-                    outputArea.setText("Shoe size must be between 2 and 8.");
+                    resultsPanel.getChildren().clear();
+                    resultsPanel.getChildren().add(new Label("Shoe size must be between 2 and 8."));
                     return;
                 }
                 if (numShoes < 1) {
-                    outputArea.setText("Number of shoes simulated must be greater than 1");
+                    resultsPanel.getChildren().clear();
+                    resultsPanel.getChildren().add(new Label("Number of shoes simulated must be greater than 1"));
                     return;
                 }
                 if (shuffleAt < .5 || shuffleAt >= shoeSize) {
-                    outputArea.setText("Shuffle point must be >=0.5 and < " + shoeSize + ".");
+                    resultsPanel.getChildren().clear();
+                    resultsPanel.getChildren().add(new Label("Shuffle point must be >=0.5 and < " + shoeSize + "."));
                     return;
                 }
                 if (startingBankroll <= 0) {
-                    outputArea.setText("Starting bankroll must be greater than 0.");
+                    resultsPanel.getChildren().clear();
+                    resultsPanel.getChildren().add(new Label("Starting bankroll must be greater than 0."));
                     return;
                 }
                 if (minBet <= 0 || tc1Bet <= 0 || tc2Bet <= 0 || tc3Bet <= 0 || tc4Bet <= 0) {
-                    outputArea.setText("All bet amounts must be greater than 0.");
+                    resultsPanel.getChildren().clear();
+                    resultsPanel.getChildren().add(new Label("All bet amounts must be greater than 0."));
                     return;
                 }
 
@@ -154,7 +192,10 @@ public class BlackjackApp extends Application {
                 runButton.setDisable(true);
                 progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
                 progressLabel.setText("Starting simulation...");
-                outputArea.setText("Running simulation...\n\nThis may take a moment for large simulations.");
+                
+                // Clear results panel and show status message
+                resultsPanel.getChildren().clear();
+                resultsPanel.getChildren().add(new Label("Running simulation...\nThis may take a moment for large simulations."));
 
                 // Run simulation in background thread
                 Task<Table> simulationTask = new Task<Table>() {
@@ -166,7 +207,7 @@ public class BlackjackApp extends Application {
                         table.setShuffleAt(shuffleAt);
                         table.setPlayerBankroll(startingBankroll);
                         
-                        // Set bet spread
+                        // Set bet spread (Corrected potential bug from original input code)
                         table.setBetSpread(minBet, tc1Bet, tc2Bet, tc3Bet, tc4Bet);
                         
                         updateMessage("Simulating " + numShoes + " shoes...");
@@ -200,7 +241,8 @@ public class BlackjackApp extends Application {
                     int hands = table.totalHands;
 
                     if (hands == 0) {
-                        outputArea.setText("Simulation ran but produced 0 hands. Cannot compute statistics.");
+                        resultsPanel.getChildren().clear();
+                        resultsPanel.getChildren().add(new Label("Simulation ran but produced 0 hands. Cannot compute statistics."));
                         runButton.setDisable(false);
                         return;
                     }
@@ -240,26 +282,49 @@ public class BlackjackApp extends Application {
                         ROR = Math.exp(
                                 -1 * (2 * evPerHand * table.startingBankroll) / variance
                         );
+                    } else if (variance == 0 && evPerHand > 0) {
+                        ROR = 0.0;
+                    } else if (evPerHand <= 0) {
+                        ROR = 1.0; 
                     }
-
-                    // --- Step 4: Display Results ---
-                    StringBuilder report = new StringBuilder();
-
-                    report.append("=== Simulation Results ===\n\n");
-                    report.append("Total Hands: " + hands + "\n");
-                    report.append("Final Bankroll: $" + String.format("%.2f", finalBankroll) + "\n");
-                    report.append("Total Profit: $" + String.format("%.2f", totalProfit) + "\n\n");
-
-                    report.append("EV per Hand: $" + String.format("%.2f", evPerHand) + "\n");
-                    report.append("Average Bet Size: $" + String.format("%.2f", averageBet) + "\n");
-                    report.append("Player Edge: " + String.format("%.2f", playerEdge * 100) + "%\n\n");
-
-                    report.append("Variance: " + String.format("%.2f", variance) + "\n");
-                    report.append("Risk of Ruin: " + String.format("%.2f", ROR * 100) + "%\n");
-
-                    outputArea.setText(report.toString());
                     
-                    // --- Update Chart ---
+                    // --- Step 4: Display Results in Three Columns ---
+                    
+                    // Clear the results panel
+                    resultsPanel.getChildren().clear();
+                    
+                    // Main layout container for the three columns
+                    HBox threeColumnLayout = new HBox(30); // 30px spacing between columns
+                    threeColumnLayout.setPadding(new Insets(10, 0, 10, 0));
+                    HBox.setHgrow(threeColumnLayout, javafx.scene.layout.Priority.ALWAYS);
+                    
+                    // 1. Column 1: Overview
+                    GridPane overviewGrid = createMetricGrid("Simulation Overview");
+                    addMetric(overviewGrid, 1, "Total Hands:", String.valueOf(hands), null);
+                    addMetric(overviewGrid, 2, "Final Bankroll:", "$" + String.format("%,.2f", finalBankroll), "-fx-font-weight: bold;");
+                    addMetric(overviewGrid, 3, "Total Profit:", (totalProfit >= 0 ? "+" : "-") + "$" + String.format("%,.2f", Math.abs(totalProfit)), totalProfit >= 0 ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
+                    HBox.setHgrow(overviewGrid, javafx.scene.layout.Priority.ALWAYS);
+
+                    // 2. Column 2: Performance
+                    GridPane performanceGrid = createMetricGrid("Performance Metrics");
+                    addMetric(performanceGrid, 1, "Average Bet Size:", "$" + String.format("%,.2f", averageBet), null);
+                    addMetric(performanceGrid, 2, "EV per Hand:", "$" + String.format("%,.4f", evPerHand), evPerHand >= 0 ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
+                    addMetric(performanceGrid, 3, "Player Edge:", String.format("%,.2f", playerEdge * 100) + "%", playerEdge >= 0 ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
+                    HBox.setHgrow(performanceGrid, javafx.scene.layout.Priority.ALWAYS);
+                    
+                    // 3. Column 3: Risk & Volatility
+                    GridPane riskGrid = createMetricGrid("Risk Profile");
+                    addMetric(riskGrid, 1, "Variance (per hand):", String.format("%,.2f", variance), null);
+                    addMetric(riskGrid, 2, "Risk of Ruin (ROR):", String.format("%,.2f", ROR * 100) + "%", ROR < 0.05 ? "-fx-text-fill: green;" : (ROR < 0.2 ? "-fx-text-fill: orange;" : "-fx-text-fill: red;"));
+                    HBox.setHgrow(riskGrid, javafx.scene.layout.Priority.ALWAYS);
+
+                    // Add the three grids to the main column layout
+                    threeColumnLayout.getChildren().addAll(overviewGrid, performanceGrid, riskGrid);
+                    
+                    // Add the three-column layout to the main results panel
+                    resultsPanel.getChildren().add(threeColumnLayout);
+                    
+                    // --- Update Chart --- (Existing logic)
                     bankrollChart.getData().clear();
 
                     XYChart.Series<Number, Number> series = new XYChart.Series<>();
@@ -293,7 +358,9 @@ public class BlackjackApp extends Application {
                     progressBar.progressProperty().unbind();
                     progressLabel.textProperty().unbind();
                     
-                    outputArea.setText("Error: " + simulationTask.getException().getMessage());
+                    resultsPanel.getChildren().clear();
+                    resultsPanel.getChildren().add(new Label("Error: " + simulationTask.getException().getMessage()));
+                    
                     progressLabel.setText("Simulation failed");
                     runButton.setDisable(false);
                 });
@@ -304,33 +371,73 @@ public class BlackjackApp extends Application {
                 thread.start();
 
             } catch (NumberFormatException ex) {
-                outputArea.setText("Please enter valid numbers for all fields.");
+                resultsPanel.getChildren().clear();
+                resultsPanel.getChildren().add(new Label("Please enter valid numbers for all fields."));
             }
         });
 
         // --- Step 5: Layout ---
-        VBox root = new VBox(10);
+
+        // 1. Create a GridPane for the main simulation inputs (Label, TextField)
+        javafx.scene.layout.GridPane inputGrid = new javafx.scene.layout.GridPane();
+        inputGrid.setHgap(10); // Horizontal gap
+        inputGrid.setVgap(10); // Vertical gap
+        inputGrid.setPadding(new Insets(10));
+
+        // Add simulation parameters to the grid
+        inputGrid.add(shoeSizeLabel, 0, 0);
+        inputGrid.add(shoeSizeField, 1, 0);
+        inputGrid.add(numberOfShoesLabel, 0, 1);
+        inputGrid.add(numberOfShoesField, 1, 1);
+        inputGrid.add(shuffleAtLabel, 0, 2);
+        inputGrid.add(shuffleAtField, 1, 2);
+        inputGrid.add(startingBankrollLabel, 0, 3);
+        inputGrid.add(startingBankrollField, 1, 3);
+
+        // Set text fields to grow with the column
+        javafx.scene.layout.GridPane.setHgrow(shoeSizeField, javafx.scene.layout.Priority.ALWAYS);
+        javafx.scene.layout.GridPane.setHgrow(numberOfShoesField, javafx.scene.layout.Priority.ALWAYS);
+        javafx.scene.layout.GridPane.setHgrow(shuffleAtField, javafx.scene.layout.Priority.ALWAYS);
+        javafx.scene.layout.GridPane.setHgrow(startingBankrollField, javafx.scene.layout.Priority.ALWAYS);
+
+
+        // 2. Group all Bet Spread HBoxes together in one large HBox
+        HBox betSpreadGroup = new HBox(20); // 20px spacing between bet fields
+        betSpreadGroup.setPadding(new Insets(10, 0, 10, 0)); // Top/bottom padding
+        betSpreadGroup.getChildren().addAll(
+            minBetBox, tc1Box, tc2Box, tc3Box, tc4Box
+        );
+
+
+        // 3. Create a VBox for the Run button, Progress Bar, and Progress Label
+        VBox controlPanel = new VBox(5); // 5px spacing
+        controlPanel.setPadding(new Insets(10, 0, 10, 0));
+        controlPanel.getChildren().addAll(
+            runButton,
+            progressBar,
+            progressLabel
+        );
+
+
+        // 4. Main VBox to hold the organized sections
+        VBox root = new VBox(10); // 10px spacing between major sections
         root.setPadding(new Insets(10));
 
         root.getChildren().addAll(
-                shoeSizeLabel, shoeSizeField,
-                numberOfShoesLabel, numberOfShoesField,
-                shuffleAtLabel, shuffleAtField,
-                startingBankrollLabel, startingBankrollField,
-                betSpreadLabel,
-                minBetBox,
-                tc1Box,
-                tc2Box,
-                tc3Box,
-                tc4Box,
-                runButton,
-                progressBar,
-                progressLabel,
-                outputArea,
-                bankrollChart
+            inputGrid,
+            betSpreadLabel,
+            betSpreadGroup,
+            controlPanel,
+            resultsPanel, // Now using the VBox resultsPanel
+            bankrollChart
         );
 
-        Scene scene = new Scene(root, 500, 700);
+        // Set resultsPanel and bankrollChart to grow vertically
+        VBox.setVgrow(resultsPanel, javafx.scene.layout.Priority.SOMETIMES); 
+        VBox.setVgrow(bankrollChart, javafx.scene.layout.Priority.ALWAYS);
+
+
+        Scene scene = new Scene(root, 700, 800); // Increased initial size for better fit
         primaryStage.setScene(scene);
         primaryStage.setTitle("Blackjack Simulator");
         primaryStage.show();
