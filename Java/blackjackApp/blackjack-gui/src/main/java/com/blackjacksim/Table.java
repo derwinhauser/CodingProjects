@@ -12,6 +12,13 @@ public class Table{
     private int numberOfDecks;
     private double shuffleAt;
     private double previousBankroll;
+    
+    // Bet spread variables
+    private int minBet = 25;
+    private int tc1Bet = 100;
+    private int tc2Bet = 500;
+    private int tc3Bet = 1000;
+    private int tc4Bet = 2000;
 
     public double startingBankroll;
     public double endingBankroll;
@@ -37,6 +44,14 @@ public class Table{
 
     public void setShuffleAt(double d){
         shuffleAt = d;
+    }
+
+    public void setBetSpread(int min, int tc1, int tc2, int tc3, int tc4){
+        this.minBet = min;
+        this.tc1Bet = tc1;
+        this.tc2Bet = tc2;
+        this.tc3Bet = tc3;
+        this.tc4Bet = tc4;
     }
 
     public void setPlayerBankroll(double d){
@@ -120,22 +135,22 @@ public class Table{
     }
 
     public int getBetSize(){
-        int betSize = 0;
+        int betSize;
         double trueCount = getTrueCount();
-        if (trueCount<1){ //TC 0 or less (min bet)
-            betSize = 25;
+        if (trueCount<1){ 
+            betSize = minBet;
         }
-        else if(trueCount<2){ //TC 1+
-            betSize = 100;
+        else if(trueCount<2){
+            betSize = tc1Bet;
         }
-        else if(trueCount<3){ //TC 2+
-            betSize = 500;
+        else if(trueCount<3){
+            betSize = tc2Bet;
         }
-        else if (trueCount<4){ //TC 3+
-            betSize = 1000;
+        else if (trueCount<4){
+            betSize = tc3Bet;
         }
         else{
-            betSize = 2000; //TC 4+
+            betSize = tc4Bet;
         }
         player.setBetSize(betSize);
         return betSize;

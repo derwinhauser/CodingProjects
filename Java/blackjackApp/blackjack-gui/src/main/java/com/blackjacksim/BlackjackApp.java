@@ -12,6 +12,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -31,11 +32,60 @@ public class BlackjackApp extends Application {
 
         Label numberOfShoesLabel = new Label("How many shoes to simulate?:");
         TextField numberOfShoesField = new TextField();
-        numberOfShoesField.setPromptText("Enter a number greater than or equal to 1");
+        numberOfShoesField.setPromptText("Enter a number greater than 1");
 
-        Label shuffleAtLabel = new Label("Shuffle at:");
+        Label shuffleAtLabel = new Label("How many decks remain before shuffling?:");
         TextField shuffleAtField = new TextField();
-        shuffleAtField.setPromptText("Decks remaining before shuffle");
+        shuffleAtField.setPromptText("Enter a number greater than 0.5 and less than shoe size");
+
+        Label startingBankrollLabel = new Label("Starting Bankroll:");
+        TextField startingBankrollField = new TextField();
+        startingBankrollField.setPromptText("Enter starting bankroll (e.g., 200000)");
+        startingBankrollField.setText("");
+
+        // Bet Spread Section
+        Label betSpreadLabel = new Label("Bet Spread:");
+        betSpreadLabel.setStyle("-fx-font-weight: bold;");
+
+        HBox minBetBox = new HBox(10);
+        Label minBetLabel = new Label("Min bet:");
+        TextField minBetField = new TextField();
+        minBetField.setPromptText("");
+        minBetField.setText("");
+        minBetField.setPrefWidth(100);
+        minBetBox.getChildren().addAll(minBetLabel, minBetField);
+
+        HBox tc1Box = new HBox(10);
+        Label tc1Label = new Label("True Count 1+:");
+        TextField tc1Field = new TextField();
+        tc1Field.setPromptText("");
+        tc1Field.setText("");
+        tc1Field.setPrefWidth(100);
+        tc1Box.getChildren().addAll(tc1Label, tc1Field);
+
+        HBox tc2Box = new HBox(10);
+        Label tc2Label = new Label("True Count 2+:");
+        TextField tc2Field = new TextField();
+        tc2Field.setPromptText("");
+        tc2Field.setText("");
+        tc2Field.setPrefWidth(100);
+        tc2Box.getChildren().addAll(tc2Label, tc2Field);
+
+        HBox tc3Box = new HBox(10);
+        Label tc3Label = new Label("True Count 3+:");
+        TextField tc3Field = new TextField();
+        tc3Field.setPromptText("");
+        tc3Field.setText("");
+        tc3Field.setPrefWidth(100);
+        tc3Box.getChildren().addAll(tc3Label, tc3Field);
+
+        HBox tc4Box = new HBox(10);
+        Label tc4Label = new Label("True Count 4+:");
+        TextField tc4Field = new TextField();
+        tc4Field.setPromptText("");
+        tc4Field.setText("");
+        tc4Field.setPrefWidth(100);
+        tc4Box.getChildren().addAll(tc4Label, tc4Field);
 
         Button runButton = new Button("Run Simulation");
 
@@ -57,7 +107,7 @@ public class BlackjackApp extends Application {
                 new LineChart<>(xAxis, yAxis);
 
         bankrollChart.setTitle("Bankroll Over Time");
-        bankrollChart.setCreateSymbols(false); // Remove data point symbols for cleaner look
+        bankrollChart.setCreateSymbols(false);
         bankrollChart.setStyle(".chart-series-line { -fx-stroke-width: 1px; }");
 
         
@@ -69,6 +119,14 @@ public class BlackjackApp extends Application {
                 int shoeSize = Integer.parseInt(shoeSizeField.getText().trim());
                 int numShoes = Integer.parseInt(numberOfShoesField.getText().trim());
                 double shuffleAt = Double.parseDouble(shuffleAtField.getText().trim());
+                double startingBankroll = Double.parseDouble(startingBankrollField.getText().trim());
+                
+                // Parse bet spread
+                int minBet = Integer.parseInt(minBetField.getText().trim());
+                int tc1Bet = Integer.parseInt(tc1Field.getText().trim());
+                int tc2Bet = Integer.parseInt(tc2Field.getText().trim());
+                int tc3Bet = Integer.parseInt(tc3Field.getText().trim());
+                int tc4Bet = Integer.parseInt(tc4Field.getText().trim());
 
                 // Input validation
                 if (shoeSize < 2 || shoeSize > 8) {
@@ -76,11 +134,19 @@ public class BlackjackApp extends Application {
                     return;
                 }
                 if (numShoes < 1) {
-                    outputArea.setText("Number of shoes must be at least 1.");
+                    outputArea.setText("Number of shoes simulated must be greater than 1");
                     return;
                 }
-                if (shuffleAt < 1 || shuffleAt >= shoeSize) {
-                    outputArea.setText("Shuffle point must be >1 and < " + shoeSize + ".");
+                if (shuffleAt < .5 || shuffleAt >= shoeSize) {
+                    outputArea.setText("Shuffle point must be >=0.5 and < " + shoeSize + ".");
+                    return;
+                }
+                if (startingBankroll <= 0) {
+                    outputArea.setText("Starting bankroll must be greater than 0.");
+                    return;
+                }
+                if (minBet <= 0 || tc1Bet <= 0 || tc2Bet <= 0 || tc3Bet <= 0 || tc4Bet <= 0) {
+                    outputArea.setText("All bet amounts must be greater than 0.");
                     return;
                 }
 
@@ -94,22 +160,22 @@ public class BlackjackApp extends Application {
                 Task<Table> simulationTask = new Task<Table>() {
                     @Override
                     protected Table call() throws Exception {
-                        // Small delay to allow UI to update before heavy computation
                         Thread.sleep(100);
                         
                         Table table = new Table(shoeSize);
                         table.setShuffleAt(shuffleAt);
+                        table.setPlayerBankroll(startingBankroll);
                         
-                        // Update message
+                        // Set bet spread
+                        table.setBetSpread(minBet, tc1Bet, tc2Bet, tc3Bet, tc4Bet);
+                        
                         updateMessage("Simulating " + numShoes + " shoes...");
                         
-                        // Run the simulation with progress callback
                         table.playShoe(numShoes, (current, total) -> {
                             updateProgress(current, total);
                             updateMessage("Simulating shoe " + current + " of " + total);
                         });
                         
-                        // Set to complete
                         updateProgress(1, 1);
                         updateMessage("Processing results...");
                         
@@ -123,7 +189,6 @@ public class BlackjackApp extends Application {
 
                 // Handle completion
                 simulationTask.setOnSucceeded(event -> {
-                    // Unbind progress properties
                     progressBar.progressProperty().unbind();
                     progressLabel.textProperty().unbind();
                     
@@ -202,7 +267,7 @@ public class BlackjackApp extends Application {
 
                     // Sample data points to avoid overloading the chart
                     int dataSize = table.bankrollHistory.size();
-                    int maxPoints = 1000; // Maximum points to display
+                    int maxPoints = 1000;
                     int step = Math.max(1, dataSize / maxPoints);
                     
                     for (int i = 0; i < dataSize; i += step) {
@@ -216,7 +281,6 @@ public class BlackjackApp extends Application {
 
                     bankrollChart.getData().add(series);
                     
-                    // Make the line thinner - apply after chart renders
                     Platform.runLater(() -> {
                         series.getNode().setStyle("-fx-stroke-width: 1px;");
                     });
@@ -226,7 +290,6 @@ public class BlackjackApp extends Application {
                 });
 
                 simulationTask.setOnFailed(event -> {
-                    // Unbind progress properties
                     progressBar.progressProperty().unbind();
                     progressLabel.textProperty().unbind();
                     
@@ -253,6 +316,13 @@ public class BlackjackApp extends Application {
                 shoeSizeLabel, shoeSizeField,
                 numberOfShoesLabel, numberOfShoesField,
                 shuffleAtLabel, shuffleAtField,
+                startingBankrollLabel, startingBankrollField,
+                betSpreadLabel,
+                minBetBox,
+                tc1Box,
+                tc2Box,
+                tc3Box,
+                tc4Box,
                 runButton,
                 progressBar,
                 progressLabel,
@@ -260,7 +330,7 @@ public class BlackjackApp extends Application {
                 bankrollChart
         );
 
-        Scene scene = new Scene(root, 450, 500);
+        Scene scene = new Scene(root, 500, 700);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Blackjack Simulator");
         primaryStage.show();
