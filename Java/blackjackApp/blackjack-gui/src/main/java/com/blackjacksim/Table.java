@@ -122,20 +122,20 @@ public class Table{
     public int getBetSize(){
         int betSize = 0;
         double trueCount = getTrueCount();
-        if (trueCount<1){ 
+        if (trueCount<1){ //TC 0 or less (min bet)
             betSize = 25;
         }
-        else if(trueCount<2){
+        else if(trueCount<2){ //TC 1+
             betSize = 100;
         }
-        else if(trueCount<3){
+        else if(trueCount<3){ //TC 2+
             betSize = 500;
         }
-        else if (trueCount<4){
+        else if (trueCount<4){ //TC 3+
             betSize = 1000;
         }
         else{
-            betSize = 2000;
+            betSize = 2000; //TC 4+
         }
         player.setBetSize(betSize);
         return betSize;
@@ -689,6 +689,12 @@ public class Table{
             // Update progress every 100 shoes (or adjust as needed)
             if (callback != null && (shoesPlayed % 100 == 0 || shoesPlayed == numberOfShoesToPlay)) {
                 callback.updateProgress(shoesPlayed, numberOfShoesToPlay);
+                // Yield to allow UI thread to update
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
             
             if (shoesPlayed%1000==0){

@@ -29,13 +29,13 @@ public class BlackjackApp extends Application {
         TextField shoeSizeField = new TextField();
         shoeSizeField.setPromptText("Enter a number between 2 and 8");
 
-        Label numberOfShoesLabel = new Label("How many shoes to simulate? (1-10000):");
+        Label numberOfShoesLabel = new Label("How many shoes to simulate?:");
         TextField numberOfShoesField = new TextField();
-        numberOfShoesField.setPromptText("Enter a number between 1 and 10000");
+        numberOfShoesField.setPromptText("Enter a number greater than or equal to 1");
 
-        Label shuffleAtLabel = new Label("Shuffle at (must be >1 and < shoe size):");
+        Label shuffleAtLabel = new Label("Shuffle at:");
         TextField shuffleAtField = new TextField();
-        shuffleAtField.setPromptText("Enter shuffle point");
+        shuffleAtField.setPromptText("Decks remaining before shuffle");
 
         Button runButton = new Button("Run Simulation");
 
@@ -75,8 +75,8 @@ public class BlackjackApp extends Application {
                     outputArea.setText("Shoe size must be between 2 and 8.");
                     return;
                 }
-                if (numShoes < 1 || numShoes > 10000) {
-                    outputArea.setText("Number of shoes must be between 1 and 10000.");
+                if (numShoes < 1) {
+                    outputArea.setText("Number of shoes must be at least 1.");
                     return;
                 }
                 if (shuffleAt < 1 || shuffleAt >= shoeSize) {
@@ -200,8 +200,18 @@ public class BlackjackApp extends Application {
                     XYChart.Series<Number, Number> series = new XYChart.Series<>();
                     series.setName("Bankroll");
 
-                    for (int i = 0; i < table.bankrollHistory.size(); i++) {
+                    // Sample data points to avoid overloading the chart
+                    int dataSize = table.bankrollHistory.size();
+                    int maxPoints = 1000; // Maximum points to display
+                    int step = Math.max(1, dataSize / maxPoints);
+                    
+                    for (int i = 0; i < dataSize; i += step) {
                         series.getData().add(new XYChart.Data<>(i + 1, table.bankrollHistory.get(i)));
+                    }
+                    
+                    // Always include the last point
+                    if (dataSize > 0 && (dataSize - 1) % step != 0) {
+                        series.getData().add(new XYChart.Data<>(dataSize, table.bankrollHistory.get(dataSize - 1)));
                     }
 
                     bankrollChart.getData().add(series);
