@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.GridPane;
@@ -121,6 +123,70 @@ public class BlackjackApp extends Application {
         TextField numberOfShoesField = new TextField();
         numberOfShoesField.setPromptText("Enter a number greater than 1");
 
+        // --- Game Rules Section ---
+        Label gameRulesLabel = new Label("Game Rules:");
+        gameRulesLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+
+        // Dealer Hits Soft 17
+        Label dealerS17Label = new Label("Dealer hits soft 17:");
+        ToggleGroup dealerS17Group = new ToggleGroup();
+        RadioButton dealerS17Yes = new RadioButton("Yes");
+        RadioButton dealerS17No = new RadioButton("No");
+        dealerS17Yes.setToggleGroup(dealerS17Group);
+        dealerS17No.setToggleGroup(dealerS17Group);
+        dealerS17No.setSelected(true); // Default to No (dealer stands)
+        HBox dealerS17Box = new HBox(10, dealerS17Label, dealerS17Yes, dealerS17No);
+
+        // Double After Split
+        Label dasLabel = new Label("Double after split allowed:");
+        ToggleGroup dasGroup = new ToggleGroup();
+        RadioButton dasYes = new RadioButton("Yes");
+        RadioButton dasNo = new RadioButton("No");
+        dasYes.setToggleGroup(dasGroup);
+        dasNo.setToggleGroup(dasGroup);
+        dasYes.setSelected(true); // Default to Yes
+        HBox dasBox = new HBox(10, dasLabel, dasYes, dasNo);
+
+        // Resplit Aces
+        Label resplitAcesLabel = new Label("Resplit aces allowed:");
+        ToggleGroup resplitAcesGroup = new ToggleGroup();
+        RadioButton resplitAcesYes = new RadioButton("Yes");
+        RadioButton resplitAcesNo = new RadioButton("No");
+        resplitAcesYes.setToggleGroup(resplitAcesGroup);
+        resplitAcesNo.setToggleGroup(resplitAcesGroup);
+        resplitAcesNo.setSelected(true); // Default to No
+        HBox resplitAcesBox = new HBox(10, resplitAcesLabel, resplitAcesYes, resplitAcesNo);
+
+        // Late Surrender
+        Label surrenderLabel = new Label("Late surrender allowed:");
+        ToggleGroup surrenderGroup = new ToggleGroup();
+        RadioButton surrenderYes = new RadioButton("Yes");
+        RadioButton surrenderNo = new RadioButton("No");
+        surrenderYes.setToggleGroup(surrenderGroup);
+        surrenderNo.setToggleGroup(surrenderGroup);
+        surrenderYes.setSelected(true); // Default to Yes
+        HBox surrenderBox = new HBox(10, surrenderLabel, surrenderYes, surrenderNo);
+
+        // Hit Split Aces
+        Label hitSplitAcesLabel = new Label("Player can hit split aces:");
+        ToggleGroup hitSplitAcesGroup = new ToggleGroup();
+        RadioButton hitSplitAcesYes = new RadioButton("Yes");
+        RadioButton hitSplitAcesNo = new RadioButton("No");
+        hitSplitAcesYes.setToggleGroup(hitSplitAcesGroup);
+        hitSplitAcesNo.setToggleGroup(hitSplitAcesGroup);
+        hitSplitAcesNo.setSelected(true); // Default to No
+        HBox hitSplitAcesBox = new HBox(10, hitSplitAcesLabel, hitSplitAcesYes, hitSplitAcesNo);
+
+        // Double Split Aces
+        Label doubleSplitAcesLabel = new Label("Player can double after splitting aces:");
+        ToggleGroup doubleSplitAcesGroup = new ToggleGroup();
+        RadioButton doubleSplitAcesYes = new RadioButton("Yes");
+        RadioButton doubleSplitAcesNo = new RadioButton("No");
+        doubleSplitAcesYes.setToggleGroup(doubleSplitAcesGroup);
+        doubleSplitAcesNo.setToggleGroup(doubleSplitAcesGroup);
+        doubleSplitAcesNo.setSelected(true); // Default to No
+        HBox doubleSplitAcesBox = new HBox(10, doubleSplitAcesLabel, doubleSplitAcesYes, doubleSplitAcesNo);
+
         Button runButton = new Button("Run Simulation");
 
         ProgressBar progressBar = new ProgressBar(0);
@@ -161,6 +227,14 @@ public class BlackjackApp extends Application {
                 int tc2Bet = Integer.parseInt(tc2Field.getText().trim());
                 int tc3Bet = Integer.parseInt(tc3Field.getText().trim());
                 int tc4Bet = Integer.parseInt(tc4Field.getText().trim());
+
+                // Get game rule settings
+                boolean dealerHitsSoft17 = dealerS17Yes.isSelected();
+                boolean doubleAfterSplit = dasYes.isSelected();
+                boolean resplitAces = resplitAcesYes.isSelected();
+                boolean lateSurrender = surrenderYes.isSelected();
+                boolean hitSplitAces = hitSplitAcesYes.isSelected();
+                boolean doubleSplitAces = doubleSplitAcesYes.isSelected();
 
                 // Input validation
                 if (shoeSize < 2 || shoeSize > 8) {
@@ -208,8 +282,24 @@ public class BlackjackApp extends Application {
                         table.setShuffleAt(shuffleAt);
                         table.setPlayerBankroll(startingBankroll);
                         
-                        // Set bet spread (Corrected potential bug from original input code)
-                        table.setBetSpread(minBet, tc1Bet, tc2Bet, tc3Bet, tc4Bet);
+                        // Set bet spread
+                        table.setBetSpread(
+                            minBet, 
+                            tc1Bet, 
+                            tc2Bet, 
+                            tc3Bet, 
+                            tc4Bet
+                        );
+                        
+                        // Set game rules
+                        table.setGameRules(
+                            dealerHitsSoft17,
+                            doubleAfterSplit,
+                            resplitAces,
+                            lateSurrender,
+                            hitSplitAces,
+                            doubleSplitAces
+                        );
                         
                         updateMessage("Simulating " + numShoes + " shoes...");
                         
@@ -415,8 +505,19 @@ public class BlackjackApp extends Application {
 
         javafx.scene.layout.GridPane.setHgrow(startingBankrollField, javafx.scene.layout.Priority.ALWAYS);
 
+        // 3. Game Rules Section
+        VBox gameRulesBox = new VBox(8);
+        gameRulesBox.setPadding(new Insets(10, 0, 10, 0));
+        gameRulesBox.getChildren().addAll(
+            gameRulesLabel,
+            dealerS17Box,
+            dasBox,
+            resplitAcesBox,
+            surrenderBox,
+            hitSplitAcesBox
+        );
 
-        // 3. Create a VBox for the Run button, Progress Bar, and Progress Label
+        // 4. Create a VBox for the Run button, Progress Bar, and Progress Label
         VBox controlPanel = new VBox(5); // 5px spacing
         controlPanel.setPadding(new Insets(10, 0, 10, 0));
         controlPanel.getChildren().addAll(
@@ -426,7 +527,7 @@ public class BlackjackApp extends Application {
         );
 
 
-        // 4. Main VBox to hold the organized sections
+        // 5. Main VBox to hold the organized sections
         VBox root = new VBox(10); // 10px spacing between major sections
         root.setPadding(new Insets(10));
 
@@ -435,6 +536,7 @@ public class BlackjackApp extends Application {
             inputGrid1,
             betSpreadLabel,
             betSpreadGroup,
+            gameRulesBox,
             controlPanel,
             resultsPanel, // Now using the VBox resultsPanel
             bankrollChart
@@ -445,7 +547,7 @@ public class BlackjackApp extends Application {
         VBox.setVgrow(bankrollChart, javafx.scene.layout.Priority.ALWAYS);
 
 
-        Scene scene = new Scene(root, 700, 800); // Increased initial size for better fit
+        Scene scene = new Scene(root, 700, 900); // Increased height for new controls
         primaryStage.setScene(scene);
         primaryStage.setTitle("Blackjack Simulator");
         primaryStage.show();

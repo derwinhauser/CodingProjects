@@ -13,6 +13,14 @@ public class Table{
     private double shuffleAt;
     private double previousBankroll;
     
+    // Game Rules
+    private boolean dealerHitsSoft17;
+    private boolean doubleAfterSplitAllowed;
+    private boolean resplitAcesAllowed;
+    private boolean lateSurrenderAllowed;
+    private boolean playerCanHitSplitAces;
+    private boolean playerCanDoubleSplitAces;
+
     // Bet spread variables
     private int minBet = 25;
     private int tc1Bet = 100;
@@ -44,6 +52,22 @@ public class Table{
 
     public void setShuffleAt(double d){
         shuffleAt = d;
+    }
+
+    public void setGameRules(
+        boolean dealerHitsSoft17, 
+        boolean doubleAfterSplitAllowed, 
+        boolean resplitAcesAllowed, 
+        boolean lateSurrenderAllowed, 
+        boolean playerCanHitSplitAces, 
+        boolean playerCanDoubleSplitAces
+    ){
+        this.dealerHitsSoft17 = dealerHitsSoft17;
+        this.doubleAfterSplitAllowed = doubleAfterSplitAllowed;
+        this.resplitAcesAllowed = resplitAcesAllowed;
+        this.lateSurrenderAllowed = lateSurrenderAllowed;
+        this.playerCanHitSplitAces = playerCanHitSplitAces;
+        this.playerCanDoubleSplitAces = playerCanDoubleSplitAces;
     }
 
     public void setBetSpread(int min, int tc1, int tc2, int tc3, int tc4){
@@ -250,77 +274,171 @@ public class Table{
         String dealerUpCardSymbol = dealerUpCard.getSymbol();
         String dealerUpCardValue = dealerUpCard.getCardValue();
         double trueCount = getTrueCount();
-        if (playerHand.getCard(0).getSymbol().equals("A")){
-            return true;
-        }
-        else if (playerHand.getCard(0).getCardValue().equals("10")){
-            if (dealerUpCardSymbol.equals("6")){
-                if (trueCount>=4){
-                    return true;
+
+        if (!dealerHitsSoft17){ //Dealer stands on soft 17
+            if (playerHand.getCard(0).getSymbol().equals("A")){
+                if (player.getNumberOfHands()>1){
+                    return resplitAcesAllowed;
                 }
-                else {
+                return true;
+            }
+            else if (playerHand.getCard(0).getCardValue().equals("10")){
+                if (dealerUpCardSymbol.equals("6")){
+                    if (trueCount>=4){
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                else if (dealerUpCardSymbol.equals("5")){
+                    if (trueCount>=5){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                else if (dealerUpCardValue.equals("4")){
+                    if (trueCount>=6){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                else{
                     return false;
                 }
             }
-            else if (dealerUpCardSymbol.equals("5")){
-                if (trueCount>=5){
+            else if (playerHand.getCard(0).getSymbol().equals("2") || playerHand.getCard(0).getSymbol().equals("3")){
+                if (dealerUpCardValue.equals("8") || dealerUpCardValue.equals("9") || dealerUpCardValue.equals("10") || dealerUpCardSymbol.equals("A")){
+                    return false;
+                }
+                else if (doubleAfterSplitAllowed){
+                    return true;
+                }
+                return "4567".contains(dealerUpCardValue);
+
+            }
+            else if (playerHand.getCard(0).getSymbol().equals("4")){
+                if (dealerUpCardValue.equals("5") || dealerUpCardValue.equals("6")){
+                    if(doubleAfterSplitAllowed){
+                        return true;
+                    }
+                }
+                return false;
+
+            }
+            else if (playerHand.getCard(0).getSymbol().equals("5")){
+                return false;
+            }
+            else if (playerHand.getCard(0).getSymbol().equals("6")){
+                if (doubleAfterSplitAllowed){
+                    return "23456".contains(dealerUpCardValue);
+                }
+                else{
+                    return "3456".contains(dealerUpCardValue);
+                }
+                
+            }
+            else if (playerHand.getCard(0).getSymbol().equals("7")){
+                return "234567".contains(dealerUpCardValue);
+            }
+            else if (playerHand.getCard(0).getSymbol().equals("8")){
+                return true;
+            }
+            else if (playerHand.getCard(0).getSymbol().equals("9")){
+                if (dealerUpCardValue.equals("7") || dealerUpCardValue.equals("10") || dealerUpCardSymbol.equals("A")){
+                    return false;
+                }
+                else{
+                    return true;
+                }
+            }
+            else{
+                return false;
+            }
+        }
+
+        else{ //Dealer hits on soft 17
+            if (playerHand.getCard(0).getSymbol().equals("A")){
+                if (player.getNumberOfHands()>1){
+                    return resplitAcesAllowed;
+                }
+                return true;
+            }
+            else if (playerHand.getCard(0).getCardValue().equals("10")){
+                if (dealerUpCardSymbol.equals("6")){
+                    if (trueCount>=4){
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                else if (dealerUpCardSymbol.equals("5")){
+                    if (trueCount>=5){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                else if (dealerUpCardValue.equals("4")){
+                    if (trueCount>=6){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                else{
+                    return false;
+                }
+            }
+            else if (playerHand.getCard(0).getSymbol().equals("2") || playerHand.getCard(0).getSymbol().equals("3")){
+                if (dealerUpCardValue.equals("8") || dealerUpCardValue.equals("9") || dealerUpCardValue.equals("10") || dealerUpCardSymbol.equals("A")){
+                    return false;
+                }
+                if (doubleAfterSplitAllowed){
+                    return "234567".contains(dealerUpCardValue);
+                }
+                return "4567".contains(dealerUpCardValue);
+            }
+            else if (playerHand.getCard(0).getSymbol().equals("4")){
+                if (dealerUpCardValue.equals("5") || dealerUpCardValue.equals("6")){
                     return true;
                 }
                 else{
                     return false;
                 }
             }
-            else if (dealerUpCardValue.equals("4")){
-                if (trueCount>=6){
-                    return true;
-                }
-                else{
+            else if (playerHand.getCard(0).getSymbol().equals("5")){
+                return false;
+            }
+            else if (playerHand.getCard(0).getSymbol().equals("6")){
+                return "23456".contains(dealerUpCardValue);
+            }
+            else if (playerHand.getCard(0).getSymbol().equals("7")){
+                return "234567".contains(dealerUpCardValue);
+            }
+            else if (playerHand.getCard(0).getSymbol().equals("8")){
+                return true;
+            }
+            else if (playerHand.getCard(0).getSymbol().equals("9")){
+                if (dealerUpCardValue.equals("7") || dealerUpCardValue.equals("10") || dealerUpCardSymbol.equals("A")){
                     return false;
                 }
+                else{
+                    return true;
+                }
             }
             else{
                 return false;
             }
         }
-        else if (playerHand.getCard(0).getSymbol().equals("2") || playerHand.getCard(0).getSymbol().equals("3")){
-            if (dealerUpCardValue.equals("8") || dealerUpCardValue.equals("9") || dealerUpCardValue.equals("10") || dealerUpCardSymbol.equals("A")){
-                return false;
-            }
-            else{
-                return true;
-            }
-        }
-        else if (playerHand.getCard(0).getSymbol().equals("4")){
-            if (dealerUpCardValue.equals("5") || dealerUpCardValue.equals("6")){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-        else if (playerHand.getCard(0).getSymbol().equals("5")){
-            return false;
-        }
-        else if (playerHand.getCard(0).getSymbol().equals("6")){
-            return "23456".contains(dealerUpCardValue);
-        }
-        else if (playerHand.getCard(0).getSymbol().equals("7")){
-            return "234567".contains(dealerUpCardValue);
-        }
-        else if (playerHand.getCard(0).getSymbol().equals("8")){
-            return true;
-        }
-        else if (playerHand.getCard(0).getSymbol().equals("9")){
-            if (dealerUpCardValue.equals("7") || dealerUpCardValue.equals("10") || dealerUpCardSymbol.equals("A")){
-                return false;
-            }
-            else{
-                return true;
-            }
-        }
-        else{
-            return false;
-        }
+        
     }
 
     public boolean canPlayerDouble(int i){
@@ -328,22 +446,13 @@ public class Table{
         if (playerHand.getSize()!=2){
             return false;
         }
-        if (playerHand.getSize()==2){
-            if(playerHand.isSoftTotal()){
-                if (player.getNumberOfHands()==1){
-                    return true;
-                }
-                else{
-                    return false;
-                }
-            }
-            else{
+        if(playerHand.isSoftTotal()){
+            if (playerCanDoubleSplitAces){
                 return true;
             }
+            return player.getNumberOfHands()==1;
         }
-        else{
-            return false;
-        }
+        return true;
     }
 
     public boolean doesPlayerDouble(int i){
@@ -530,7 +639,15 @@ public class Table{
                 dealerTotal = dealerHand.totalHand();
             }
             else{
-                break;
+                if (dealerTotal==17 && dealerHand.isSoftTotal() && dealerHitsSoft17){
+                    dealerHand = dealer.getHand();
+                    dealerTakesCard();
+                    dealerHand = dealer.getHand();
+                    dealerTotal = dealerHand.totalHand();
+                }
+                else{
+                    break;
+                }
             }
         }
     }
@@ -606,6 +723,7 @@ public class Table{
         boolean doesPlayerSplit;
         boolean doesPlayerDouble;
         boolean doesPlayerHit;
+        
         while(playerHand.getHandIsInPlay()){
             while (true){
                 if (player.handCanSplit(i)){
@@ -701,8 +819,8 @@ public class Table{
             shuffleCards();
             shoesPlayed++;
             
-            // Update progress every 100 shoes (or adjust as needed)
-            if (callback != null && (shoesPlayed % 100 == 0 || shoesPlayed == numberOfShoesToPlay)) {
+            // Update progress every 1000 shoes (or adjust as needed)
+            if (callback != null && (shoesPlayed % 1000 == 0 || shoesPlayed == numberOfShoesToPlay)) {
                 callback.updateProgress(shoesPlayed, numberOfShoesToPlay);
                 // Yield to allow UI thread to update
                 try {
