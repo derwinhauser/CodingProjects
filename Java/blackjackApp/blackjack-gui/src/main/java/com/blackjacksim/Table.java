@@ -100,6 +100,9 @@ public class Table{
     }
 
     public double getTrueCount(){
+        if (!countingCards){
+            return 0.0;
+        }
         int runningCount = getRunningCount();
         double remainingDecks = shoe.getNumberOfDecks();
         double trueCount = runningCount/remainingDecks;
@@ -291,6 +294,11 @@ public class Table{
         String dealerUpCardValue = dealerUpCard.getCardValue();
         double trueCount = getTrueCount();
 
+        if (!resplitAcesAllowed && playerHand.getCard(0).getSymbol().equals("A")){
+            if (player.getNumberOfHands()>1){
+                return false;
+            }
+        }
         if (!dealerHitsSoft17){ //Dealer stands on soft 17
             if (playerHand.getCard(0).getSymbol().equals("A")){
                 if (player.getNumberOfHands()>1){
@@ -459,6 +467,16 @@ public class Table{
 
     public boolean canPlayerDouble(int i){
         Hand playerHand = player.getHand(i);
+        if (!playerCanDoubleSplitAces){
+            if (playerHand.getCard(0).getSymbol().equals("A")){
+                if (player.getNumberOfHands()>1){
+                    return false;
+                }
+            }
+        }
+        if (!doubleAfterSplitAllowed && player.getNumberOfHands()>1){
+            return false;
+        }
         if (playerHand.getSize()!=2){
             return false;
         }
@@ -582,37 +600,56 @@ public class Table{
         Card dealerUpCard = dealer.getUpCard();
         String dealerUpCardSymbol = dealerUpCard.getSymbol();
         boolean isSoftTotal = playerHand.isSoftTotal();
+        double trueCount = getTrueCount();
+
+        if (!playerCanHitSplitAces){
+            if (playerHand.getSize()>1 && playerHand.getCard(0).getSymbol().equals("A") && player.getNumberOfHands()>1){
+                return false;
+            }
+        }
         if (!dealerHitsSoft17) { //Dealer stands on soft 17
             if(isSoftTotal){
                 if (playerTotal>=19){
                     return false;
                 }
-                else if (playerTotal<=17){
+                if (playerTotal<=17){
                     return true;
                 }
-                else if(playerTotal == 18){
+                if(playerTotal == 18){
                     return "9TJQKA".contains(dealerUpCardSymbol);
-                }
-                else{
-                    return false;
                 }
             }
             else{
                 if(playerTotal>=17){
                     return false;
                 }
-                else if(playerTotal>=13){
-                    return !"23456".contains(dealerUpCardSymbol);
-                }
-                else if (playerTotal==12){
-                    if ("456".contains(dealerUpCardSymbol)){
+                if(playerTotal>=13){
+                    if (playerTotal==16 ){
+                        if ("TJQK".contains(dealerUpCardSymbol) && getTrueCount()>=0){
+                            return false;
+                        }
+                        if ("9".equals(dealerUpCardSymbol) && getTrueCount()>=4){
+                            return false;
+                        }
+                    }
+                    if (playerTotal==15 && "TJQK".contains(dealerUpCardSymbol) && getTrueCount()>=3){
                         return false;
                     }
-                    else{
+                    return !"23456".contains(dealerUpCardSymbol);
+                }
+                if (playerTotal==12){
+                    if (trueCount>=3 && "2".equals(dealerUpCardSymbol)){
+                        return false;
+                    }
+                    if (trueCount>=2 && "3".equals(dealerUpCardSymbol)){
+                        return false;
+                    }
+                    if (trueCount<=0 && "4".equals(dealerUpCardSymbol)){
                         return true;
                     }
+                    return !"456".contains(dealerUpCardSymbol);
                 }
-                else if(playerTotal<=11){
+                if(playerTotal<=11){
                     return true;
                 }
                 else{
@@ -620,7 +657,57 @@ public class Table{
                 }
             }    
         }
-        return false; //TEMP
+        else { //dealer hits on soft 17
+            if(isSoftTotal){
+                if (playerTotal>=19){
+                    return false;
+                }
+                if (playerTotal<=17){
+                    return true;
+                }
+                if(playerTotal == 18){
+                    return "9TJQKA".contains(dealerUpCardSymbol);
+                }
+            }
+            else{
+                if(playerTotal>=17){
+                    return false;
+                }
+                if(playerTotal>=13){
+                    if (playerTotal==16 ){
+                        if ("TJQK".contains(dealerUpCardSymbol) && getTrueCount()>=0){
+                            return false;
+                        }
+                        if ("9".equals(dealerUpCardSymbol) && getTrueCount()>=4){
+                            return false;
+                        }
+                        if ("A".equals(dealerUpCardSymbol) && getTrueCount()>=3){
+                            return false;
+                        }
+                    }
+                    if (playerTotal==15 && "TJQK".contains(dealerUpCardSymbol) && getTrueCount()>=3){
+                        return false;
+                    }
+                    return !"23456".contains(dealerUpCardSymbol);
+                }
+                if (playerTotal==12){
+                    if (trueCount>=3 && "2".equals(dealerUpCardSymbol)){
+                        return false;
+                    }
+                    if (trueCount>=2 && "3".equals(dealerUpCardSymbol)){
+                        return false;
+                    }
+                    if (trueCount<=0 && "4".equals(dealerUpCardSymbol)){
+                        return true;
+                    }
+                    return !"456".contains(dealerUpCardSymbol);
+                }
+                if(playerTotal<=11){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void dealerTakesCard(){
