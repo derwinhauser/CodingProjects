@@ -121,7 +121,7 @@ public class Deck{
                     else if (j==10){
                         value="10";
                         count = -1;
-                        symbol = "10";
+                        symbol = "T";
                     }
                     else if (j==11){
                         value="10";

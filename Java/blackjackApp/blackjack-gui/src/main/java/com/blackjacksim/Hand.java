@@ -92,6 +92,9 @@ public class Hand{
             else if (tempSymbol.equals("J")){
                 tempCardValue = 10;
             }
+            else if (tempSymbol.equals("T") || tempSymbol.equals("10")){
+                tempCardValue = 10;
+            }
             else{
                 tempCardValue = Integer.parseInt(tempSymbol);
             }
@@ -160,6 +163,9 @@ public class Hand{
                 tempCardValue = 10;
             }
             else if (tempSymbol.equals("J")){
+                tempCardValue = 10;
+            }
+            else if (tempSymbol.equals("T") || tempSymbol.equals("10")){
                 tempCardValue = 10;
             }
             else{

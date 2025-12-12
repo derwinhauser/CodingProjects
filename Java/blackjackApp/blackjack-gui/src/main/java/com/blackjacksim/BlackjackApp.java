@@ -10,12 +10,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.Screen;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -71,15 +74,15 @@ public class BlackjackApp extends Application {
         Label betSpreadLabel = new Label("Bet Spread:");
         betSpreadLabel.setStyle("-fx-font-weight: bold;");
 
-        HBox minBetBox = new HBox(10);
-        Label minBetLabel = new Label("Min bet:");
+        VBox minBetBox = new VBox(5);
+        Label minBetLabel = new Label("Base Unit:");
         TextField minBetField = new TextField();
         minBetField.setPromptText("");
         minBetField.setText("");
         minBetField.setPrefWidth(100);
         minBetBox.getChildren().addAll(minBetLabel, minBetField);
 
-        HBox tc1Box = new HBox(10);
+        VBox tc1Box = new VBox(5);
         Label tc1Label = new Label("True Count 1+:");
         TextField tc1Field = new TextField();
         tc1Field.setPromptText("");
@@ -87,7 +90,7 @@ public class BlackjackApp extends Application {
         tc1Field.setPrefWidth(100);
         tc1Box.getChildren().addAll(tc1Label, tc1Field);
 
-        HBox tc2Box = new HBox(10);
+        VBox tc2Box = new VBox(5);
         Label tc2Label = new Label("True Count 2+:");
         TextField tc2Field = new TextField();
         tc2Field.setPromptText("");
@@ -95,7 +98,7 @@ public class BlackjackApp extends Application {
         tc2Field.setPrefWidth(100);
         tc2Box.getChildren().addAll(tc2Label, tc2Field);
 
-        HBox tc3Box = new HBox(10);
+        VBox tc3Box = new VBox(5);
         Label tc3Label = new Label("True Count 3+:");
         TextField tc3Field = new TextField();
         tc3Field.setPromptText("");
@@ -103,7 +106,7 @@ public class BlackjackApp extends Application {
         tc3Field.setPrefWidth(100);
         tc3Box.getChildren().addAll(tc3Label, tc3Field);
 
-        HBox tc4Box = new HBox(10);
+        VBox tc4Box = new VBox(5);
         Label tc4Label = new Label("True Count 4+:");
         TextField tc4Field = new TextField();
         tc4Field.setPromptText("");
@@ -135,7 +138,6 @@ public class BlackjackApp extends Application {
         dealerS17Yes.setToggleGroup(dealerS17Group);
         dealerS17No.setToggleGroup(dealerS17Group);
         dealerS17No.setSelected(true); // Default to No (dealer stands)
-        HBox dealerS17Box = new HBox(10, dealerS17Label, dealerS17Yes, dealerS17No);
 
         // Double After Split
         Label dasLabel = new Label("Double after split allowed:");
@@ -145,7 +147,6 @@ public class BlackjackApp extends Application {
         dasYes.setToggleGroup(dasGroup);
         dasNo.setToggleGroup(dasGroup);
         dasYes.setSelected(true); // Default to Yes
-        HBox dasBox = new HBox(10, dasLabel, dasYes, dasNo);
 
         // Resplit Aces
         Label resplitAcesLabel = new Label("Resplit aces allowed:");
@@ -154,18 +155,7 @@ public class BlackjackApp extends Application {
         RadioButton resplitAcesNo = new RadioButton("No");
         resplitAcesYes.setToggleGroup(resplitAcesGroup);
         resplitAcesNo.setToggleGroup(resplitAcesGroup);
-        resplitAcesNo.setSelected(true); // Default to No
-        HBox resplitAcesBox = new HBox(10, resplitAcesLabel, resplitAcesYes, resplitAcesNo);
-
-        // Late Surrender
-        Label surrenderLabel = new Label("Late surrender allowed:");
-        ToggleGroup surrenderGroup = new ToggleGroup();
-        RadioButton surrenderYes = new RadioButton("Yes");
-        RadioButton surrenderNo = new RadioButton("No");
-        surrenderYes.setToggleGroup(surrenderGroup);
-        surrenderNo.setToggleGroup(surrenderGroup);
-        surrenderYes.setSelected(true); // Default to Yes
-        HBox surrenderBox = new HBox(10, surrenderLabel, surrenderYes, surrenderNo);
+        resplitAcesYes.setSelected(true); // Default to No
 
         // Hit Split Aces
         Label hitSplitAcesLabel = new Label("Player can hit split aces:");
@@ -175,7 +165,6 @@ public class BlackjackApp extends Application {
         hitSplitAcesYes.setToggleGroup(hitSplitAcesGroup);
         hitSplitAcesNo.setToggleGroup(hitSplitAcesGroup);
         hitSplitAcesNo.setSelected(true); // Default to No
-        HBox hitSplitAcesBox = new HBox(10, hitSplitAcesLabel, hitSplitAcesYes, hitSplitAcesNo);
 
         // Double Split Aces
         Label doubleSplitAcesLabel = new Label("Player can double after splitting aces:");
@@ -185,7 +174,62 @@ public class BlackjackApp extends Application {
         doubleSplitAcesYes.setToggleGroup(doubleSplitAcesGroup);
         doubleSplitAcesNo.setToggleGroup(doubleSplitAcesGroup);
         doubleSplitAcesNo.setSelected(true); // Default to No
-        HBox doubleSplitAcesBox = new HBox(10, doubleSplitAcesLabel, doubleSplitAcesYes, doubleSplitAcesNo);
+
+        // Late Surrender
+        Label surrenderLabel = new Label("Late surrender allowed:");
+        ToggleGroup surrenderGroup = new ToggleGroup();
+        RadioButton surrenderYes = new RadioButton("Yes");
+        RadioButton surrenderNo = new RadioButton("No");
+        surrenderYes.setToggleGroup(surrenderGroup);
+        surrenderNo.setToggleGroup(surrenderGroup);
+        surrenderYes.setSelected(true); // Default to Yes
+
+        // Layout the game rule controls in a GridPane so columns align (Label | Yes | No)
+        GridPane gameRulesGrid = new GridPane();
+        gameRulesGrid.setHgap(20);
+        gameRulesGrid.setVgap(8);
+
+        // Row 0: Counting cards option (moved to top)
+        Label countingLabel = new Label("Counting cards:");
+        ToggleGroup countingGroup = new ToggleGroup();
+        RadioButton countingYes = new RadioButton("Yes");
+        RadioButton countingNo = new RadioButton("No");
+        countingYes.setToggleGroup(countingGroup);
+        countingNo.setToggleGroup(countingGroup);
+        countingNo.setSelected(true);
+        gameRulesGrid.add(countingLabel, 0, 0);
+        gameRulesGrid.add(countingYes, 1, 0);
+        gameRulesGrid.add(countingNo, 2, 0);
+
+        // Row 1: Dealer hits soft 17
+        gameRulesGrid.add(dealerS17Label, 0, 1);
+        gameRulesGrid.add(dealerS17Yes, 1, 1);
+        gameRulesGrid.add(dealerS17No, 2, 1);
+
+        // Row 2: Double after split
+        gameRulesGrid.add(dasLabel, 0, 2);
+        gameRulesGrid.add(dasYes, 1, 2);
+        gameRulesGrid.add(dasNo, 2, 2);
+
+        // Row 3: Resplit aces
+        gameRulesGrid.add(resplitAcesLabel, 0, 3);
+        gameRulesGrid.add(resplitAcesYes, 1, 3);
+        gameRulesGrid.add(resplitAcesNo, 2, 3);
+
+        // Row 4: Hit split aces
+        gameRulesGrid.add(hitSplitAcesLabel, 0, 4);
+        gameRulesGrid.add(hitSplitAcesYes, 1, 4);
+        gameRulesGrid.add(hitSplitAcesNo, 2, 4);
+
+        // Row 5: Double split aces
+        gameRulesGrid.add(doubleSplitAcesLabel, 0, 5);
+        gameRulesGrid.add(doubleSplitAcesYes, 1, 5);
+        gameRulesGrid.add(doubleSplitAcesNo, 2, 5);
+
+        // Row 6: Late surrender
+        gameRulesGrid.add(surrenderLabel, 0, 6);
+        gameRulesGrid.add(surrenderYes, 1, 6);
+        gameRulesGrid.add(surrenderNo, 2, 6);
 
         Button runButton = new Button("Run Simulation");
 
@@ -221,12 +265,12 @@ public class BlackjackApp extends Application {
                 double shuffleAt = Double.parseDouble(shuffleAtField.getText().trim());
                 double startingBankroll = Double.parseDouble(startingBankrollField.getText().trim());
                 
-                // Parse bet spread
+                // Parse bet spread: base unit always required. True-count bets only required when counting is enabled.
                 int minBet = Integer.parseInt(minBetField.getText().trim());
-                int tc1Bet = Integer.parseInt(tc1Field.getText().trim());
-                int tc2Bet = Integer.parseInt(tc2Field.getText().trim());
-                int tc3Bet = Integer.parseInt(tc3Field.getText().trim());
-                int tc4Bet = Integer.parseInt(tc4Field.getText().trim());
+                int tc1Bet = minBet;
+                int tc2Bet = minBet;
+                int tc3Bet = minBet;
+                int tc4Bet = minBet;
 
                 // Get game rule settings
                 boolean dealerHitsSoft17 = dealerS17Yes.isSelected();
@@ -235,6 +279,15 @@ public class BlackjackApp extends Application {
                 boolean lateSurrender = surrenderYes.isSelected();
                 boolean hitSplitAces = hitSplitAcesYes.isSelected();
                 boolean doubleSplitAces = doubleSplitAcesYes.isSelected();
+                boolean countingCards = countingYes.isSelected();
+
+                // If counting cards is enabled, parse and require true-count bet fields
+                if (countingCards) {
+                    tc1Bet = Integer.parseInt(tc1Field.getText().trim());
+                    tc2Bet = Integer.parseInt(tc2Field.getText().trim());
+                    tc3Bet = Integer.parseInt(tc3Field.getText().trim());
+                    tc4Bet = Integer.parseInt(tc4Field.getText().trim());
+                }
 
                 // Input validation
                 if (shoeSize < 2 || shoeSize > 8) {
@@ -257,11 +310,25 @@ public class BlackjackApp extends Application {
                     resultsPanel.getChildren().add(new Label("Starting bankroll must be greater than 0."));
                     return;
                 }
-                if (minBet <= 0 || tc1Bet <= 0 || tc2Bet <= 0 || tc3Bet <= 0 || tc4Bet <= 0) {
+                if (minBet <= 0) {
                     resultsPanel.getChildren().clear();
-                    resultsPanel.getChildren().add(new Label("All bet amounts must be greater than 0."));
+                    resultsPanel.getChildren().add(new Label("Base unit must be greater than 0."));
                     return;
                 }
+                if (countingCards) {
+                    if (tc1Bet <= 0 || tc2Bet <= 0 || tc3Bet <= 0 || tc4Bet <= 0) {
+                        resultsPanel.getChildren().clear();
+                        resultsPanel.getChildren().add(new Label("All true-count bet amounts must be greater than 0 when counting is enabled."));
+                        return;
+                    }
+                }
+
+                // Make final copies of parsed values so the Task inner class can reference them
+                final int fMinBet = minBet;
+                final int fTc1Bet = tc1Bet;
+                final int fTc2Bet = tc2Bet;
+                final int fTc3Bet = tc3Bet;
+                final int fTc4Bet = tc4Bet;
 
                 // Disable button during simulation
                 runButton.setDisable(true);
@@ -284,11 +351,11 @@ public class BlackjackApp extends Application {
                         
                         // Set bet spread
                         table.setBetSpread(
-                            minBet, 
-                            tc1Bet, 
-                            tc2Bet, 
-                            tc3Bet, 
-                            tc4Bet
+                            fMinBet,
+                            fTc1Bet,
+                            fTc2Bet,
+                            fTc3Bet,
+                            fTc4Bet
                         );
                         
                         // Set game rules
@@ -298,7 +365,8 @@ public class BlackjackApp extends Application {
                             resplitAces,
                             lateSurrender,
                             hitSplitAces,
-                            doubleSplitAces
+                            doubleSplitAces,
+                            countingCards
                         );
                         
                         updateMessage("Simulating " + numShoes + " shoes...");
@@ -508,13 +576,10 @@ public class BlackjackApp extends Application {
         // 3. Game Rules Section
         VBox gameRulesBox = new VBox(8);
         gameRulesBox.setPadding(new Insets(10, 0, 10, 0));
+        // Add the section title and the aligned grid of controls
         gameRulesBox.getChildren().addAll(
             gameRulesLabel,
-            dealerS17Box,
-            dasBox,
-            resplitAcesBox,
-            surrenderBox,
-            hitSplitAcesBox
+            gameRulesGrid
         );
 
         // 4. Create a VBox for the Run button, Progress Bar, and Progress Label
@@ -547,9 +612,32 @@ public class BlackjackApp extends Application {
         VBox.setVgrow(bankrollChart, javafx.scene.layout.Priority.ALWAYS);
 
 
-        Scene scene = new Scene(root, 700, 900); // Increased height for new controls
+        // Determine available screen area and cap initial window size so it fits smaller monitors
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        double maxWidth = screenBounds.getWidth() * 0.95; // leave a small margin
+        double maxHeight = screenBounds.getHeight() * 0.95;
+
+        double initWidth = Math.min(700, maxWidth);
+        double initHeight = Math.min(900, maxHeight);
+
+        // Wrap main UI in a ScrollPane so vertical scrolling is available when window height is reduced
+        ScrollPane scrollPane = new ScrollPane(root);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setPannable(true);
+
+        Scene scene = new Scene(scrollPane, initWidth, initHeight);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Blackjack Simulator");
+
+        // Sensible minimums so UI stays usable
+        primaryStage.setMinWidth(Math.min(600, initWidth));
+        primaryStage.setMinHeight(Math.min(400, initHeight));
+
+        // Do not hard-limit max size; allow full-screen to occupy entire display
+
+        primaryStage.centerOnScreen();
         primaryStage.show();
     }
 

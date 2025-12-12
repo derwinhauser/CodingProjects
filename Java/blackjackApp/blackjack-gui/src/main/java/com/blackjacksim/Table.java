@@ -20,6 +20,7 @@ public class Table{
     private boolean lateSurrenderAllowed;
     private boolean playerCanHitSplitAces;
     private boolean playerCanDoubleSplitAces;
+    private boolean countingCards;
 
     // Bet spread variables
     private int minBet = 25;
@@ -60,7 +61,8 @@ public class Table{
         boolean resplitAcesAllowed, 
         boolean lateSurrenderAllowed, 
         boolean playerCanHitSplitAces, 
-        boolean playerCanDoubleSplitAces
+        boolean playerCanDoubleSplitAces,
+        boolean countingCards
     ){
         this.dealerHitsSoft17 = dealerHitsSoft17;
         this.doubleAfterSplitAllowed = doubleAfterSplitAllowed;
@@ -68,6 +70,7 @@ public class Table{
         this.lateSurrenderAllowed = lateSurrenderAllowed;
         this.playerCanHitSplitAces = playerCanHitSplitAces;
         this.playerCanDoubleSplitAces = playerCanDoubleSplitAces;
+        this.countingCards = countingCards;
     }
 
     public void setBetSpread(int min, int tc1, int tc2, int tc3, int tc4){
@@ -161,6 +164,11 @@ public class Table{
     public int getBetSize(){
         int betSize;
         double trueCount = getTrueCount();
+        if (!countingCards){
+            betSize = minBet;
+            player.setBetSize(betSize);
+            return betSize;
+        }
         if (trueCount<1){ 
             betSize = minBet;
         }
@@ -191,11 +199,9 @@ public class Table{
     }
 
     public boolean playerTakesInsurance(){
-        boolean dealerShowsAce = dealerShowsAce();
-        boolean playerHasBlackjack = player.blackjackCheck();
         double trueCount = getTrueCount();
         
-        if (dealerShowsAce && !playerHasBlackjack){
+        if (dealerShowsAce() && !playerHasBlackjack()){
             if (trueCount>=3){
                 return true;
             }
@@ -209,10 +215,8 @@ public class Table{
     }
 
     public boolean playerTakesEvenMoney(){
-        boolean dealerShowsAce = dealerShowsAce();
-        boolean playerHasBlackjack = player.blackjackCheck();
         double trueCount = getTrueCount();
-        if (dealerShowsAce && playerHasBlackjack){
+        if (dealerShowsAce() && playerHasBlackjack()){
             if (trueCount>=3){
                 return true;
             }
@@ -222,6 +226,18 @@ public class Table{
         }
         else{
             return false;
+        }
+    }
+
+    public boolean playerCanSurrender(){
+        if (!lateSurrenderAllowed){
+            return false;
+        }
+        if (player.getNumberOfHands()>1){
+            return false;
+        }
+        else{
+            return true;
         }
     }
 
@@ -311,8 +327,8 @@ public class Table{
                     return false;
                 }
             }
-            else if (playerHand.getCard(0).getSymbol().equals("2") || playerHand.getCard(0).getSymbol().equals("3")){
-                if (dealerUpCardValue.equals("8") || dealerUpCardValue.equals("9") || dealerUpCardValue.equals("10") || dealerUpCardSymbol.equals("A")){
+            else if ("23".contains(playerHand.getCard(0).getSymbol())){
+                if ("89TJQKA".contains(dealerUpCardSymbol)){
                     return false;
                 }
                 else if (doubleAfterSplitAllowed){
@@ -322,7 +338,7 @@ public class Table{
 
             }
             else if (playerHand.getCard(0).getSymbol().equals("4")){
-                if (dealerUpCardValue.equals("5") || dealerUpCardValue.equals("6")){
+                if ("56".contains(dealerUpCardSymbol)){
                     if(doubleAfterSplitAllowed){
                         return true;
                     }
@@ -349,7 +365,7 @@ public class Table{
                 return true;
             }
             else if (playerHand.getCard(0).getSymbol().equals("9")){
-                if (dealerUpCardValue.equals("7") || dealerUpCardValue.equals("10") || dealerUpCardSymbol.equals("A")){
+                if ("7TJQKA".contains(dealerUpCardSymbol)){
                     return false;
                 }
                 else{
@@ -397,8 +413,8 @@ public class Table{
                     return false;
                 }
             }
-            else if (playerHand.getCard(0).getSymbol().equals("2") || playerHand.getCard(0).getSymbol().equals("3")){
-                if (dealerUpCardValue.equals("8") || dealerUpCardValue.equals("9") || dealerUpCardValue.equals("10") || dealerUpCardSymbol.equals("A")){
+            else if ("23".contains(playerHand.getCard(0).getSymbol())){
+                if ("89TJQKA".contains(dealerUpCardSymbol)){
                     return false;
                 }
                 if (doubleAfterSplitAllowed){
@@ -427,7 +443,7 @@ public class Table{
                 return true;
             }
             else if (playerHand.getCard(0).getSymbol().equals("9")){
-                if (dealerUpCardValue.equals("7") || dealerUpCardValue.equals("10") || dealerUpCardSymbol.equals("A")){
+                if ("7TJQKA".contains(dealerUpCardSymbol)){
                     return false;
                 }
                 else{
@@ -566,53 +582,45 @@ public class Table{
         Card dealerUpCard = dealer.getUpCard();
         String dealerUpCardSymbol = dealerUpCard.getSymbol();
         boolean isSoftTotal = playerHand.isSoftTotal();
-
-        if(isSoftTotal){
-            if (playerTotal>=19){
-                return false;
-            }
-            else if (playerTotal<=17){
-                return true;
-            }
-            else if(playerTotal == 18){
-                if("2345678".contains(dealerUpCardSymbol)){
+        if (!dealerHitsSoft17) { //Dealer stands on soft 17
+            if(isSoftTotal){
+                if (playerTotal>=19){
                     return false;
                 }
-                else{
+                else if (playerTotal<=17){
                     return true;
+                }
+                else if(playerTotal == 18){
+                    return "9TJQKA".contains(dealerUpCardSymbol);
+                }
+                else{
+                    return false;
                 }
             }
             else{
-                return false;
-            }
-        }
-        else{
-            if(playerTotal>=17){
-                return false;
-            }
-            else if(playerTotal>=13){
-                if("23456".contains(dealerUpCardSymbol)){
+                if(playerTotal>=17){
                     return false;
                 }
-                else{
+                else if(playerTotal>=13){
+                    return !"23456".contains(dealerUpCardSymbol);
+                }
+                else if (playerTotal==12){
+                    if ("456".contains(dealerUpCardSymbol)){
+                        return false;
+                    }
+                    else{
+                        return true;
+                    }
+                }
+                else if(playerTotal<=11){
                     return true;
                 }
-            }
-            else if (playerTotal==12){
-                if ("456".contains(dealerUpCardSymbol)){
+                else{
                     return false;
                 }
-                else{
-                    return true;
-                }
-            }
-            else if(playerTotal<=11){
-                return true;
-            }
-            else{
-                return false;
-            }
+            }    
         }
+        return false; //TEMP
     }
 
     public void dealerTakesCard(){
@@ -786,6 +794,14 @@ public class Table{
         previousBankroll = current;
     }
 
+    public boolean playerHasBlackjack(){
+        return player.blackjackCheck();
+    }
+
+    public boolean dealerHasBlackjack(){
+        return dealer.blackjackCheck();
+    }
+
     private void clearFile() throws IOException {
         // Close existing writer if open
         if (writer != null) {
@@ -799,15 +815,78 @@ public class Table{
         writer = new FileWriter("blackjackResults.csv", false);
     }
 
+    public boolean doesPlayerSurrender(){
+        Hand playerHand = player.getHand(0);
+        Card dealerUpCard = dealer.getUpCard();
+        String dealerUpCardSymbol = dealerUpCard.getSymbol();
+        String dealerUpCardValue = dealerUpCard.getCardValue();
+        double trueCount = getTrueCount();
+        int handTotal = playerHand.totalHand();
+        if (!lateSurrenderAllowed){
+            return false;
+        }
+        if (playerHand.isSoftTotal()){
+            return false;
+        }
+
+        if(dealerHitsSoft17){
+            if (handTotal==16){
+                if ("TJQKA".contains(dealerUpCardSymbol)){
+                    return true;
+                }
+                if ("9".equals(dealerUpCardSymbol)){
+                    return trueCount>=-1;
+                }
+                if ("8".equals(dealerUpCardSymbol)){
+                    return trueCount>=4;
+                }
+            }
+            if (handTotal==15){
+                if ("9".equals(dealerUpCardSymbol)){
+                    return trueCount>=2;
+                }
+                if ("TJQK".contains(dealerUpCardSymbol)){
+                    return trueCount>=0;
+                }
+                if ("A".equals(dealerUpCardSymbol)){
+                    return trueCount>=-1;
+                }
+            }
+            if (handTotal==17){
+                return "A".equals(dealerUpCardSymbol);
+            }
+        }
+        else{ //Dealer stands on soft 17
+            if (handTotal==16){
+                if ("TJQKA".contains(dealerUpCardSymbol)){
+                    return true;
+                }
+                if ("9".equals(dealerUpCardSymbol)){
+                    return trueCount>=-1;
+                }
+                if ("8".equals(dealerUpCardSymbol)){
+                    return trueCount>=4;
+                }
+            }
+            if (handTotal==15){
+                if ("9".equals(dealerUpCardSymbol)){
+                    return trueCount>=2;
+                }
+                if ("TJQK".contains(dealerUpCardSymbol)){
+                    return trueCount>1;
+                }
+                if ("A".equals(dealerUpCardSymbol)){
+                    return trueCount>=2;
+                }
+            }
+        }
+        return false;
+    }
+
     // New version with callback
     public void playShoe(int numberOfShoesToPlay, ProgressCallback callback) throws IOException{
         double bankroll = player.getBankroll();
         int betSize;
-        boolean dealerShowsAce;
-        boolean playerHasBlackjack;
-        boolean dealerHasBlackjack;
-        boolean playerTakesInsurance;
-        boolean playerTakesEvenMoney;
         int shoesPlayed = 0;
 
         clearFile();
@@ -843,27 +922,20 @@ public class Table{
 
                 dealStartingCards();
 
-                playerHasBlackjack = player.blackjackCheck();
-                dealerShowsAce = dealerShowsAce();
+                if (dealerShowsAce()){  
 
-                if (dealerShowsAce){  
-                    dealerHasBlackjack = dealer.blackjackCheck();
-                    playerTakesInsurance = playerTakesInsurance();
-
-                    if(playerTakesInsurance && !dealerHasBlackjack){
+                    if(playerTakesInsurance() && !dealerHasBlackjack()){
                         double loss = (betSize*0.5);
                         bankroll = player.getBankroll();
                         bankroll = (bankroll-loss);
                         player.setBankroll(bankroll);
                     }
 
-                    if (playerTakesInsurance && dealerHasBlackjack){
+                    if (playerTakesInsurance() && dealerHasBlackjack()){
                         continue;                        
                     }
 
-                    playerTakesEvenMoney = playerTakesEvenMoney();
-
-                    if(playerTakesEvenMoney){
+                    if(playerTakesEvenMoney()){
                         bankroll = player.getBankroll();
                         bankroll = bankroll + betSize;
                         player.setBankroll(bankroll);
@@ -871,7 +943,7 @@ public class Table{
                     }
                 }
 
-                if (playerHasBlackjack){
+                if (playerHasBlackjack()){
                     double payout = (betSize*1.5);
                     bankroll = player.getBankroll();
                     bankroll = bankroll + payout;
@@ -880,6 +952,14 @@ public class Table{
                 }
                 else{
                     int handNumber=0;
+                    if (playerCanSurrender()){
+                        if (doesPlayerSurrender()){
+                            bankroll = player.getBankroll();
+                            bankroll = bankroll - (betSize*0.5);
+                            player.setBankroll(bankroll);
+                            continue;
+                        }
+                    }
                     while(playerHasHandInPlay()){
                         playHand(handNumber);
                         handNumber++;
