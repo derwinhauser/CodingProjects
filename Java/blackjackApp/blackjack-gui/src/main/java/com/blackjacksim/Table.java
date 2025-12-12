@@ -1010,6 +1010,13 @@ public class Table{
                 dealStartingCards();
 
                 if (dealerShowsAce()){  
+                    
+                    if(playerTakesEvenMoney()){
+                        bankroll = player.getBankroll();
+                        bankroll = bankroll + betSize;
+                        player.setBankroll(bankroll);
+                        continue;
+                    }
 
                     if(playerTakesInsurance() && !dealerHasBlackjack()){
                         double loss = (betSize*0.5);
@@ -1021,11 +1028,14 @@ public class Table{
                     if (playerTakesInsurance() && dealerHasBlackjack()){
                         continue;                        
                     }
-
-                    if(playerTakesEvenMoney()){
+                    
+                    if (dealerHasBlackjack() && !playerHasBlackjack()){
                         bankroll = player.getBankroll();
-                        bankroll = bankroll + betSize;
+                        bankroll = bankroll - betSize;
                         player.setBankroll(bankroll);
+                        continue;
+                    }
+                    if (playerHasBlackjack() && dealerHasBlackjack()){
                         continue;
                     }
                 }
