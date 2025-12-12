@@ -1,5 +1,4 @@
 package com.blackjacksim;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -603,7 +602,7 @@ public class Table{
         double trueCount = getTrueCount();
 
         if (!playerCanHitSplitAces){
-            if (playerHand.getSize()>1 && playerHand.getCard(0).getSymbol().equals("A") && player.getNumberOfHands()>1){
+            if (playerHand.getSize()>=2 && isSoftTotal && player.getNumberOfHands()>1){
                 return false;
             }
         }
@@ -856,25 +855,7 @@ public class Table{
         player.setHand(playerHand, i);
     }
 
-    private FileWriter writer; // Add instance variable for file writer
-
     public void writeToFile() throws IOException {
-        int handNumber = player.getHandNumber();
-        String handNumberString = String.valueOf(handNumber);
-        double bankroll = player.getBankroll();
-        String bankrollString = String.valueOf(bankroll);
-        int betSize = player.getBetSize();
-        String betSizeString = String.valueOf(betSize);
-        double trueCount = getTrueCount();
-        String trueCountString = String.valueOf(trueCount);
-        String line = "";
-        line = handNumberString+","+trueCountString+","+betSizeString+","+bankrollString+"\n";
-        if (player.getHandNumber()%1000==1 && writer == null){
-            writer = new FileWriter("blackjackResults.csv", true); // Open in append mode
-            writer.write(line); // Use instance variable, don't close here
-        }
-        
-
         betHistory.add(player.getBetSize());
         double current = player.getBankroll();
         double profitThisHand = current - previousBankroll;
@@ -893,25 +874,10 @@ public class Table{
         return dealer.blackjackCheck();
     }
 
-    private void clearFile() throws IOException {
-        // Close existing writer if open
-        if (writer != null) {
-            try {
-                writer.close();
-            } catch (IOException e) {
-                // Ignore close errors
-            }
-        }
-        // Open new writer for this simulation
-        writer = new FileWriter("blackjackResults.csv", false);
-        writer.close();
-    }
-
     public boolean doesPlayerSurrender(){
         Hand playerHand = player.getHand(0);
         Card dealerUpCard = dealer.getUpCard();
         String dealerUpCardSymbol = dealerUpCard.getSymbol();
-        String dealerUpCardValue = dealerUpCard.getCardValue();
         double trueCount = getTrueCount();
         int handTotal = playerHand.totalHand();
         if (!lateSurrenderAllowed){
@@ -980,8 +946,6 @@ public class Table{
         double bankroll = player.getBankroll();
         int betSize;
         int shoesPlayed = 0;
-
-        clearFile();
 
         startingBankroll = player.getBankroll();
         previousBankroll = startingBankroll;
@@ -1078,11 +1042,6 @@ public class Table{
             callback.updateProgress(numberOfShoesToPlay, numberOfShoesToPlay);
         }
         
-        // Close the file writer
-        if (writer != null) {
-            writer.close();
-            writer = null;
-        }
         
         endingBankroll = player.getBankroll();
         totalHands = player.getHandNumber();
