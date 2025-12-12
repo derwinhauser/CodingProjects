@@ -869,7 +869,11 @@ public class Table{
         String trueCountString = String.valueOf(trueCount);
         String line = "";
         line = handNumberString+","+trueCountString+","+betSizeString+","+bankrollString+"\n";
-        writer.write(line); // Use instance variable, don't close here
+        if (player.getHandNumber()%1000==1 && writer == null){
+            writer = new FileWriter("blackjackResults.csv", true); // Open in append mode
+            writer.write(line); // Use instance variable, don't close here
+        }
+        
 
         betHistory.add(player.getBetSize());
         double current = player.getBankroll();
@@ -900,6 +904,7 @@ public class Table{
         }
         // Open new writer for this simulation
         writer = new FileWriter("blackjackResults.csv", false);
+        writer.close();
     }
 
     public boolean doesPlayerSurrender(){
@@ -1028,7 +1033,7 @@ public class Table{
                     if (playerTakesInsurance() && dealerHasBlackjack()){
                         continue;                        
                     }
-                    
+
                     if (dealerHasBlackjack() && !playerHasBlackjack()){
                         bankroll = player.getBankroll();
                         bankroll = bankroll - betSize;
