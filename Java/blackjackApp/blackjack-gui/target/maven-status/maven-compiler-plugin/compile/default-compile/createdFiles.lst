@@ -4,7 +4,6 @@ com\blackjacksim\Card.class
 com\blackjacksim\Table$ProgressCallback.class
 com\blackjacksim\BlackjackApp.class
 com\blackjacksim\Dealer.class
-logo.ico
 com\blackjacksim\Player.class
 com\blackjacksim\Table.class
 com\blackjacksim\Hand.class
